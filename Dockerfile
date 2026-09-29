@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache modules: rewrite and headers for CORS
 RUN a2enmod rewrite headers
 
-# Copy application files into Apache DocumentRoot
-COPY . /var/www/html/
+# Copy backend application files into Apache DocumentRoot
+COPY backend/ /var/www/html/
 
 WORKDIR /var/www/html
 
