@@ -1,0 +1,38 @@
+cd "backend"
+php -S 127.0.0.1:8000 router.php
+
+
+cd "frontend"
+npm install
+npm run dev
+
+Service
+About us
+Hotels & more
+Contact
+￼￼
+▼
+Contakt
+contact form
+Write us your request, we will get in touch with you
+
+Your K-Consulting Team Sports & MICE
+
+📱
+Phone: +49 2241 343320
+
+Fax: +49 2241 344316
+
+E-Mail: contact(@)sportsandmice.com
+
+Surname
+￼
+
+npm run dev -- --host 0.0.0.0
+
+
+cloudflared tunnel --url http://localhost:5173
+
+
+Email / Username: admin@sportsandmice.com
+Password: admin123

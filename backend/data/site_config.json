@@ -1,0 +1,683 @@
+{
+    "version": 20,
+    "last_published_at": "2026-09-28 10:20:00",
+    "last_saved_at": "2026-09-28 10:20:00",
+    "has_unpublished_changes": false,
+    "theme": {
+        "primary_color": "#ff0000",
+        "primary_hover": "#e60000",
+        "secondary_color": "#106cc2",
+        "accent_color": "#ff6b6b",
+        "dark_bg": "#1f242d",
+        "card_bg": "#faf5fa",
+        "card_border": "#ede4ed",
+        "text_primary": "#222222",
+        "text_secondary": "#555555",
+        "font_family": "'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+        "border_radius": "8px",
+        "button_border_radius": "50px"
+    },
+    "animations": {
+        "enabled": true,
+        "default_type": "up",
+        "default_duration": 0.55,
+        "default_delay": 0.1,
+        "stagger_children": true,
+        "page_transition": "fade",
+        "card_hover": "lift",
+        "reduced_motion_support": true,
+        "sections": {
+            "home_hero": {
+                "type": "up",
+                "duration": 0.6,
+                "delay": 0.1
+            },
+            "home_intro": {
+                "type": "up",
+                "duration": 0.55,
+                "delay": 0.1
+            },
+            "home_cards": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.15
+            },
+            "home_expertise": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "home_video": {
+                "type": "right",
+                "duration": 0.6,
+                "delay": 0.2
+            },
+            "home_contact_cta": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "service_hero_video": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "service_intro": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "service_cards": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.15
+            },
+            "service_cta": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "about_hero": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "about_story": {
+                "type": "right",
+                "duration": 0.6,
+                "delay": 0.15
+            },
+            "about_travel": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.2
+            },
+            "about_cta": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "hotels_hero": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "hotels_tours": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.15
+            },
+            "hotels_upcoming": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "hotels_cta": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "contact_hero": {
+                "type": "up",
+                "duration": 0.5,
+                "delay": 0.1
+            },
+            "contact_form_section": {
+                "type": "left",
+                "duration": 0.55,
+                "delay": 0.2
+            }
+        }
+    },
+    "header": {
+        "logo_url": "/assets/images/logo.png",
+        "brand_title": "Sports & MICE",
+        "sticky": true,
+        "show_language_selector": true,
+        "nav_items": [
+            {
+                "id": "nav_home",
+                "name_en": "Home",
+                "name_de": "Home",
+                "path": "/",
+                "enabled": true,
+                "order": 1
+            },
+            {
+                "id": "nav_service",
+                "name_en": "Service",
+                "name_de": "Dienstleistung",
+                "path": "/en/Service/",
+                "enabled": true,
+                "order": 2
+            },
+            {
+                "id": "nav_about",
+                "name_en": "About us",
+                "name_de": "Über uns",
+                "path": "/en/About-us/",
+                "enabled": true,
+                "order": 3
+            },
+            {
+                "id": "nav_hotels",
+                "name_en": "Hotels & more",
+                "name_de": "Hotels & mehr",
+                "path": "/en/Hotels-more/",
+                "enabled": true,
+                "order": 4
+            },
+            {
+                "id": "nav_contact",
+                "name_en": "Contact",
+                "name_de": "Kontakt",
+                "path": "/en/Contact/",
+                "enabled": true,
+                "order": 5
+            }
+        ]
+    },
+    "footer": {
+        "company_name": "K-Consulting Sports & MICE",
+        "street": "Fritz-Pullig-Strasse 9",
+        "city_country_en": "53757 Sankt Augustin\nGermany",
+        "city_country_de": "53757 Sankt Augustin\nDeutschland",
+        "phone": "+49 2241 343320",
+        "fax": "+49 2241 344316",
+        "email": "contact@sportsandmice.com",
+        "copyright_text": "© 2026 www.sportsandmice.com",
+        "social_links": [
+            {
+                "platform": "LinkedIn",
+                "url": "https://www.linkedin.com/in/marc-knuelle-427252161/",
+                "enabled": true
+            },
+            {
+                "platform": "YouTube",
+                "url": "https://youtube.com",
+                "enabled": false
+            },
+            {
+                "platform": "Instagram",
+                "url": "https://instagram.com",
+                "enabled": false
+            }
+        ]
+    },
+    "pages": {
+        "home": {
+            "id": "home",
+            "title": "Home",
+            "seo_title": "Sports & MICE | K-Consulting - Sports Travel & Conferences",
+            "seo_description": "Sport needs professional structures when traveling to competitions, team building and conferences around the world.",
+            "hero_bg_image": "/assets/images/home_hero_bg.jpg",
+            "enabled": true
+        },
+        "service": {
+            "id": "service",
+            "title": "Service",
+            "seo_title": "Service | Sports & MICE K-Consulting",
+            "seo_description": "With our commitment we support your sporting success! Comprehensive MICE services for sports teams.",
+            "hero_bg_image": "/assets/images/service_hero_bg.jpg",
+            "enabled": true
+        },
+        "about": {
+            "id": "about",
+            "title": "About us",
+            "seo_title": "About us | Sports & MICE K-Consulting",
+            "seo_description": "Active in high-performance sport. Marc Knuelle, founder and international referee since 2000.",
+            "hero_bg_image": "/assets/images/about_hero_bg.jpg",
+            "enabled": true
+        },
+        "hotels": {
+            "id": "hotels",
+            "title": "Hotels & more",
+            "seo_title": "Hotels & more | Sports & MICE K-Consulting",
+            "seo_description": "Hotels sights inspection tours in Cancún, Dubai, Kenya, Mexico, USA, Brazil, Japan.",
+            "hero_bg_image": "/assets/images/hotels_hero_bg.jpg",
+            "enabled": true
+        },
+        "contact": {
+            "id": "contact",
+            "title": "Contact",
+            "seo_title": "Contact | Sports & MICE K-Consulting",
+            "seo_description": "Write us your request, we will get in touch with you. Your K-Consulting Team Sports & MICE.",
+            "hero_bg_image": "/assets/images/contact_hero_bg.jpg",
+            "enabled": true
+        },
+        "imprint": {
+            "id": "imprint",
+            "title": "Imprint & Privacy",
+            "seo_title": "Imprint & Data Protection | Sports & MICE",
+            "seo_description": "Legal imprint and GDPR data protection regulations for K-Consulting Sports & MICE.",
+            "hero_bg_image": "/assets/images/home_hero_bg.jpg",
+            "enabled": true
+        }
+    },
+    "sections": {
+        "home": [
+            {
+                "id": "home_hero",
+                "type": "hero",
+                "name": "Hero Banner Section",
+                "heading_prefix_en": "Sports associations &",
+                "heading_prefix_de": "Sportverbände &",
+                "tag1_en": "Meetings ♢ Incentives",
+                "tag1_de": "Besprechungen ♢ Teambildung",
+                "tag2_en": "Conferences ♢ Events",
+                "tag2_de": "Konferenzen ♢ Veranstaltungen",
+                "subtitle_en": "Sport needs professional structures when traveling to competitions, team building and conferences around the world",
+                "subtitle_de": "Der Sport braucht professionelle Strukturen bei Reisen zu Wettkämpfen, Teambildung und Konferenzen weltweit",
+                "bg_image": "/assets/images/home_hero_bg.jpg",
+                "cta_button_text_en": "Get Free Consultation",
+                "cta_button_text_de": "Kostenlose Beratung anfragen",
+                "cta_button_link": "/en/Contact/",
+                "cta_button_enabled": true,
+                "enabled": true,
+                "order": 1
+            },
+            {
+                "id": "home_intro",
+                "type": "home_intro",
+                "name": "Introductory Explanation",
+                "title_en": "Sport needs professional structures when traveling to competitions, team building and conferences around the world",
+                "title_de": "Der Sport braucht professionelle Strukturen bei Reisen zu Wettkämpfen, Teambildung und Konferenzen weltweit",
+                "p1_en": "Be it at competitions or team building of the national teams or at conferences, events or meetings of sports associations, the focus must always be on sport and its further development.",
+                "p1_de": "Sei es bei Wettkämpfen oder Teambildungen der Nationalmannschaften oder bei Konferenzen, Veranstaltungen oder Besprechungen der Sportverbände, der Sport und seine Weiterentwicklung müssen immer im Mittelpunkt stehen.",
+                "p2_en": "It is particularly important that the infrastructure suits the needs to the attendees. Hotels need to be able to deal with the needs of sports teams, team building activities have to meet the special demands of athletes and conference rooms should suit active athletic participants.",
+                "p2_de": "So ist es besonders wichtig, dass die Infrastruktur stimmig ist. Hotels müssen mit Sportmannschaften umgehen können, Teambildungsaktivitäten den besonderen Ansprüchen der Sportler:innen entsprechen, Konferenzräume zu den aktiven sportlichen Teilnehmer:innen passen.",
+                "p3_en": "For events to be successful, the environment must also be suit the sporting characteristics of the customer.",
+                "p3_de": "Zum Gelingen von Veranstaltungen muss auch das Umfeld zu den sportlichen Eigenschaften der Kunden passen.",
+                "enabled": true,
+                "order": 2
+            },
+            {
+                "id": "home_cards",
+                "type": "cards",
+                "name": "Together for Success - 3 Pillars",
+                "title_en": "Together for success! Travel and meet like the pros!",
+                "title_de": "Gemeinsam zum Erfolg! Reisen und Tagen wie die Profis!",
+                "cards": [
+                    {
+                        "num": "01",
+                        "title_en": "HOTELS",
+                        "title_de": "HOTELS",
+                        "desc_en": "We find the right hotels around the globe for the needs of your sports team. The security and facilities of hotels play a major role, as well as good connections to the competition site and an environment suitable for athletes.",
+                        "desc_de": "Wir finden für die Bedürfnisse Ihrer Sportmannschaft die richtigen Hotels rund um den Globus. Dabei spielen die Sicherheit und die Ausstattung der Hotels eine große Rolle, sowie gute Verbindungen zum Wettkampfort und ein für Sportler:innen passendes Umfeld."
+                    },
+                    {
+                        "num": "02",
+                        "title_en": "CONFERENCES",
+                        "title_de": "KONFERENZEN",
+                        "desc_en": "For meetings, conferences, seminars and events, we will find the right venue for you that suits your athletic participants. This also includes an environment with attractive offers and events.",
+                        "desc_de": "Für die Besprechungen, Konferenzen, Seminare und Veranstaltungen finden wir für Sie den passenden Veranstaltungsort, der zu Ihren sportlichen Teilnehmenden passt. Dazu gehört auch ein Umfeld mit attraktiven Angeboten und Events."
+                    },
+                    {
+                        "num": "03",
+                        "title_en": "INCENTIVES",
+                        "title_de": "TEAMBILDUNG",
+                        "desc_en": "Whether the national team or the board of directors of the sports association, we will find a suitable motivating and extraordinary activity for you, which will weld you together even more so that you can celebrate successes together.",
+                        "desc_de": "Ob die Nationalmannschaft oder der Vorstand des Sportverbandes, wir finden für Sie eine passende motivierende und außergewöhnliche Aktivität, die Sie noch enger zusammenschweißt, um gemeinsam Erfolge zu feiern. Langeweile ist uns fremd!"
+                    }
+                ],
+                "enabled": true,
+                "order": 3
+            },
+            {
+                "id": "home_expertise",
+                "type": "expertise",
+                "name": "Expertise for Sporting Success",
+                "title_en": "Use our expertise for your sporting success!",
+                "title_de": "Nutzen Sie unsere Expertise für Ihren sportlichen Erfolg!",
+                "p1_en": "Unlike large companies, sports associations usually do not have their own department specializing in trips to competitions for national teams or sports officials to conferences.",
+                "p1_de": "Anders als große Unternehmen haben Sportverbände in der Regel keine eigene Abteilung, die sich nur um die Reisen zu Wettkämpfen der Nationalmannschaften oder der Sportfunktionäre zu Tagungen kümmert.",
+                "p2_en": "We take care of the search for the right team hotel for you, organize transport from the airport and to the competition venue, or find the right team building activity.",
+                "p2_de": "Wir nehmen Ihnen die Suche des passenden Mannschaftshotels ab, organisieren auf Wunsch den Transport vom Flughafen wie auch zur Wettkampfstätte oder finden die richtige Teambildungsaktivität.",
+                "p3_en": "We will look for suitable conference options for your conferences and meetings that suit your sports officials and their needs.",
+                "p3_de": "Wir suchen passende Tagungsmöglichkeiten für Ihre Konferenzen und Besprechungen, die zu Ihren Sportfunktionären passen.",
+                "p4_en": "We will only propose conference locations with access to suitable sporting facilities. With our many years of experience, we will find exactly the right thing for you.",
+                "p4_de": "Keine Konferenzorte ohne sportliches Angebot. Mit unseren langjährigen Erfahrungen werden wir genau das Richtige für Sie finden.",
+                "enabled": true,
+                "order": 4
+            },
+            {
+                "id": "home_video",
+                "type": "video",
+                "name": "International High-Performance Sport Video",
+                "title_en": "Our own experiences in international high-performance sport make us experts!",
+                "title_de": "Eigene Erfahrungen im internationalen Hochleistungssport machen uns zu Experten!",
+                "video_url": "https://www.youtube.com/embed/dD_FThvzO9I?start=76&controls=1",
+                "p1_en": "In order to understand the needs of customers from top-class sport, a MICE co-ordinator needs to have had their own experiences at that level.",
+                "p1_de": "Um Kunden aus dem Spitzensport verstehen zu können, sollte man eigene Erfahrungen gemacht haben.",
+                "p2_en": "How do you know what it means when a sports team competes and travels abroad? What is important to sports officials at conferences? What are their special requirements?",
+                "p2_de": "Was bedeutet es, wenn eine Sportmannschaft zu einem Wettkampf reist oder man selbst an einem Wettkampf teilnimmt? Was ist den Sportfunktionären bei Tagungen wichtig? Was sind die besonderen Ansprüche?",
+                "p3_en": "We know the answers because we have seen it ourselves!",
+                "p3_de": "Wir kennen die Antworten, denn wir haben es selbst erlebt!",
+                "about_link_text_en": "See further details in our About Us section.",
+                "about_link_text_de": "Erfahren Sie mehr in unserem Bereich Über uns.",
+                "about_link_url": "/en/About-us/",
+                "enabled": true,
+                "order": 5
+            },
+            {
+                "id": "home_contact_cta",
+                "type": "cta",
+                "name": "Contact Call to Action",
+                "title_en": "Write to us with your request!",
+                "title_de": "Kontaktieren Sie uns!",
+                "subtitle_en": "Contact us today for professional team travel, meetings, and conferences.",
+                "subtitle_de": "Schreiben Sie uns Ihr Anliegen, wir melden uns bei Ihnen.",
+                "button_text_en": "Contact Us",
+                "button_text_de": "Kontaktformular",
+                "button_link": "/en/Contact/",
+                "bg_image": "/assets/images/service_cta_bg.jpg",
+                "enabled": true,
+                "order": 6
+            }
+        ],
+        "service": [
+            {
+                "id": "service_hero_video",
+                "type": "service_hero",
+                "name": "Service Video Showcase",
+                "title_en": "Service",
+                "title_de": "Dienstleistung",
+                "video_url": "https://www.youtube.com/embed/aXREXtsXonE?controls=1",
+                "bg_image": "/assets/images/service_hero_bg.jpg",
+                "enabled": true,
+                "order": 1
+            },
+            {
+                "id": "service_intro",
+                "type": "text_block",
+                "name": "Service Introduction",
+                "title_en": "With our commitment we support your sporting success!",
+                "title_de": "Mit unserem Engagement unterstützen wir Ihren sportlichen Erfolg!",
+                "p1_en": "Our team ensures the right selection of venues and hotels for your MICE activities. Sports teams and sports officials have special requirements, which guide us in our recommendations for you.",
+                "p1_de": "Unser Team sorgt für die richtige Auswahl von Venues und Hotels für Ihre MICE-Aktivitäten. Sportteams und Sportfunktionäre haben besondere Anforderungen, an denen wir uns bei unseren Empfehlungen für Sie orientieren.",
+                "p2_en": "When selecting hotels, we ensure that they are suitable for sports teams and that they have staff who are familiar with dealing with sports teams. Our targeted advice to the selected hotel ensures high-quality services for you. The facilities need to be right; the fitness center shouldn't be the smallest room in the hotel. We also value attractive running routes near the hotel.",
+                "p2_de": "Bei der Auswahl der Hotels achten wir darauf, dass diese für Sportmannschaften geeignet sind und über Personal verfügen, das im Umgang mit Sportmannschaften vertraut ist. Unsere gezielte Beratung des ausgewählten Hotels sichert Ihnen qualitativ hochwertige Dienstleistungen. Die Ausstattung muss stimmen, der Fitnessbereich sollte nicht der kleinste Raum des Hotels sein. Auch legen wir Wert auf ansprechende Laufstrecken in Hotelnähe.",
+                "p3_en": "We make sure that you are in a good location and distance from the competition site and can ensure that transport is looked after. We check the conference facilities for meetings, seminars and assemblies that your teams or your sports officials need to meet your needs. It is our strength that we have made a picture for ourselves on site.",
+                "p3_de": "Wir sorgen dafür, dass Sie sich in guter Lage und Entfernung zur Wettkampfstätte befinden und können den Transport sicherstellen. Wir prüfen die Tagungsmöglichkeiten für Sitzungen, Seminare und Versammlungen, die Ihre Mannschaften oder Ihre Sportfunktionäre benötigen, damit sie Ihren Bedürfnissen entsprechen. Es ist unsere Stärke, dass wir uns vor Ort ein Bild gemacht haben.",
+                "enabled": true,
+                "order": 2
+            },
+            {
+                "id": "service_cards",
+                "type": "services",
+                "name": "The right answers to your needs",
+                "title_en": "The right answers to your needs",
+                "title_de": "Die passenden Antworten auf Ihre Bedürfnisse",
+                "enabled": true,
+                "order": 3
+            },
+            {
+                "id": "service_cta",
+                "type": "cta",
+                "name": "Service Contact CTA",
+                "title_en": "Write to us with your request!",
+                "title_de": "Schreiben Sie uns Ihr Anliegen!",
+                "button_text_en": "contact form",
+                "button_text_de": "Kontaktformular",
+                "button_link": "/en/Contact/",
+                "bg_image": "/assets/images/service_cta_bg.jpg",
+                "enabled": true,
+                "order": 4
+            }
+        ],
+        "about": [
+            {
+                "id": "about_hero",
+                "type": "hero",
+                "name": "About Hero Banner",
+                "title_en": "About us",
+                "title_de": "Über uns",
+                "bg_image": "/assets/images/about_hero_bg.jpg",
+                "enabled": true,
+                "order": 1
+            },
+            {
+                "id": "about_story",
+                "type": "story",
+                "name": "Active in High-Performance Sport",
+                "title_en": "Active in high-performance sport",
+                "title_de": "Aktiv im Spitzensport",
+                "photo": "/assets/images/about_hockey_referee.jpeg",
+                "p1_en": "Our founder, Marc Knuelle, has been an international referee in field hockey since 2000. In addition to three European championships, he has acted as a referee at many international tournaments on five continents. There are also countless trips around the world, during which he has accompanied national teams to their training camps. Participation in major sporting events and congresses rounds off Marc’s deep and broad insight into the world of high-performance sport and the MICE activities of the sports associations.",
+                "p1_de": "Unser Gründer Marc Knuelle ist seit 2000 internationaler Schiedsrichter im Feldhockey. Neben drei Europameisterschaften leitete er Spiele auf fünf Kontinenten. Hinzu kommen unzählige Reisen um die Welt, bei denen er Nationalmannschaften in ihre Trainingslager begleitet hat. Die Teilnahme an sportlichen Großveranstaltungen und Kongressen runden Marcs tiefen und breiten Einblick in die Welt des Spitzensports und die MICE-Aktivitäten der Sportverbände ab.",
+                "p2_en": "As a referee, you learn early on to make decisions again and again and to take responsibility for mistakes. These clear ways of acting characterize our performance for customers. We will make sure that we deliver an experience that matches your expectations.",
+                "p2_de": "Als Schiedsrichter lernt man früh, immer wieder Entscheidungen zu treffen und Verantwortung für Fehler zu übernehmen. Diese klaren Handlungsweisen zeichnen unsere Leistung für Kunden aus. Wir werden dafür sorgen, dass wir ein Erlebnis liefern, das Ihren Erwartungen entspricht.",
+                "p3_en": "After organizing and holding many meetings of the referees at the national level, Marc founded K-Consulting Sports & MICE in 2015, which to this day supports sports associations in holding meetings and trips for national teams.",
+                "p3_de": "Nach der Organisation und Durchführung vieler Tagungen der Schiedsrichter auf nationaler Ebene gründete Marc 2015 die K-Consulting Sports & MICE, die bis heute Sportverbände bei der Durchführung von Tagungen und Reisen für Nationalmannschaften unterstützt.",
+                "enabled": true,
+                "order": 2
+            },
+            {
+                "id": "about_travel",
+                "type": "gallery",
+                "name": "World Traveler Destinations",
+                "title_en": "World traveler - \"Marco Polo\" conquers the planet",
+                "title_de": "Weltreisender - \"Marco Polo\" erobert den Planeten",
+                "enabled": true,
+                "order": 3
+            },
+            {
+                "id": "about_cta",
+                "type": "cta",
+                "name": "About Contact CTA",
+                "title_en": "Write to us with your request!",
+                "title_de": "Schreiben Sie uns Ihr Anliegen!",
+                "button_text_en": "Contact Form",
+                "button_text_de": "Kontaktformular",
+                "button_link": "/en/Contact/",
+                "bg_image": "/assets/images/service_cta_bg.jpg",
+                "enabled": true,
+                "order": 4
+            }
+        ],
+        "hotels": [
+            {
+                "id": "hotels_hero",
+                "type": "hero",
+                "name": "Hotels Hero Banner",
+                "title_en": "Hotels & more",
+                "title_de": "Hotels & mehr",
+                "bg_image": "/assets/images/hotels_hero_bg.jpg",
+                "enabled": true,
+                "order": 1
+            },
+            {
+                "id": "hotels_tours",
+                "type": "gallery",
+                "name": "Inspection Tours List",
+                "title_en": "Hotels sights inspection tours",
+                "title_de": "Hotels sights inspection tours",
+                "enabled": true,
+                "order": 2
+            },
+            {
+                "id": "hotels_upcoming",
+                "type": "upcoming",
+                "name": "Upcoming Destinations Banner",
+                "title_en": "Next: Kenya - Mexico - USA - Brazil - Japan",
+                "title_de": "Next: Kenia - Mexiko - USA - Brasilien - Japan",
+                "enabled": true,
+                "order": 3
+            },
+            {
+                "id": "hotels_cta",
+                "type": "cta",
+                "name": "Hotels Contact CTA",
+                "title_en": "Write to us with your request!",
+                "title_de": "Schreiben Sie uns Ihr Anliegen!",
+                "button_text_en": "Contact Form",
+                "button_text_de": "Kontaktformular",
+                "button_link": "/en/Contact/",
+                "bg_image": "/assets/images/service_cta_bg.jpg",
+                "enabled": true,
+                "order": 4
+            }
+        ],
+        "contact": [
+            {
+                "id": "contact_hero",
+                "type": "hero",
+                "name": "Contact Hero Banner",
+                "title_en": "Contact",
+                "title_de": "Kontakt",
+                "bg_image": "/assets/images/contact_hero_bg.jpg",
+                "enabled": true,
+                "order": 1
+            },
+            {
+                "id": "contact_form_section",
+                "type": "contact",
+                "name": "Interactive Contact Form & Info",
+                "title_en": "contact form",
+                "title_de": "Kontaktformular",
+                "subtitle_en": "Write us your request, we will get in touch with you",
+                "subtitle_de": "Schreiben Sie uns Ihr Anliegen, wir melden uns bei Ihnen",
+                "team_sign_en": "Your K-Consulting Team Sports & MICE",
+                "team_sign_de": "Ihr K-Consulting Team Sports & MICE",
+                "phone": "+49 2241 343320",
+                "fax": "+49 2241 344316",
+                "email": "contact@sportsandmice.com",
+                "enabled": true,
+                "order": 2
+            }
+        ]
+    },
+    "services": [
+        {
+            "id": "svc_1",
+            "title_en": "Meetings and Conferences",
+            "title_de": "Meetings und Konferenzen",
+            "desc_en": "Conference rooms, state-of-the-art presentation technology, and quiet meeting atmosphere for sports executives.",
+            "desc_de": "Tagungsräume, moderne Präsentationstechnik und ruhige Tagungsatmosphäre für Sportfunktionäre.",
+            "image": "/assets/images/service_meeting.jpg",
+            "link": "/en/Contact/",
+            "order": 1,
+            "active": true
+        },
+        {
+            "id": "svc_2",
+            "title_en": "Team building & Incentives",
+            "title_de": "Teambuilding & Incentives",
+            "desc_en": "Motivational group activities, athletic challenges, and bonding programs tailored to competitive spirits.",
+            "desc_de": "Motivierende Gruppenaktivitäten und Teambuilding-Programme für Teams.",
+            "image": "/assets/images/service_teambuilding.png",
+            "link": "/en/Contact/",
+            "order": 2,
+            "active": true
+        },
+        {
+            "id": "svc_3",
+            "title_en": "Team trips and events",
+            "title_de": "Teamreisen und Events",
+            "desc_en": "Logistics, tailored nutrition, dedicated team floors, and proximity to competition facilities worldwide.",
+            "desc_de": "Logistik, gesunde Sportlerernährung und kurze Wege zu Wettkampfstätten.",
+            "image": "/assets/images/service_teamtrips.jpeg",
+            "link": "/en/Contact/",
+            "order": 3,
+            "active": true
+        },
+        {
+            "id": "svc_4",
+            "title_en": "International sports congresses",
+            "title_de": "Internationale Sportkongresse",
+            "desc_en": "Host world-class congresses, annual general meetings, and sporting federations events seamlessly.",
+            "desc_de": "Austragung von Sportkongressen und Delegiertenversammlungen.",
+            "image": "/assets/images/congress_icon.png",
+            "link": "/en/Contact/",
+            "order": 4,
+            "active": true
+        }
+    ],
+    "team": [
+        {
+            "id": "member_marc",
+            "name": "Marc Knuelle",
+            "role_en": "Founder & Managing Director",
+            "role_de": "Gründer & Geschäftsführer",
+            "designation": "International Field Hockey Referee since 2000",
+            "photo": "/assets/images/about_hockey_referee.jpeg",
+            "bio_en": "Active referee at 3 European Championships and international tournaments across 5 continents.",
+            "bio_de": "Internationaler Schiedsrichter bei 3 Europameisterschaften und weltweiten Turnieren.",
+            "order": 1,
+            "active": true
+        }
+    ],
+    "gallery": [
+        {
+            "id": "tour_cancun",
+            "title": "Tour - Mexico - Cancún",
+            "title_de": "Tour - Mexiko - Cancún",
+            "hotel_name": "Hotel Fairmont Mayakoba \"Riviera Maya\"",
+            "location": "Cancún, Mexico",
+            "image": "/assets/images/hotel_cancun.jpg",
+            "external_url": "https://www.fairmont.com/mayakoba-riviera-maya/?goto=fiche_hotel&code_hotel=A573&merchantid=seo-maps-MX-A573&sourceid=aw-cen&utm_medium=seo+maps&utm_source=google+Maps&utm_campaign=seo+maps&y_source=1_MTIzNjEzOTgtNzE1LWxvY2F0aW9uLmdvb2dsZV93ZWJzaXRlX292ZXJyaWRl",
+            "button_text_en": "Fairmont Mayakoba \"Riviera Maya\"",
+            "button_text_de": "Fairmont Mayakoba \"Riviera Maya\"",
+            "desc_en": "The Yucatán peninsula not only inspires with its breathtaking beaches, but also with its excellent hotel infrastructure. Meetings with a view of the sea or events on the beach are easily possible here. Mexico also impresses with a wide range of sports, very special for water sports. It is a perfect location, especially for team building. We were particularly impressed by the Hotel Fairmont Myakoba \"Riviera Maya\", a great place to meet and relax.",
+            "desc_de": "Die Halbinsel Yucatán begeistert nicht nur mit ihren atemberaubenden Stränden, sondern auch mit ihrer hervorragenden Hotelinfrastruktur. Tagen mit Blick aufs Meer oder Veranstaltungen am Strand sind hier problemlos möglich. Auch sportlich besticht Mexiko mit einem vielfältigen Angebot, ganz besondere für den Wassersport. Gerade für Teambildung ist es ein perfektes Ziel. Besonders beeindruckt hat uns das Hotel Fairmont Myakoba \"Riviera Maya\", ein toller Ort zum Tagen und Entspannen.",
+            "order": 1,
+            "active": true
+        },
+        {
+            "id": "tour_dubai",
+            "title": "Tour - UAE - Dubai",
+            "title_de": "Tour - VAE - Dubai",
+            "hotel_name": "Sofitel The Palm Dubai",
+            "location": "Dubai, UAE",
+            "image": "/assets/images/hotel_dubai.jpg",
+            "external_url": "https://www.sofitel-dubai-thepalm.com",
+            "button_text_en": "Sofitel The Palm Dubai",
+            "button_text_de": "Sofitel The Palm Dubai",
+            "desc_en": "All events can happy here - Dubai is a year-round destination with extensive conference facilities. It offers a high level of security as well as a wide range of sports infrastructure. There are also various options for team building activities. We were particularly impressed by the Sofitel The Palm Dubai hotel, with its great location and a perfect mix of meeting and relaxing.",
+            "desc_de": "Kein Event, was hier nicht realisiert werden kann - Dubai ist ein Ganzjahresziel mit weitreichenden Tagungsmöglichkeiten. Es bietet ein hohes Maß an Sicherheit wie auch ein breites Angebot an Sportinfrastruktur. Dazu gibt es vielfältige Möglichkeiten für Teambildungs-Aktivitäten. Besonders beeindruckt hat uns das Hotel Sofitel The Palm Dubai, durch seine tolle Lage und eine perfekte Mischung zum Tagen und Wohlfühlen.",
+            "order": 2,
+            "active": true
+        },
+        {
+            "id": "travel_havana",
+            "title": "Havana - Cuba",
+            "title_de": "Havana - Kuba",
+            "hotel_name": "Caribbean Sport Hub",
+            "location": "Havana, Cuba",
+            "image": "/assets/images/about_havana.jpeg",
+            "external_url": "",
+            "desc_en": "The Caribbean passion of sport, for meeting with a view of the sea and ideal for motivational trips.",
+            "desc_de": "Die karibische Leidenschaft des Sports, für Meetings mit Blick aufs Meer und ideal für Motivationsreisen.",
+            "order": 3,
+            "active": true
+        },
+        {
+            "id": "travel_beijing",
+            "title": "Beijing - China",
+            "title_de": "Peking - China",
+            "hotel_name": "Olympic Venues",
+            "location": "Beijing, China",
+            "image": "/assets/images/about_beijing.jpg",
+            "external_url": "",
+            "desc_en": "A country where sport is very important - ideally suited for large sport competitions.",
+            "desc_de": "Ein Land, in dem Sport einen hohen Stellenwert hat - bestens geeignet für große Sportwettkämpfe.",
+            "order": 4,
+            "active": true
+        },
+        {
+            "id": "travel_joburg",
+            "title": "Johannesburg - South Africa",
+            "title_de": "Johannesburg - Südafrika",
+            "hotel_name": "Sports & Wildlife Base",
+            "location": "Johannesburg, South Africa",
+            "image": "/assets/images/about_johannesburg.jpg",
+            "external_url": "",
+            "desc_en": "Ideal for sport thanks to its good hotels, good sports event infrastructure and great team building activities.",
+            "desc_de": "Ideal für den Sport dank guter Hotels, guter Sport-Event-Infrastruktur und toller Teambuilding-Aktivitäten.",
+            "order": 5,
+            "active": true
+        }
+    ],
+    "draft_changes_count": 0,
+    "draft_changes_summary": []
+}

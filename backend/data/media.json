@@ -1,0 +1,56 @@
+[
+    {
+        "id": "media_logo",
+        "name": "logo.png",
+        "url": "\/assets\/images\/logo.png",
+        "alt_text": "Sports & MICE K-Consulting Logo",
+        "category": "Branding",
+        "size_kb": 45,
+        "created_at": "2026-09-25 11:02:15"
+    },
+    {
+        "id": "media_home_hero",
+        "name": "home_hero_bg.jpg",
+        "url": "\/assets\/images\/home_hero_bg.jpg",
+        "alt_text": "Stadium Arena Lights Hero Background",
+        "category": "Hero",
+        "size_kb": 320,
+        "created_at": "2026-09-25 11:02:15"
+    },
+    {
+        "id": "media_service_hero",
+        "name": "service_hero_bg.jpg",
+        "url": "\/assets\/images\/service_hero_bg.jpg",
+        "alt_text": "MICE Gala Dinner Background",
+        "category": "Hero",
+        "size_kb": 280,
+        "created_at": "2026-09-25 11:02:15"
+    },
+    {
+        "id": "media_referee",
+        "name": "about_hockey_referee.jpeg",
+        "url": "\/assets\/images\/about_hockey_referee.jpeg",
+        "alt_text": "Marc Knuelle Field Hockey Referee",
+        "category": "About",
+        "size_kb": 190,
+        "created_at": "2026-09-25 11:02:15"
+    },
+    {
+        "id": "media_cancun",
+        "name": "hotel_cancun.jpg",
+        "url": "\/assets\/images\/hotel_cancun.jpg",
+        "alt_text": "Fairmont Mayakoba Riviera Maya Cancun",
+        "category": "Hotels",
+        "size_kb": 240,
+        "created_at": "2026-09-25 11:02:15"
+    },
+    {
+        "id": "media_dubai",
+        "name": "hotel_dubai.jpg",
+        "url": "\/assets\/images\/hotel_dubai.jpg",
+        "alt_text": "Sofitel The Palm Dubai Resort",
+        "category": "Hotels",
+        "size_kb": 260,
+        "created_at": "2026-09-25 11:02:15"
+    }
+]

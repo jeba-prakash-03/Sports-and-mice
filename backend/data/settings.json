@@ -1,0 +1,21 @@
+{
+    "site_name": "Sports & MICE",
+    "company_name": "K-Consulting Sports & MICE",
+    "founder_name": "Marc Knuelle",
+    "phone": "+49 2241 343320",
+    "fax": "+49 2241 344316",
+    "email": "contact@sportsandmice.com",
+    "admin_notification_email": "jebaprakash115@gmail.com",
+    "address_street": "Fritz-Pullig-Strasse 9",
+    "address_city": "53757 Sankt Augustin",
+    "address_country": "Germany",
+    "linkedin_url": "https://www.linkedin.com/in/marc-knuelle-427252161/",
+    "smtp_host": "smtp.gmail.com",
+    "smtp_port": "587",
+    "smtp_user": "jebaprakash115@gmail.com",
+    "smtp_pass": "hkbw lgup hmvg udet",
+    "smtp_from": "jebaprakash115@gmail.com",
+    "smtp_from_name": "Sports & MICE",
+    "email_notifications_enabled": "true",
+    "visitor_autoresponder_enabled": "true"
+}

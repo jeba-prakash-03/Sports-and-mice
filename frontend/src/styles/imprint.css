@@ -1,0 +1,74 @@
+/* Imprint & Data Protection Styles */
+
+.imprint-hero {
+  background-size: cover;
+  background-position: center;
+  padding: 85px 0 75px 0;
+  color: #ffffff;
+}
+
+.imprint-hero-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.25;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.imprint-content-section {
+  padding: 60px 0 80px 0;
+  background-color: #ffffff;
+}
+
+.imprint-block {
+  margin-bottom: 50px;
+}
+
+.imprint-section-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #222222;
+  margin: 0 0 20px 0;
+}
+
+.imprint-sub-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333333;
+  margin: 25px 0 14px 0;
+}
+
+.imprint-intro-text {
+  font-size: 14.5px;
+  color: #444444;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.imprint-details-card {
+  background-color: #fafafa;
+  border-left: 3px solid #0c33f5;
+  padding: 20px 24px;
+  border-radius: 2px;
+  margin-bottom: 25px;
+}
+
+.imprint-details-card p {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #333333;
+  line-height: 1.5;
+}
+
+.imprint-details-card a {
+  color: #0c33f5;
+  text-decoration: underline;
+}
+
+.imprint-text {
+  font-size: 14.5px;
+  color: #444444;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
