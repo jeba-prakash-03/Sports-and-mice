@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -15,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      const response = await fetch('/api/auth/me.php', {
+      const response = await fetch(`${API_BASE_URL}/auth/me.php`, {
         headers: {
           'Authorization': `Bearer ${currentToken}`
         }
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/auth/login.php', {
+      const response = await fetch(`${API_BASE_URL}/auth/login.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

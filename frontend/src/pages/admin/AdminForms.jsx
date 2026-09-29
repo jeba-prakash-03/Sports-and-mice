@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { API_BASE_URL } from '../../services/api';
 import { 
   Search, 
   Filter, 
@@ -40,7 +41,7 @@ const AdminForms = () => {
         sort_order: 'DESC'
       });
 
-      const res = await fetch(`/api/admin/submissions.php?${params.toString()}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/submissions.php?${params.toString()}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -74,7 +75,7 @@ const AdminForms = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const res = await fetch('/api/admin/submissions.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/submissions.php`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +95,7 @@ const AdminForms = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`/api/admin/submissions.php?id=${id}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/submissions.php?id=${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

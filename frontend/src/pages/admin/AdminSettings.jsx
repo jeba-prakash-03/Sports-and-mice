@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useSite } from '../../context/SiteContext';
-import { resetConfig } from '../../services/api';
+import { resetConfig, API_BASE_URL } from '../../services/api';
 import { Save, Check, RefreshCw, Mail, Phone, Server, Send, AlertTriangle, RotateCcw, ShieldAlert, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -41,7 +41,7 @@ const AdminSettings = () => {
   const fetchSettings = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/settings.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/settings.php`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -69,7 +69,7 @@ const AdminSettings = () => {
     if (e) e.preventDefault();
     setSaving(true);
     try {
-      const res = await fetch('/api/admin/settings.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/settings.php`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

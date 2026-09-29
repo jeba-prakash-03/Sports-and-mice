@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useSite } from '../../context/SiteContext';
+import { API_BASE_URL } from '../../services/api';
 import { Save, Check, RefreshCw, Home, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -32,7 +33,7 @@ const AdminContent = () => {
   const fetchContent = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/content.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/content.php`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -65,7 +66,7 @@ const AdminContent = () => {
   const handleSave = async (sectionKey) => {
     setSaving(true);
     try {
-      const res = await fetch(`/api/admin/content.php?section=${sectionKey}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/content.php?section=${sectionKey}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

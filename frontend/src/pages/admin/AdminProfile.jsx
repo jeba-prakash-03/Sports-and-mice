@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { API_BASE_URL } from '../../services/api';
 import { 
   Save, 
   Check, 
@@ -42,7 +43,7 @@ const AdminProfile = () => {
 
     setSaving(true);
     try {
-      const res = await fetch('/api/auth/profile.php', {
+      const res = await fetch(`${API_BASE_URL}/auth/profile.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

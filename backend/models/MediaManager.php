@@ -133,15 +133,84 @@ class MediaManager {
         $safeName = preg_replace('/[^a-zA-Z0-9_-]/', '_', pathinfo($file['name'], PATHINFO_FILENAME));
         $filename = sprintf('%s_%s.%s', $safeName, substr(md5(uniqid()), 0, 8), $ext);
 
+        // Check if Cloudinary is configured
+        $cloudName = getenv('CLOUDINARY_CLOUD_NAME');
+        $apiKey = getenv('CLOUDINARY_API_KEY');
+        $apiSecret = getenv('CLOUDINARY_API_SECRET');
+        $uploadPreset = getenv('CLOUDINARY_UPLOAD_PRESET');
+
+        $cloudinaryUrl = getenv('CLOUDINARY_URL');
+        if ($cloudinaryUrl && (!$cloudName || !$apiKey || !$apiSecret)) {
+            // Parse cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+            if (preg_match('/cloudinary:\/\/([^:]+):([^@]+)@(.+)/', $cloudinaryUrl, $matches)) {
+                $apiKey = $matches[1];
+                $apiSecret = $matches[2];
+                $cloudName = $matches[3];
+            }
+        }
+
+        if ($cloudName && ($apiKey && $apiSecret || $uploadPreset)) {
+            // Upload to Cloudinary via REST API
+            $timestamp = time();
+            $params = [
+                'file' => new CURLFile($file['tmp_name'], $mime, $filename),
+                'folder' => 'sports_and_mice'
+            ];
+
+            if ($uploadPreset) {
+                $params['upload_preset'] = $uploadPreset;
+            } else {
+                $params['timestamp'] = $timestamp;
+                $params['api_key'] = $apiKey;
+                // Sign parameters
+                $signStr = "folder=sports_and_mice&timestamp={$timestamp}{$apiSecret}";
+                $params['signature'] = sha1($signStr);
+            }
+
+            $ch = curl_init("https://api.cloudinary.com/v1_1/{$cloudName}/image/upload");
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            if ($httpCode === 200 && $response) {
+                $cdata = json_decode($response, true);
+                if (isset($cdata['secure_url'])) {
+                    $mediaItem = [
+                        'id' => 'cld_' . ($cdata['public_id'] ?? time()),
+                        'name' => $filename,
+                        'url' => $cdata['secure_url'],
+                        'alt_text' => $altText ?: $safeName,
+                        'category' => $category,
+                        'size_kb' => round(($cdata['bytes'] ?? $file['size']) / 1024, 1),
+                        'created_at' => date('Y-m-d H:i:s')
+                    ];
+
+                    $items = $this->getAll();
+                    array_unshift($items, $mediaItem);
+                    @file_put_contents($this->jsonFile, json_encode($items, JSON_PRETTY_PRINT));
+
+                    return $mediaItem;
+                }
+            }
+        }
+
+        // Fallback to local storage
         $targetPublic = $this->publicUploadDir . '/' . $filename;
         $targetBackend = $this->backendUploadDir . '/' . $filename;
 
         if (!move_uploaded_file($file['tmp_name'], $targetPublic)) {
-            throw new RuntimeException('Failed to save uploaded file.');
+            // If public uploads not accessible (e.g. separate server on Render), save to backend uploads
+            if (!move_uploaded_file($file['tmp_name'], $targetBackend)) {
+                @copy($file['tmp_name'], $targetBackend);
+            }
+        } else {
+            @copy($targetPublic, $targetBackend);
         }
-
-        // Copy to backend uploads as backup
-        @copy($targetPublic, $targetBackend);
 
         $mediaItem = [
             'id' => 'med_' . time() . '_' . substr(md5(uniqid()), 0, 6),
@@ -155,7 +224,7 @@ class MediaManager {
 
         $items = $this->getAll();
         array_unshift($items, $mediaItem);
-        file_put_contents($this->jsonFile, json_encode($items, JSON_PRETTY_PRINT));
+        @file_put_contents($this->jsonFile, json_encode($items, JSON_PRETTY_PRINT));
 
         return $mediaItem;
     }

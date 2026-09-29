@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { API_BASE_URL } from '../../services/api';
 import { 
   ArrowLeft, 
   Mail, 
@@ -32,7 +33,7 @@ const AdminFormDetail = () => {
   const fetchDetail = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/admin/submissions.php?id=${id}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/submissions.php?id=${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -57,7 +58,7 @@ const AdminFormDetail = () => {
   const handleSaveStatusAndNotes = async () => {
     setSaving(true);
     try {
-      const res = await fetch(`/api/admin/submissions.php?id=${id}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/submissions.php?id=${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ const AdminFormDetail = () => {
     }
 
     try {
-      const res = await fetch(`/api/admin/submissions.php?id=${id}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/submissions.php?id=${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

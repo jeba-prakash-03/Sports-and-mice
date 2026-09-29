@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { API_BASE_URL } from '../../services/api';
 import { 
   Image as ImageIcon, 
   Upload, 
@@ -142,7 +143,7 @@ export const ImagePickerField = ({
     const token = authToken || localStorage.getItem('sm_admin_token') || localStorage.getItem('sports_admin_token');
 
     try {
-      const res = await fetch('/api/admin/upload.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/upload.php`, {
         method: 'POST',
         headers: token ? { 'Authorization': `Bearer ${token}` } : {},
         body: formData

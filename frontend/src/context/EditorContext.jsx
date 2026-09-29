@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from './AuthContext';
 import { useSite } from './SiteContext';
+import { API_BASE_URL } from '../services/api';
 
 export const parseYouTubeUrl = (url) => {
   if (!url) return { isYouTube: false, videoId: null, embedUrl: null };
@@ -87,7 +88,7 @@ export const EditorProvider = ({ children }) => {
     if (!authToken) return;
     setSaveStatus('saving');
     try {
-      const res = await fetch('/api/admin/config.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/config.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

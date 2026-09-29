@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../services/api';
 import { 
   LayoutDashboard, 
   Inbox, 
@@ -40,7 +41,7 @@ const AdminLayout = () => {
   const fetchUnreadCount = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/admin/dashboard.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/dashboard.php`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {

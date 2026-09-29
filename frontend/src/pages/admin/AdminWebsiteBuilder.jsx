@@ -3,6 +3,7 @@ import { NavLink, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useSite } from '../../context/SiteContext';
 import { useEditor, parseYouTubeUrl } from '../../context/EditorContext';
+import { API_BASE_URL } from '../../services/api';
 
 // Import Exact Real Pages & Global Shell
 import Header from '../../components/Header';
@@ -534,7 +535,7 @@ const AdminWebsiteBuilder = () => {
   const loadMedia = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/admin/media.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/media.php`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -575,7 +576,7 @@ const AdminWebsiteBuilder = () => {
     if (!authToken) return;
     setSaveStatus('saving');
     try {
-      const res = await fetch('/api/admin/config.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/config.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -611,7 +612,7 @@ const AdminWebsiteBuilder = () => {
     formData.append('title', file.name);
 
     try {
-      const res = await fetch('/api/admin/upload.php', {
+      const res = await fetch(`${API_BASE_URL}/admin/upload.php`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
