@@ -9,15 +9,8 @@ if ($uri !== '/' && file_exists($staticFile) && !is_dir($staticFile)) {
 }
 
 // Route all API requests through index.php logic (without exit)
-header("Access-Control-Allow-Origin: *");
+require_once __DIR__ . '/cors.php';
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    return;
-}
 
 // Dispatch
 if (strpos($uri, '/api/public/page') !== false || strpos($uri, '/api/page') !== false) {

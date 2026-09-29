@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useSite } from '../../context/SiteContext';
-import { fetchAdminConfig, fetchAuditLogs, publishConfig } from '../../services/api';
+import { fetchAdminConfig, fetchAuditLogs, publishConfig, API_BASE_URL } from '../../services/api';
 import { 
   Inbox, 
   Mail, 
@@ -38,7 +38,7 @@ const AdminDashboard = () => {
     setLoading(true);
     try {
       const [dashRes, cmsRes, logsRes] = await Promise.all([
-        fetch('/api/admin/dashboard.php', { 
+        fetch(`${API_BASE_URL}/admin/dashboard.php`, { 
           headers: { 'Authorization': `Bearer ${token}` } 
         }),
         fetchAdminConfig(),

@@ -2,16 +2,7 @@
 // backend/api/public/page.php
 // Optimized single-page endpoint for public site rendering
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Content-Type: application/json; charset=UTF-8");
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
+require_once __DIR__ . '/../../cors.php';
 require_once __DIR__ . '/../../config/database.php';
 require_once __DIR__ . '/../../models/CmsConfig.php';
 
@@ -43,65 +34,39 @@ if (isset($slugMap[$slug])) {
 // Fetch published site configuration (strictly published only)
 $published = $cms->getPublished();
 
-// Check if page exists in published config
-$pageMeta = $published['pages'][$slug] ?? null;
-$pageSections = $published['sections'][$slug] ?? [];
-
-// Filter only enabled sections for public visitor
-$enabledSections = array_values(array_filter($pageSections, function($sec) {
-    return ($sec['enabled'] ?? true) !== false;
-}));
-
-// Sort enabled sections by order
-usort($enabledSections, function($a, $b) {
-    return ($a['order'] ?? 0) - ($b['order'] ?? 0);
-});
-
-// Build lean payload (excluding all draft diffs, admin metadata, history, etc.)
-$leanPayload = [
-    'page' => $pageMeta ? [
-        'id' => $slug,
-        'title' => $pageMeta['title'] ?? ucfirst($slug),
-        'seo_title' => $pageMeta['seo_title'] ?? '',
-        'seo_description' => $pageMeta['seo_description'] ?? '',
-        'hero_bg_image' => $pageMeta['hero_bg_image'] ?? ''
-    ] : [
-        'id' => $slug,
-        'title' => ucfirst($slug)
-    ],
-    'sections' => $enabledSections,
-    'theme' => $published['theme'] ?? [],
-    'header' => [
-        'logo_url' => $published['header']['logo_url'] ?? '/assets/images/logo.png',
-        'brand_title' => $published['header']['brand_title'] ?? 'Sports & MICE',
-        'nav_items' => array_values(array_filter($published['header']['nav_items'] ?? [], function($i) {
-            return ($i['enabled'] ?? true) !== false;
-        }))
-    ],
-    'footer' => $published['footer'] ?? [],
-    'animations' => $published['animations'] ?? [
-        'enabled' => true,
-        'default_type' => 'up',
-        'default_duration' => 0.55
-    ],
-    'version' => $published['version'] ?? 1,
-    'published_at' => $published['last_published_at'] ?? ''
-];
-
-// Generate ETag for instant 304 response on repeat visits
-$etag = '"' . md5('page_' . $slug . '_v' . ($leanPayload['version']) . '_' . ($leanPayload['published_at'])) . '"';
-
-header("Cache-Control: public, max-age=120, stale-while-revalidate=600");
-header("ETag: " . $etag);
-
-if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) === $etag) {
-    http_response_code(304);
+if (!$published || !isset($published['pages'])) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Site configuration unavailable'
+    ]);
     exit;
 }
 
-http_response_code(200);
-echo json_encode([
+$pageData = $published['pages'][$slug] ?? null;
+
+if (!$pageData) {
+    http_response_code(404);
+    echo json_encode([
+        'success' => false,
+        'error' => "Page '{$slug}' not found",
+        'available_pages' => array_keys($published['pages'])
+    ]);
+    exit;
+}
+
+// Return optimized payload with global headers/footers and requested page sections
+$response = [
     'success' => true,
     'slug' => $slug,
-    'data' => $leanPayload
-]);
+    'page' => $pageData,
+    'header' => $published['header'] ?? [],
+    'footer' => $published['footer'] ?? [],
+    'theme' => $published['theme'] ?? [],
+    'animations' => $published['animations'] ?? [],
+    'version' => $published['version'] ?? 1,
+    'last_published_at' => $published['last_published_at'] ?? null
+];
+
+http_response_code(200);
+echo json_encode($response);

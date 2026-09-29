@@ -3179,7 +3179,7 @@ const AdminWebsiteBuilder = () => {
                     type="button"
                     onClick={() => {
                       const dest = selectedElement.link || '/en/Contact/';
-                      window.open(dest.startsWith('http') ? dest : `http://localhost:5173${dest.startsWith('/') ? dest : '/' + dest}`, '_blank');
+                      window.open(dest.startsWith('http') ? dest : `${window.location.origin}${dest.startsWith('/') ? dest : '/' + dest}`, '_blank');
                     }}
                     style={{ padding: '8px 12px', background: '#334155', color: '#fff', border: '1px solid #475569', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}
                     title="Safely test the button destination in a separate browser tab"
@@ -3491,7 +3491,7 @@ const AdminWebsiteBuilder = () => {
                           type="button"
                           onClick={() => {
                             const p = selectedElement.item?.path || '/';
-                            window.open(`http://localhost:5173${p.startsWith('/') ? p : '/' + p}`, '_blank');
+                            window.open(`${window.location.origin}${p.startsWith('/') ? p : '/' + p}`, '_blank');
                           }}
                           style={{ flex: 1, padding: '9px 12px', background: '#1e293b', border: '1px solid #334155', color: '#f8fafc', borderRadius: '6px', fontWeight: 600, fontSize: '0.8rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}
                         >

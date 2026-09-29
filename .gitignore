@@ -18,13 +18,22 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Environment variables
+# Environment variables & Local configs
 .env
 .env.local
 .env.*.local
+frontend/.env.local
+backend/config.php
+backend/config.local.php
+
+# Keep example & sample templates tracked
+!.env.example
+!frontend/.env.example
+!backend/config.sample.php
 
 # Editor directories
 .vscode/
 .idea/
 *.swp
 *.swo
+
