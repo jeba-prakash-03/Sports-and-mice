@@ -13,6 +13,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+*.log
+backend/logs/*.log
+!backend/logs/.gitkeep
 
 # OS Files
 .DS_Store
@@ -31,9 +34,14 @@ backend/config.local.php
 !frontend/.env.example
 !backend/config.sample.php
 
+# Scratch, Scraped & Temporary files
+downloaded_assets/
+scraped_raw/
+run_cmd.txt
+docs/
+
 # Editor directories
 .vscode/
 .idea/
 *.swp
 *.swo
-
