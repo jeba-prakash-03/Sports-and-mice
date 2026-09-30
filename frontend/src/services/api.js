@@ -25,22 +25,40 @@ export const handleAuthResponse = (response) => {
   return response;
 };
 
+// Helper to safely parse JSON responses and catch HTML fallbacks (e.g. Vercel SPA rewrites)
+const parseJsonResponse = async (response, endpointName = 'API') => {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await response.text();
+    const isHtml = text.trim().startsWith('<') || text.includes('<!DOCTYPE') || text.includes('<html');
+    if (isHtml) {
+      throw new Error(`[${endpointName}] Expected JSON but received HTML from "${response.url}". Ensure VITE_API_URL is configured in Vercel project environment variables to point to your PHP backend.`);
+    }
+    try {
+      return JSON.parse(text);
+    } catch {
+      throw new Error(`[${endpointName}] Server returned invalid JSON (Status: ${response.status})`);
+    }
+  }
+  return await response.json();
+};
+
 /* ================= PUBLIC & PREVIEW APIs ================= */
 
 export const fetchPublicSiteConfig = async (preview = false) => {
   try {
     const authToken = localStorage.getItem('sm_admin_token') || localStorage.getItem('sports_admin_token');
     const url = preview ? `${API_BASE_URL}/site-config.php?preview=true` : `${API_BASE_URL}/site-config.php`;
-    const headers = {};
+    const headers = { 'Accept': 'application/json' };
     if (preview && authToken) {
       headers['Authorization'] = `Bearer ${authToken}`;
     }
     const response = await fetch(url, { headers });
-    const result = await response.json();
+    const result = await parseJsonResponse(response, 'fetchPublicSiteConfig');
     return result.data || {};
   } catch (error) {
-    console.error('Failed to fetch site config:', error);
-    return null;
+    console.error('Failed to fetch site config:', error.message || error);
+    throw error;
   }
 };
 
@@ -55,14 +73,14 @@ export const submitContactForm = async (formData) => {
       body: JSON.stringify(formData)
     });
 
-    const data = await response.json();
+    const data = await parseJsonResponse(response, 'submitContactForm');
     return {
       ok: response.ok,
       status: response.status,
       data
     };
   } catch (error) {
-    console.error('API Error:', error);
+    console.error('API Error in submitContactForm:', error.message || error);
     return {
       ok: false,
       status: 500,
@@ -73,6 +91,7 @@ export const submitContactForm = async (formData) => {
     };
   }
 };
+
 
 /* ================= ADMIN CMS & BUILDER APIs ================= */
 

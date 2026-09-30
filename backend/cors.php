@@ -3,7 +3,7 @@
 // Shared CORS handling for local and production environments
 
 // Load allowed origins from environment variable or default list
-$envOrigins = getenv('CORS_ALLOWED_ORIGINS');
+$envOrigins = getenv('ALLOWED_ORIGINS') ?: getenv('CORS_ALLOWED_ORIGINS');
 if ($envOrigins) {
     $allowedOrigins = array_map('trim', explode(',', $envOrigins));
 } else {

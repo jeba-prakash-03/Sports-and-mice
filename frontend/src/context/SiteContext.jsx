@@ -6,6 +6,7 @@ const SiteContext = createContext();
 export const SiteProvider = ({ children }) => {
   const [cmsConfig, setCmsConfig] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isDraftPreview, setIsDraftPreview] = useState(false);
 
   // Apply theme tokens to CSS root variables
@@ -25,16 +26,22 @@ export const SiteProvider = ({ children }) => {
   };
 
   const loadSiteConfig = useCallback(async (previewMode = false) => {
+    setLoading(true);
+    setError(null);
     try {
       const config = await fetchPublicSiteConfig(previewMode);
-      if (config) {
+      if (config && (config.sections || config.pages)) {
         setCmsConfig(config);
+        setError(null);
         if (config.theme) {
           applyThemeTokens(config.theme);
         }
+      } else {
+        throw new Error('Empty or invalid CMS configuration received from backend.');
       }
     } catch (err) {
-      console.error('Error loading CMS site config:', err);
+      console.error('[SiteContext] Error loading CMS site config:', err.message || err);
+      setError(err.message || 'Failed to load website configuration from backend API.');
     } finally {
       setLoading(false);
     }
@@ -73,6 +80,7 @@ export const SiteProvider = ({ children }) => {
       cmsConfig,
       setCmsConfig,
       loading,
+      error,
       isDraftPreview,
       loadSiteConfig,
       settings,
