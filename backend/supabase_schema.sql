@@ -1,4 +1,8 @@
--- Supabase (PostgreSQL) Schema for Sports & MICE
+-- ==========================================================
+-- Supabase (PostgreSQL) Production Schema for Sports & MICE
+-- Run this in Supabase SQL Editor if creating tables manually.
+-- (Note: The PHP backend will also auto-create these on first connection).
+-- ==========================================================
 
 -- 1. Admin Users Table
 CREATE TABLE IF NOT EXISTS users (
@@ -10,6 +14,8 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 
 -- 2. Form Submissions Table
 CREATE TABLE IF NOT EXISTS form_submissions (
@@ -54,7 +60,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 5. Site Dynamic Content Table
+-- 5. Site Dynamic Content Table (Stores full CMS published & draft trees)
 CREATE TABLE IF NOT EXISTS site_content (
     id SERIAL PRIMARY KEY,
     section_key VARCHAR(100) NOT NULL UNIQUE,
@@ -85,7 +91,21 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Seed Initial Default Admin User (Password: admin123)
+-- ==========================================================
+-- Initial Seed Data
+-- ==========================================================
+
+-- Default Admin User (Email: admin@sportsandmice.com, Password: admin123)
 INSERT INTO users (name, email, password_hash, role)
-VALUES ('Marc Knuelle', 'admin@sportsandmice.com', '$2y$10$eA3pQZ/KovD1e91qJzCeeu7oZ946J.iL13oQZcE8LpY5E/l4WlVpG', 'admin')
+VALUES ('Marc Knuelle', 'admin@sportsandmice.com', '$2y$10$H.CI.hOd51PYl5catGfUvefFE.OYIp./qauHaMbEkJIpxBNQx1dNq', 'admin')
 ON CONFLICT (email) DO NOTHING;
+
+-- Default Site Settings
+INSERT INTO site_settings (setting_key, setting_value, category)
+VALUES 
+('site_title', 'Sports & MICE | K-Consulting', 'general'),
+('site_description', 'High-end hospitality, event management, and travel logistics for sports associations and corporate events.', 'general'),
+('contact_email', 'info@sportsandmice.com', 'contact'),
+('contact_phone', '+49 123 456 7890', 'contact'),
+('contact_address', 'Heidelberg, Germany', 'contact')
+ON CONFLICT (setting_key) DO NOTHING;

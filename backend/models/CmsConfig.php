@@ -659,6 +659,22 @@ class CmsConfig {
     }
 
     public function getPublished() {
+        if ($this->db instanceof PDO) {
+            try {
+                $stmt = $this->db->prepare("SELECT content_json FROM site_content WHERE section_key = 'published_config' LIMIT 1");
+                $stmt->execute();
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($row && !empty($row['content_json'])) {
+                    $data = is_string($row['content_json']) ? json_decode($row['content_json'], true) : $row['content_json'];
+                    if ($data && (!empty($data['sections']) || !empty($data['pages']))) {
+                        return $data;
+                    }
+                }
+            } catch (Exception $e) {
+                // fallback to file
+            }
+        }
+
         if (file_exists($this->publishedFile)) {
             $content = file_get_contents($this->publishedFile);
             $data = json_decode($content, true);
@@ -668,6 +684,22 @@ class CmsConfig {
     }
 
     public function getDraft() {
+        if ($this->db instanceof PDO) {
+            try {
+                $stmt = $this->db->prepare("SELECT content_json FROM site_content WHERE section_key = 'draft_config' LIMIT 1");
+                $stmt->execute();
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($row && !empty($row['content_json'])) {
+                    $data = is_string($row['content_json']) ? json_decode($row['content_json'], true) : $row['content_json'];
+                    if ($data && (!empty($data['sections']) || !empty($data['pages']))) {
+                        return $data;
+                    }
+                }
+            } catch (Exception $e) {
+                // fallback to file
+            }
+        }
+
         if (file_exists($this->draftFile)) {
             $content = file_get_contents($this->draftFile);
             $data = json_decode($content, true);
@@ -762,8 +794,27 @@ class CmsConfig {
         $currentDraft['draft_changes_count'] = $diff['count'];
         $currentDraft['draft_changes_summary'] = $diff['summary'];
 
-        // Save ONLY to draftFile! NEVER save to publishedFile!
+        // Save ONLY to draftFile & DB draft! NEVER save to published!
         file_put_contents($this->draftFile, json_encode($currentDraft, JSON_PRETTY_PRINT));
+
+        if ($this->db instanceof PDO) {
+            try {
+                $jsonStr = json_encode($currentDraft);
+                $isPgsql = ($this->db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql');
+                if ($isPgsql) {
+                    $stmt = $this->db->prepare("INSERT INTO site_content (section_key, content_json, updated_at) 
+                        VALUES ('draft_config', ?::jsonb, NOW()) 
+                        ON CONFLICT (section_key) DO UPDATE SET content_json = EXCLUDED.content_json, updated_at = NOW()");
+                } else {
+                    $stmt = $this->db->prepare("INSERT INTO site_content (section_key, content_json, updated_at) 
+                        VALUES ('draft_config', ?, NOW()) 
+                        ON DUPLICATE KEY UPDATE content_json = VALUES(content_json), updated_at = NOW()");
+                }
+                $stmt->execute([$jsonStr]);
+            } catch (Exception $e) {
+                // Silently fallback to JSON
+            }
+        }
 
         // Record draft version entry in database and content_versions.json
         $this->recordVersion(
@@ -794,9 +845,40 @@ class CmsConfig {
         $draft['draft_changes_count'] = 0;
         $draft['draft_changes_summary'] = [];
 
-        // Save to publishedFile: THIS is the ONLY place that makes changes live!
+        // Save to publishedFile and draftFile
         file_put_contents($this->publishedFile, json_encode($draft, JSON_PRETTY_PRINT));
         file_put_contents($this->draftFile, json_encode($draft, JSON_PRETTY_PRINT));
+
+        // Save to DB (both published_config and draft_config)
+        if ($this->db instanceof PDO) {
+            try {
+                $jsonStr = json_encode($draft);
+                $isPgsql = ($this->db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql');
+                if ($isPgsql) {
+                    $stmt = $this->db->prepare("INSERT INTO site_content (section_key, content_json, updated_at) 
+                        VALUES ('published_config', ?::jsonb, NOW()) 
+                        ON CONFLICT (section_key) DO UPDATE SET content_json = EXCLUDED.content_json, updated_at = NOW()");
+                    $stmt->execute([$jsonStr]);
+
+                    $stmtDraft = $this->db->prepare("INSERT INTO site_content (section_key, content_json, updated_at) 
+                        VALUES ('draft_config', ?::jsonb, NOW()) 
+                        ON CONFLICT (section_key) DO UPDATE SET content_json = EXCLUDED.content_json, updated_at = NOW()");
+                    $stmtDraft->execute([$jsonStr]);
+                } else {
+                    $stmt = $this->db->prepare("INSERT INTO site_content (section_key, content_json, updated_at) 
+                        VALUES ('published_config', ?, NOW()) 
+                        ON DUPLICATE KEY UPDATE content_json = VALUES(content_json), updated_at = NOW()");
+                    $stmt->execute([$jsonStr]);
+
+                    $stmtDraft = $this->db->prepare("INSERT INTO site_content (section_key, content_json, updated_at) 
+                        VALUES ('draft_config', ?, NOW()) 
+                        ON DUPLICATE KEY UPDATE content_json = VALUES(content_json), updated_at = NOW()");
+                    $stmtDraft->execute([$jsonStr]);
+                }
+            } catch (Exception $e) {
+                // Silently fallback to JSON
+            }
+        }
 
         // Record published version
         $this->recordVersion(

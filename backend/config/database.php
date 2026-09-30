@@ -57,6 +57,9 @@ class Database {
                     PDO::ATTR_EMULATE_PREPARES => false
                 ]);
 
+                // Auto-initialize required PostgreSQL tables & seed data on Supabase
+                $this->ensurePostgresTablesExist($pdo);
+
                 $this->conn = $pdo;
                 $this->db_type = 'pgsql';
                 return $this->conn;
@@ -243,6 +246,120 @@ class Database {
             $seedStmt = $pdo->prepare("INSERT INTO `users` (name, email, password_hash, role) VALUES (?, ?, ?, ?)");
             $defaultPass = password_hash("admin123", PASSWORD_BCRYPT);
             $seedStmt->execute(["Marc Knuelle", "admin@sportsandmice.com", $defaultPass, "admin"]);
+        }
+    }
+
+    private function ensurePostgresTablesExist($pdo) {
+        // 1. Users Table
+        $pdo->exec("CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            email VARCHAR(150) NOT NULL UNIQUE,
+            password_hash VARCHAR(255) NOT NULL,
+            role VARCHAR(50) DEFAULT 'admin',
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+        );");
+
+        // 2. Form Submissions Table
+        $pdo->exec("CREATE TABLE IF NOT EXISTS form_submissions (
+            id SERIAL PRIMARY KEY,
+            form_type VARCHAR(50) NOT NULL DEFAULT 'contact',
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            phone VARCHAR(100) DEFAULT '',
+            subject VARCHAR(255) DEFAULT '',
+            message TEXT NOT NULL,
+            form_data JSONB DEFAULT NULL,
+            status VARCHAR(50) NOT NULL DEFAULT 'new',
+            notes TEXT DEFAULT NULL,
+            ip_address VARCHAR(45) DEFAULT '',
+            user_agent TEXT DEFAULT NULL,
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+        );");
+
+        // 3. Contacts Table
+        $pdo->exec("CREATE TABLE IF NOT EXISTS contacts (
+            id SERIAL PRIMARY KEY,
+            surname VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            country VARCHAR(255) DEFAULT '',
+            city VARCHAR(255) DEFAULT '',
+            address VARCHAR(255) DEFAULT '',
+            message TEXT NOT NULL,
+            created_at TIMESTAMPTZ DEFAULT NOW()
+        );");
+
+        // 4. Site Settings Table
+        $pdo->exec("CREATE TABLE IF NOT EXISTS site_settings (
+            id SERIAL PRIMARY KEY,
+            setting_key VARCHAR(100) NOT NULL UNIQUE,
+            setting_value TEXT DEFAULT NULL,
+            category VARCHAR(50) DEFAULT 'general',
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+        );");
+
+        // 5. Site Content Table
+        $pdo->exec("CREATE TABLE IF NOT EXISTS site_content (
+            id SERIAL PRIMARY KEY,
+            section_key VARCHAR(100) NOT NULL UNIQUE,
+            content_json JSONB NOT NULL,
+            updated_at TIMESTAMPTZ DEFAULT NOW()
+        );");
+
+        // 6. Content Versions Table
+        $pdo->exec("CREATE TABLE IF NOT EXISTS content_versions (
+            id SERIAL PRIMARY KEY,
+            version_number INT NOT NULL,
+            page_id VARCHAR(100) DEFAULT 'global',
+            content TEXT NOT NULL,
+            status VARCHAR(50) NOT NULL DEFAULT 'draft',
+            summary VARCHAR(255) DEFAULT '',
+            created_by VARCHAR(150) DEFAULT 'admin@sportsandmice.com',
+            created_at TIMESTAMPTZ DEFAULT NOW(),
+            published_at TIMESTAMPTZ NULL
+        );");
+
+        // 7. Audit Logs Table
+        $pdo->exec("CREATE TABLE IF NOT EXISTS audit_logs (
+            id SERIAL PRIMARY KEY,
+            user_email VARCHAR(150) NOT NULL,
+            action VARCHAR(100) NOT NULL,
+            target VARCHAR(255) DEFAULT '',
+            details TEXT DEFAULT '',
+            created_at TIMESTAMPTZ DEFAULT NOW()
+        );");
+
+        // Seed default Admin user in Supabase
+        try {
+            $checkUser = $pdo->query("SELECT COUNT(*) as count FROM users");
+            if ($checkUser && $checkUser->fetch(PDO::FETCH_ASSOC)['count'] == 0) {
+                $seedUser = $pdo->prepare("INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?) ON CONFLICT (email) DO NOTHING");
+                $defaultPass = password_hash("admin123", PASSWORD_BCRYPT);
+                $seedUser->execute(["Marc Knuelle", "admin@sportsandmice.com", $defaultPass, "admin"]);
+            }
+        } catch (Exception $e) {
+            // Ignore seed user error
+        }
+
+        // Seed default published & draft CMS config in Supabase site_content table
+        try {
+            $checkContent = $pdo->query("SELECT COUNT(*) as count FROM site_content WHERE section_key = 'published_config'");
+            if ($checkContent && $checkContent->fetch(PDO::FETCH_ASSOC)['count'] == 0) {
+                $defaultJsonFile = __DIR__ . '/../data/default_config.json';
+                $siteJsonFile = __DIR__ . '/../data/site_config.json';
+                $content = file_exists($siteJsonFile) ? file_get_contents($siteJsonFile) : (file_exists($defaultJsonFile) ? file_get_contents($defaultJsonFile) : null);
+                if ($content) {
+                    $seedContent = $pdo->prepare("INSERT INTO site_content (section_key, content_json, updated_at) VALUES ('published_config', ?::jsonb, NOW()) ON CONFLICT (section_key) DO NOTHING");
+                    $seedContent->execute([$content]);
+
+                    $seedDraft = $pdo->prepare("INSERT INTO site_content (section_key, content_json, updated_at) VALUES ('draft_config', ?::jsonb, NOW()) ON CONFLICT (section_key) DO NOTHING");
+                    $seedDraft->execute([$content]);
+                }
+            }
+        } catch (Exception $e) {
+            // Ignore seed content error
         }
     }
 
