@@ -42,8 +42,8 @@ class Database {
                 $host = $parsed['host'] ?? $host;
                 $port = $parsed['port'] ?? ($dbType === 'pgsql' ? 5432 : 3306);
                 $db_name = isset($parsed['path']) ? ltrim($parsed['path'], '/') : $db_name;
-                $username = $parsed['user'] ?? $username;
-                $password = $parsed['pass'] ?? $password;
+                $username = isset($parsed['user']) ? urldecode($parsed['user']) : $username;
+                $password = isset($parsed['pass']) ? urldecode($parsed['pass']) : $password;
             }
         }
 
