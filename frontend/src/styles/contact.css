@@ -1,13 +1,14 @@
-/* Contact Page Styles with Modern Polish */
+/* Contact Page Styles - Ultra-Premium Editorial Agency System */
 
 .contact-hero {
   position: relative;
   background-size: cover;
   background-position: center;
-  padding: clamp(60px, 8vw, 95px) 0 clamp(50px, 7vw, 85px) 0;
+  padding: clamp(75px, 9vw, 115px) 0 clamp(60px, 8vw, 95px) 0;
   color: #ffffff;
   overflow: hidden;
   width: 100%;
+  background-color: var(--dark-bg);
 }
 
 .contact-hero::before {
@@ -17,7 +18,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.55) 100%);
+  background: linear-gradient(180deg, rgba(11, 15, 25, 0.4) 0%, rgba(15, 23, 42, 0.82) 100%);
   pointer-events: none;
 }
 
@@ -27,17 +28,18 @@
 }
 
 .contact-hero-title {
-  font-size: clamp(2rem, 5vw, 3.4rem);
-  font-weight: 800;
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 700;
   color: #ffffff;
   margin: 0;
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
-  letter-spacing: -0.5px;
-  line-height: 1.2;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .contact-content-section {
-  padding: clamp(45px, 6vw, 70px) 0 clamp(50px, 7vw, 90px) 0;
+  padding: clamp(56px, 7vw, 90px) 0 clamp(60px, 8vw, 100px) 0;
   background-color: #ffffff;
   width: 100%;
 }
@@ -45,7 +47,7 @@
 .contact-main-grid {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
-  gap: clamp(28px, 4vw, 55px);
+  gap: clamp(28px, 4.5vw, 64px);
   align-items: flex-start;
 }
 
@@ -56,19 +58,21 @@
 }
 
 .contact-form-title {
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-  font-weight: 800;
-  color: #111111;
-  margin: 0 0 14px 0;
-  letter-spacing: -0.5px;
-  line-height: 1.25;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 16px 0;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
 .contact-form-subtitle {
-  font-size: clamp(14px, 1.25vw, 15.5px);
-  color: #555555;
-  margin: 0 0 16px 0;
-  line-height: 1.6;
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.25vw, 16.5px);
+  color: var(--text-secondary);
+  margin: 0 0 18px 0;
+  line-height: 1.65;
 }
 
 .contact-team-sign {
