@@ -4,19 +4,27 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   width: 100%;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.02);
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.site-header.header-scrolled {
-  background-color: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
-  border-bottom-color: rgba(15, 23, 42, 0.09);
+@media (min-width: 1024px) {
+  .site-header.header-scrolled {
+    top: 14px;
+    width: min(1380px, calc(100% - 48px));
+    margin: 0 auto;
+    border-radius: var(--radius-full);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
 }
 
 .header-container {
@@ -24,16 +32,16 @@
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 clamp(20px, 3.5vw, 48px);
-  height: 98px;
+  height: 94px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: height 0.3s var(--transition-smooth), padding 0.3s ease;
+  transition: height 0.35s var(--transition-smooth), padding 0.35s ease;
 }
 
 .header-scrolled .header-container {
-  height: 82px;
-  padding: 0 clamp(18px, 3vw, 40px);
+  height: 72px;
+  padding: 0 clamp(18px, 2.5vw, 36px);
 }
 
 /* Brand Logo and Title in Left Corner */
