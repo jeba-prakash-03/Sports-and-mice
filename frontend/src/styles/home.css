@@ -28,6 +28,31 @@
   z-index: 1;
 }
 
+/*
+ * The background image lives in its own layer, oversized beyond the hero's
+ * bounds (inset: -6%) so the mouse/scroll parallax translation (± a few px,
+ * up to ~60px on scroll) never exposes an edge. `.home-hero` keeps its own
+ * `overflow: hidden` to clip it. Driven entirely by `transform` (see
+ * HeroParallaxBg.jsx) — never background-position — so it's GPU-composited
+ * and doesn't repaint on every frame.
+ */
+.hero-bg-parallax {
+  position: absolute;
+  inset: -6%;
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  z-index: 0;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-parallax {
+    inset: 0;
+  }
+}
+
 .home-hero-container {
   position: relative;
   z-index: 2;

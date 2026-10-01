@@ -6,6 +6,7 @@ import { useEditor, parseYouTubeUrl } from '../context/EditorContext';
 import { AnimatedSection, AnimatedCard } from './AnimatedSection';
 import { AnimatedCounter } from './AnimatedCounter';
 import { VideoFacade } from './VideoFacade';
+import HeroParallaxBg from './HeroParallaxBg';
 import {
   Trophy,
   Globe2,
@@ -1097,8 +1098,9 @@ export const DynamicSectionRenderer = ({
       return (
         <section
           className={`home-hero ${isBuilderMode ? 'builder-section-preview' : ''}`}
-          style={{ ...customStyle, backgroundImage: bgImage ? `url('${bgImage}')` : undefined }}
+          style={customStyle}
         >
+          <HeroParallaxBg bgImage={bgImage} />
           <div className="container home-hero-container">
             <AnimatedSection direction={anim.type} duration={anim.duration} delay={anim.delay} distance={30} className="home-hero-content">
               <h1 className="hero-heading-prefix" style={{ color: section.heading_color || undefined }}>
