@@ -832,7 +832,7 @@ class CmsConfig {
      * Publish draft to live website.
      * Atomically copies draft content to published file and increments live version number.
      */
-    public function publish($adminEmail = 'admin@sportsandmice.com') {
+    public function publish($adminEmail = 'admin@sportsandmice.com', $summary = null) {
         $draft = $this->getDraft();
         $published = $this->getPublished();
 
@@ -885,11 +885,72 @@ class CmsConfig {
             $newVersion,
             $draft,
             'published',
-            "Version v{$newVersion} published live to website",
+            $summary ?: "Version v{$newVersion} published live to website",
             $adminEmail
         );
 
         return $draft;
+    }
+
+    /**
+     * Restore a previously-published version's content and publish it as a
+     * new version (never destroys history — the restore itself becomes a
+     * new version entry). Requires the full content snapshot, which is only
+     * retained in the MySQL content_versions table (the JSON version log
+     * only keeps a summary, not the content), so this needs a DB connection.
+     */
+    public function rollbackToVersion($versionNumber, $adminEmail = 'admin@sportsandmice.com') {
+        if (!($this->db instanceof PDO)) {
+            throw new Exception('Rollback requires a database connection (version content is not retained in JSON fallback storage).');
+        }
+
+        $stmt = $this->db->prepare("SELECT content FROM content_versions WHERE version_number = ? ORDER BY id DESC LIMIT 1");
+        $stmt->execute([$versionNumber]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row || empty($row['content'])) {
+            throw new Exception("Version {$versionNumber} was not found.");
+        }
+
+        $restoredContent = json_decode($row['content'], true);
+        if (!$restoredContent) {
+            throw new Exception("Version {$versionNumber} content could not be read.");
+        }
+
+        $published = $this->getPublished();
+        $newVersion = intval($published['version'] ?? 1) + 1;
+
+        $restoredContent['version'] = $newVersion;
+        $restoredContent['last_published_at'] = date('Y-m-d H:i:s');
+        $restoredContent['has_unpublished_changes'] = false;
+        $restoredContent['draft_changes_count'] = 0;
+        $restoredContent['draft_changes_summary'] = [];
+
+        file_put_contents($this->publishedFile, json_encode($restoredContent, JSON_PRETTY_PRINT));
+        file_put_contents($this->draftFile, json_encode($restoredContent, JSON_PRETTY_PRINT));
+
+        try {
+            $jsonStr = json_encode($restoredContent);
+            $isPgsql = ($this->db->getAttribute(PDO::ATTR_DRIVER_NAME) === 'pgsql');
+            $upsert = $isPgsql
+                ? "INSERT INTO site_content (section_key, content_json, updated_at) VALUES (?, ?::jsonb, NOW()) ON CONFLICT (section_key) DO UPDATE SET content_json = EXCLUDED.content_json, updated_at = NOW()"
+                : "INSERT INTO site_content (section_key, content_json, updated_at) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE content_json = VALUES(content_json), updated_at = NOW()";
+            $stmt = $this->db->prepare($upsert);
+            $stmt->execute(['published_config', $jsonStr]);
+            $stmt->execute(['draft_config', $jsonStr]);
+        } catch (Exception $e) {
+            // Silently fallback to JSON (already written above)
+        }
+
+        $this->recordVersion(
+            $newVersion,
+            $restoredContent,
+            'published',
+            "Restored content from version v{$versionNumber}",
+            $adminEmail
+        );
+
+        return $restoredContent;
     }
 
     public function resetToDefault($adminEmail = 'admin@sportsandmice.com') {

@@ -3,32 +3,51 @@
 require_once __DIR__ . '/SmtpMailer.php';
 
 class EmailService {
-    // Default SMTP configuration matching user credentials
+    // Fallback SMTP configuration, used only when no SMTP settings have been
+    // configured via the Admin Settings screen or SMTP_* environment variables.
+    // Never put real credentials here — this is a committed source file.
     private static $defaultSmtp = [
-        'host' => 'smtp.gmail.com',
+        'host' => 'smtp.example.com',
         'port' => 587,
-        'user' => 'jebaprakash115@gmail.com',
-        'pass' => 'hkbw lgup hmvg udet',
-        'from_email' => 'jebaprakash115@gmail.com',
+        'user' => '',
+        'pass' => '',
+        'from_email' => 'no-reply@sportsandmice.com',
         'from_name' => 'Sports & MICE',
-        'admin_email' => 'jebaprakash115@gmail.com'
+        'admin_email' => 'contact@sportsandmice.com'
     ];
 
     private static function getMailer($settings = []) {
-        $host = !empty($settings['smtp_host']) ? $settings['smtp_host'] : self::$defaultSmtp['host'];
-        $port = !empty($settings['smtp_port']) ? (int)$settings['smtp_port'] : self::$defaultSmtp['port'];
-        $user = !empty($settings['smtp_user']) ? $settings['smtp_user'] : self::$defaultSmtp['user'];
-        $pass = !empty($settings['smtp_pass']) ? $settings['smtp_pass'] : self::$defaultSmtp['pass'];
-        $fromEmail = !empty($settings['smtp_from']) ? $settings['smtp_from'] : self::$defaultSmtp['from_email'];
+        $host = !empty($settings['smtp_host']) ? $settings['smtp_host'] : (getenv('SMTP_HOST') ?: self::$defaultSmtp['host']);
+        $port = !empty($settings['smtp_port']) ? (int)$settings['smtp_port'] : (int)(getenv('SMTP_PORT') ?: self::$defaultSmtp['port']);
+        $user = !empty($settings['smtp_user']) ? $settings['smtp_user'] : (getenv('SMTP_USER') ?: self::$defaultSmtp['user']);
+        $pass = !empty($settings['smtp_pass']) ? $settings['smtp_pass'] : (getenv('SMTP_PASS') ?: self::$defaultSmtp['pass']);
+        $fromEmail = !empty($settings['smtp_from']) ? $settings['smtp_from'] : (getenv('SMTP_FROM') ?: self::$defaultSmtp['from_email']);
         $fromName = !empty($settings['smtp_from_name']) ? $settings['smtp_from_name'] : self::$defaultSmtp['from_name'];
 
         return new SmtpMailer($host, $port, $user, $pass, $fromEmail, $fromName);
     }
 
     /**
+     * SMTP is considered "configured" only when real credentials exist
+     * (settings table/file or SMTP_USER+SMTP_PASS env vars). Without
+     * credentials we skip sending instead of silently failing against
+     * smtp.example.com, so submissions are never lost or blocked on email.
+     */
+    private static function isConfigured($settings = []) {
+        $user = $settings['smtp_user'] ?? getenv('SMTP_USER');
+        $pass = $settings['smtp_pass'] ?? getenv('SMTP_PASS');
+        return !empty($user) && !empty($pass);
+    }
+
+    /**
      * Send email to Admin with new form submission details
      */
     public static function sendAdminNotification($submission, $settings = []) {
+        if (!self::isConfigured($settings)) {
+            error_log('EmailService: SMTP not configured (set it under Admin > Settings or SMTP_USER/SMTP_PASS env vars) — skipping admin notification.');
+            return ['success' => false, 'error' => 'SMTP not configured'];
+        }
+
         $adminEmail = !empty($settings['admin_notification_email']) ? $settings['admin_notification_email'] : self::$defaultSmtp['admin_email'];
         $siteName = $settings['site_name'] ?? 'Sports & MICE';
 
@@ -100,6 +119,11 @@ class EmailService {
      * Send formal confirmation email to the User / Visitor
      */
     public static function sendVisitorAcknowledgement($submission, $settings = []) {
+        if (!self::isConfigured($settings)) {
+            error_log('EmailService: SMTP not configured (set it under Admin > Settings or SMTP_USER/SMTP_PASS env vars) — skipping visitor acknowledgement.');
+            return ['success' => false, 'error' => 'SMTP not configured'];
+        }
+
         $visitorEmail = $submission['email'];
         if (empty($visitorEmail) || !filter_var($visitorEmail, FILTER_VALIDATE_EMAIL)) {
             return false;

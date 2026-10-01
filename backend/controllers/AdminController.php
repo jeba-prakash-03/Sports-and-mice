@@ -72,7 +72,7 @@ class AdminController {
         return ['status' => 500, 'response' => ['success' => false, 'error' => 'Failed to update profile.']];
     }
 
-    public function getDashboard() {
+    public function getDashboardStats() {
         require_once __DIR__ . '/../models/CmsConfig.php';
         require_once __DIR__ . '/../models/AuditLog.php';
 
@@ -123,8 +123,16 @@ class AdminController {
         ];
     }
 
-    public function getSubmissions($params) {
-        $result = $this->submissionModel->getAll($params);
+    public function getSubmissions($page = 1, $limit = 15, $search = '', $status = '', $formType = '', $sortBy = 'created_at', $sortOrder = 'DESC') {
+        $result = $this->submissionModel->getAll([
+            'page' => $page,
+            'limit' => $limit,
+            'search' => $search,
+            'status' => $status,
+            'form_type' => $formType,
+            'sort_by' => $sortBy,
+            'sort_order' => $sortOrder
+        ]);
         return [
             'status' => 200,
             'response' => [
@@ -134,7 +142,7 @@ class AdminController {
         ];
     }
 
-    public function getSubmissionDetail($id) {
+    public function getSubmissionById($id) {
         $item = $this->submissionModel->findById($id);
         if (!$item) {
             return ['status' => 404, 'response' => ['success' => false, 'error' => 'Submission not found.']];

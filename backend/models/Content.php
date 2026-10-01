@@ -50,10 +50,10 @@ class Content {
         $json = json_encode($data, JSON_PRETTY_PRINT);
 
         if ($this->db instanceof PDO) {
-            $stmt = $this->db->prepare("INSERT INTO site_content (section_key, content_json) 
-                                        VALUES (:k, :json) 
-                                        ON DUPLICATE KEY UPDATE content_json = :json, updated_at = NOW()");
-            return $stmt->execute([':k' => $sectionKey, ':json' => $json]);
+            $stmt = $this->db->prepare("INSERT INTO site_content (section_key, content_json)
+                                        VALUES (:k, :json)
+                                        ON DUPLICATE KEY UPDATE content_json = :json2, updated_at = NOW()");
+            return $stmt->execute([':k' => $sectionKey, ':json' => $json, ':json2' => $json]);
         } else {
             $all = $this->getAll();
             $all[$sectionKey] = $data;

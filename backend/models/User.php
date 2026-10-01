@@ -17,40 +17,32 @@ class User {
         }
 
         if ($this->db instanceof PDO) {
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE LOWER(email) = :input OR LOWER(name) = :input LIMIT 1");
-            $stmt->bindParam(':input', $loginInput);
+            $stmt = $this->db->prepare("SELECT * FROM users WHERE LOWER(email) = :input1 OR LOWER(name) = :input2 LIMIT 1");
+            $stmt->bindParam(':input1', $loginInput);
+            $stmt->bindParam(':input2', $loginInput);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user && (password_verify($password, $user['password_hash']) || (in_array($password, ['admin', 'admin123', 'admin@123']) && password_verify('admin123', $user['password_hash'])))) {
+            if ($user && password_verify($password, $user['password_hash'])) {
                 unset($user['password_hash']);
                 return $user;
             }
+            return false;
         }
 
-        // File JSON fallback
+        // File JSON fallback (used only when no database connection is available)
         if (file_exists($this->dataFile)) {
             $users = json_decode(file_get_contents($this->dataFile), true) ?: [];
             foreach ($users as $u) {
                 $userEmail = strtolower($u['email'] ?? '');
                 $userName = strtolower($u['name'] ?? '');
-                $matchesUser = ($userEmail === $loginInput || $userName === $loginInput || $loginInput === 'admin');
+                $matchesUser = ($userEmail === $loginInput || $userName === $loginInput);
 
-                if ($matchesUser && (password_verify($password, $u['password_hash'] ?? '') || (in_array($password, ['admin', 'admin123', 'admin@123']) && password_verify('admin123', $u['password_hash'] ?? '')))) {
+                if ($matchesUser && password_verify($password, $u['password_hash'] ?? '')) {
                     unset($u['password_hash']);
                     return $u;
                 }
             }
-        }
-
-        // Default admin credentials fallback
-        if (($loginInput === 'admin@sportsandmice.com' || $loginInput === 'admin') && in_array($password, ['admin', 'admin123', 'admin@123'])) {
-            return [
-                'id' => 1,
-                'name' => 'Marc Knuelle',
-                'email' => 'admin@sportsandmice.com',
-                'role' => 'admin'
-            ];
         }
 
         return false;

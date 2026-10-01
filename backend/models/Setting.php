@@ -37,12 +37,12 @@ class Setting {
         }
 
         if ($this->db instanceof PDO) {
-            $stmt = $this->db->prepare("INSERT INTO site_settings (setting_key, setting_value, category) 
-                                        VALUES (:k, :v, :cat) 
-                                        ON DUPLICATE KEY UPDATE setting_value = :v, updated_at = NOW()");
+            $stmt = $this->db->prepare("INSERT INTO site_settings (setting_key, setting_value, category)
+                                        VALUES (:k, :v, :cat)
+                                        ON DUPLICATE KEY UPDATE setting_value = :v2, updated_at = NOW()");
             foreach ($newSettings as $key => $val) {
                 $cat = strpos($key, 'smtp') !== false ? 'smtp' : (strpos($key, 'address') !== false ? 'contact' : 'general');
-                $stmt->execute([':k' => $key, ':v' => (string)$val, ':cat' => $cat]);
+                $stmt->execute([':k' => $key, ':v' => (string)$val, ':cat' => $cat, ':v2' => (string)$val]);
             }
             return true;
         } else {

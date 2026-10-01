@@ -94,7 +94,13 @@ try {
                 exit;
             }
 
-            $rolled = $cms->rollbackToVersion($targetVersion, $userEmail);
+            try {
+                $rolled = $cms->rollbackToVersion($targetVersion, $userEmail);
+            } catch (Exception $rollbackError) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => $rollbackError->getMessage()]);
+                exit;
+            }
             $audit->log($userEmail, 'Rollback Version', "Reverted to v{$targetVersion}", "New live version published from backup");
 
             http_response_code(200);
@@ -107,7 +113,7 @@ try {
         }
 
         if ($action === 'reset_defaults') {
-            $reset = $cms->resetToDefaults($userEmail);
+            $reset = $cms->resetToDefault($userEmail);
             $audit->log($userEmail, 'Reset Defaults', 'System', 'Reinitialized site configuration to project defaults');
 
             http_response_code(200);

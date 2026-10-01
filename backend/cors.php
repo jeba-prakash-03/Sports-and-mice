@@ -9,9 +9,11 @@ if ($envOrigins) {
 } else {
     $allowedOrigins = [
         'http://localhost:5173',
+        'http://localhost:5180',
         'http://localhost:3000',
         'http://localhost:8000',
         'http://127.0.0.1:5173',
+        'http://127.0.0.1:5180',
         'http://127.0.0.1:3000',
         'https://sports-and-mice.vercel.app'
     ];
@@ -19,20 +21,24 @@ if ($envOrigins) {
 
 $httpOrigin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
-// Match origin safely
-$originHeader = '*';
+// Only ever echo back an origin that is actually on the allowlist (or a
+// Vercel preview/production deployment). Any other origin gets no
+// Access-Control-Allow-Origin header at all, so browsers block the
+// cross-origin response — this must not silently reflect every origin,
+// especially alongside Allow-Credentials: true below.
+$originHeader = null;
 if ($httpOrigin) {
     if (in_array($httpOrigin, $allowedOrigins)) {
         $originHeader = $httpOrigin;
     } elseif (preg_match('/^https:\/\/.*\.vercel\.app$/i', $httpOrigin)) {
         // Automatically support Vercel preview & production deployments
         $originHeader = $httpOrigin;
-    } else {
-        $originHeader = $httpOrigin;
     }
 }
 
-header("Access-Control-Allow-Origin: $originHeader");
+if ($originHeader) {
+    header("Access-Control-Allow-Origin: $originHeader");
+}
 header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Accept, Origin");
 header("Access-Control-Allow-Credentials: true");

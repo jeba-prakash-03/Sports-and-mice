@@ -11,12 +11,12 @@ class SmtpMailer {
     private $timeout = 6;
 
     public function __construct($host, $port, $username, $password, $fromEmail, $fromName = 'Sports & MICE') {
-        $this->host = $host ?: 'smtp.gmail.com';
+        $this->host = $host ?: 'smtp.example.com';
         $this->port = (int)($port ?: 587);
-        $this->username = $username ?: 'jebaprakash115@gmail.com';
+        $this->username = $username ?: '';
         // Clean any spaces from Google App Password if present
-        $this->password = str_replace(' ', '', $password ?: 'hkbwlguphmvgudet');
-        $this->fromEmail = $fromEmail ?: 'jebaprakash115@gmail.com';
+        $this->password = str_replace(' ', '', $password ?: '');
+        $this->fromEmail = $fromEmail ?: 'no-reply@sportsandmice.com';
         $this->fromName = $fromName ?: 'Sports & MICE';
     }
 

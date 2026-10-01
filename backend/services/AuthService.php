@@ -2,7 +2,20 @@
 // backend/services/AuthService.php
 
 class AuthService {
-    private static $secret_key = "sports_mice_secure_token_secret_key_2026";
+    private static $secret_key = null;
+
+    private static function getSecretKey() {
+        if (self::$secret_key !== null) {
+            return self::$secret_key;
+        }
+
+        $configFile = __DIR__ . '/../config.php';
+        $config = file_exists($configFile) ? (include $configFile) : [];
+        $fromConfig = is_array($config) ? ($config['jwt_secret'] ?? null) : null;
+
+        self::$secret_key = getenv('JWT_SECRET') ?: $fromConfig ?: 'dev-only-insecure-secret-change-me';
+        return self::$secret_key;
+    }
 
     // Simple, secure JWT-compatible token generation without external deps
     public static function generateToken($userId, $email, $role = 'admin') {
@@ -18,7 +31,7 @@ class AuthService {
         $base64UrlHeader = self::base64UrlEncode($header);
         $base64UrlPayload = self::base64UrlEncode($payload);
 
-        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, self::$secret_key, true);
+        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, self::getSecretKey(), true);
         $base64UrlSignature = self::base64UrlEncode($signature);
 
         return $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
@@ -37,7 +50,7 @@ class AuthService {
         list($base64UrlHeader, $base64UrlPayload, $base64UrlSignature) = $parts;
 
         $signature = self::base64UrlDecode($base64UrlSignature);
-        $expectedSignature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, self::$secret_key, true);
+        $expectedSignature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, self::getSecretKey(), true);
 
         if (!hash_equals($signature, $expectedSignature)) {
             return false;

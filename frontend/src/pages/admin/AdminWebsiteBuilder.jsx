@@ -572,6 +572,7 @@ const AdminWebsiteBuilder = () => {
 
   // Publish changes to live version
   const handlePublish = async () => {
+    if (saveStatus === 'saving') return;
     const authToken = token || localStorage.getItem('sm_admin_token') || localStorage.getItem('sports_admin_token');
     if (!authToken) return;
     setSaveStatus('saving');
@@ -593,7 +594,11 @@ const AdminWebsiteBuilder = () => {
           setPublishSuccessMsg(`Published successfully! New Live Version: v${json.data.version || 2}`);
           setTimeout(() => setPublishSuccessMsg(null), 4000);
           loadSiteConfig(false);
+        } else {
+          setSaveStatus('error');
         }
+      } else {
+        setSaveStatus('error');
       }
     } catch (e) {
       console.error('Error publishing site:', e);
@@ -1458,7 +1463,7 @@ const AdminWebsiteBuilder = () => {
                     ) : (
                       filteredLibraryItems.map((item) => (
                         <div 
-                          key={`${item.category}_${item.type}_${item.layout || ''}`}
+                          key={`${item.category}_${item.type}_${item.layout || ''}_${item.name}`}
                           className="visual-component-card"
                           draggable={true}
                           onDragStart={(e) => {
@@ -5759,12 +5764,13 @@ const AdminWebsiteBuilder = () => {
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   className="builder-modal-btn btn-publish-confirm"
                   onClick={handlePublish}
+                  disabled={saveStatus === 'saving'}
                 >
                   <Send size={15} />
-                  <span>Publish</span>
+                  <span>{saveStatus === 'saving' ? 'Publishing...' : 'Publish'}</span>
                 </button>
               </div>
             </motion.div>

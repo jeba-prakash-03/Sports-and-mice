@@ -75,6 +75,12 @@ export const SiteProvider = ({ children }) => {
     } : {}
   };
 
+  // Admin screens that edit the legacy site_content/site_settings tables
+  // (AdminContent, AdminSettings) call these after a successful save so the
+  // cached public config is re-fetched rather than left stale.
+  const refreshContent = useCallback(() => loadSiteConfig(isDraftPreview), [loadSiteConfig, isDraftPreview]);
+  const refreshSettings = useCallback(() => loadSiteConfig(isDraftPreview), [loadSiteConfig, isDraftPreview]);
+
   return (
     <SiteContext.Provider value={{
       cmsConfig,
@@ -83,6 +89,8 @@ export const SiteProvider = ({ children }) => {
       error,
       isDraftPreview,
       loadSiteConfig,
+      refreshContent,
+      refreshSettings,
       settings,
       dynamicContent
     }}>

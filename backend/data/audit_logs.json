@@ -1,5 +1,77 @@
 [
     {
+        "id": "log_1790842358_da3a49",
+        "admin_email": "admin@sportsandmice.com",
+        "action": "Published Website",
+        "target": "Version 24",
+        "details": "Restore original brand title after audit testing",
+        "ip": "127.0.0.1",
+        "created_at": "2026-10-01 10:12:38"
+    },
+    {
+        "id": "log_1790842358_19e552",
+        "admin_email": "admin@sportsandmice.com",
+        "action": "Version published",
+        "target": "v24",
+        "details": "Restore original brand title after audit testing",
+        "ip": "127.0.0.1",
+        "created_at": "2026-10-01 10:12:38"
+    },
+    {
+        "id": "log_1790842348_d5d339",
+        "admin_email": "admin@sportsandmice.com",
+        "action": "Saved Draft Changes",
+        "target": "Website Builder",
+        "details": "Draft version updated with 1 changes",
+        "ip": "127.0.0.1",
+        "created_at": "2026-10-01 10:12:28"
+    },
+    {
+        "id": "log_1790842348_27e4b6",
+        "admin_email": "admin@sportsandmice.com",
+        "action": "Draft updated",
+        "target": "Website Content",
+        "details": "Draft updated with 1 pending changes",
+        "ip": "127.0.0.1",
+        "created_at": "2026-10-01 10:12:28"
+    },
+    {
+        "id": "log_1790842300_616715",
+        "admin_email": "admin@sportsandmice.com",
+        "action": "Published Website",
+        "target": "Version 23",
+        "details": "Restore original brand title after audit testing",
+        "ip": "127.0.0.1",
+        "created_at": "2026-10-01 10:11:40"
+    },
+    {
+        "id": "log_1790842300_40d215",
+        "admin_email": "admin@sportsandmice.com",
+        "action": "Version published",
+        "target": "v23",
+        "details": "Restore original brand title after audit testing",
+        "ip": "127.0.0.1",
+        "created_at": "2026-10-01 10:11:40"
+    },
+    {
+        "id": "log_1790842299_dd626c",
+        "admin_email": "admin@sportsandmice.com",
+        "action": "Saved Draft Changes",
+        "target": "Website Builder",
+        "details": "Draft version updated with 0 changes",
+        "ip": "127.0.0.1",
+        "created_at": "2026-10-01 10:11:39"
+    },
+    {
+        "id": "log_1790842299_9fa60a",
+        "admin_email": "admin@sportsandmice.com",
+        "action": "Draft updated",
+        "target": "Website Content",
+        "details": "Draft updated with 0 pending changes",
+        "ip": "127.0.0.1",
+        "created_at": "2026-10-01 10:11:39"
+    },
+    {
         "id": "log_1790591232_bc5197",
         "admin_email": "admin@sportsandmice.com",
         "action": "Saved Draft Changes",
@@ -1726,77 +1798,5 @@
         "details": "Draft updated with 1 pending changes",
         "ip": "127.0.0.1",
         "created_at": "2026-09-28 06:37:34"
-    },
-    {
-        "id": "log_1790577452_1c85af",
-        "admin_email": "admin@sportsandmice.com",
-        "action": "Saved Draft Changes",
-        "target": "Page: SERVICE",
-        "details": "Draft version updated with 1 changes",
-        "ip": "127.0.0.1",
-        "created_at": "2026-09-28 06:37:32"
-    },
-    {
-        "id": "log_1790577452_597e74",
-        "admin_email": "admin@sportsandmice.com",
-        "action": "Draft updated",
-        "target": "Website Content",
-        "details": "Draft updated with 1 pending changes",
-        "ip": "127.0.0.1",
-        "created_at": "2026-09-28 06:37:32"
-    },
-    {
-        "id": "log_1790577451_bd0154",
-        "admin_email": "admin@sportsandmice.com",
-        "action": "Saved Draft Changes",
-        "target": "Page: SERVICE",
-        "details": "Draft version updated with 1 changes",
-        "ip": "127.0.0.1",
-        "created_at": "2026-09-28 06:37:31"
-    },
-    {
-        "id": "log_1790577451_3d982f",
-        "admin_email": "admin@sportsandmice.com",
-        "action": "Draft updated",
-        "target": "Website Content",
-        "details": "Draft updated with 1 pending changes",
-        "ip": "127.0.0.1",
-        "created_at": "2026-09-28 06:37:31"
-    },
-    {
-        "id": "log_1790577438_66a4fb",
-        "admin_email": "admin@sportsandmice.com",
-        "action": "Saved Draft Changes",
-        "target": "Page: SERVICE",
-        "details": "Draft version updated with 1 changes",
-        "ip": "127.0.0.1",
-        "created_at": "2026-09-28 06:37:18"
-    },
-    {
-        "id": "log_1790577438_273b22",
-        "admin_email": "admin@sportsandmice.com",
-        "action": "Draft updated",
-        "target": "Website Content",
-        "details": "Draft updated with 1 pending changes",
-        "ip": "127.0.0.1",
-        "created_at": "2026-09-28 06:37:18"
-    },
-    {
-        "id": "log_1790577437_0a49a2",
-        "admin_email": "admin@sportsandmice.com",
-        "action": "Saved Draft Changes",
-        "target": "Page: SERVICE",
-        "details": "Draft version updated with 1 changes",
-        "ip": "127.0.0.1",
-        "created_at": "2026-09-28 06:37:17"
-    },
-    {
-        "id": "log_1790577437_2b1750",
-        "admin_email": "admin@sportsandmice.com",
-        "action": "Draft updated",
-        "target": "Website Content",
-        "details": "Draft updated with 1 pending changes",
-        "ip": "127.0.0.1",
-        "created_at": "2026-09-28 06:37:17"
     }
 ]
