@@ -1,4 +1,4 @@
-/* Global styles for Sports & MICE - Premium Editorial Agency System */
+/* Global styles for Sports & MICE - Editorial, Swiss Grid, Bento & Spatial System */
 :root {
   --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -8,25 +8,31 @@
   --primary-blue: #106cc2;
   --primary-blue-hover: #0c4d8b;
   --dark-bg: #0b0f19;
-  --dark-surface: #141b2d;
-  --dark-surface-elevated: #1e263d;
-  --light-bg: #fafbfc;
+  --dark-surface: #121826;
+  --dark-surface-elevated: #1a2236;
+  --light-bg: #f8fafc;
   --card-bg: #ffffff;
   --card-border: rgba(15, 23, 42, 0.08);
+  --hairline-border: rgba(15, 23, 42, 0.09);
+  --hairline-border-dark: rgba(255, 255, 255, 0.1);
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
   
-  --shadow-xs: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --spacing-section: clamp(80px, 9.5vw, 130px);
+  --spacing-container: clamp(20px, 4vw, 48px);
+  
+  --shadow-xs: 0 1px 3px rgba(15, 23, 42, 0.04);
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
   --shadow-glow: 0 0 25px rgba(255, 0, 0, 0.25);
+  --shadow-spatial: 0 24px 48px -12px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(15, 23, 42, 0.05);
   
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 18px;
+  --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-full: 9999px;
   
@@ -59,44 +65,90 @@ body {
 /* Premium Fluid Typography with Space Grotesk Headings */
 h1, .h1 {
   font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 5.2vw, 3.8rem);
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
   font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
   color: var(--text-primary);
 }
 
 h2, .h2 {
   font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 3.8vw, 2.6rem);
+  font-size: clamp(1.85rem, 4vw, 2.8rem);
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.025em;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
 }
 
 h3, .h3 {
   font-family: var(--font-heading);
-  font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
   font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.015em;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
 }
 
 h4, .h4 {
   font-family: var(--font-heading);
-  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.35;
   letter-spacing: -0.01em;
 }
 
 p {
   font-family: var(--font-body);
-  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
-  line-height: 1.65;
+  font-size: clamp(0.98rem, 1.25vw, 1.08rem);
+  line-height: 1.75;
   color: var(--text-secondary);
+}
+
+/* Swiss Grid Section Number & Metadata Tags */
+.swiss-num-tag {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--primary-red);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.swiss-num-tag::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+}
+
+/* Swiss Hairline Dividers */
+.swiss-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--hairline-border);
+  margin: 24px 0;
+}
+
+/* Spatial Depth & Bento Layout Base */
+.spatial-panel {
+  background: #ffffff;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-spatial);
+  position: relative;
+  transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth), border-color 0.3s ease;
+}
+
+.spatial-panel:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 32px 64px -16px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(255, 0, 0, 0.15);
+  border-color: rgba(255, 0, 0, 0.2);
 }
 
 /* Editorial Eyebrow Label */
