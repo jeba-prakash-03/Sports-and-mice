@@ -324,6 +324,8 @@
 }
 
 .service-img-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
   display: flex;
   flex-direction: column;
   background: #ffffff;
@@ -331,7 +333,10 @@
   overflow: hidden;
   border: 1px solid rgba(229, 231, 235, 0.8);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  /* perspective/rotate handle the mouse tilt (see tilt.js); translateY is
+     added back in on hover below. Both are transform-only. */
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
   padding-bottom: 20px;
   height: 100%;
   width: 100% !important;
@@ -339,9 +344,15 @@
 }
 
 .service-img-card:hover {
-  transform: translateY(-8px);
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 0, 0, 0.15);
   border-color: rgba(255, 0, 0, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-img-card {
+    transform: none !important;
+  }
 }
 
 .card-img-wrapper {

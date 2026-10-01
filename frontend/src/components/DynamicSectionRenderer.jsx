@@ -59,6 +59,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getResponsiveValue, buildElementStyles } from '../utils/responsiveStyles';
+import { handleTiltMove, handleTiltLeave } from '../utils/tilt';
 import { QuickAddGrid } from './admin/EditorUI';
 
 export const DEFAULT_NEW_SECTIONS = {
@@ -1829,6 +1830,8 @@ export const DynamicSectionRenderer = ({
                   <AnimatedCard key={svc.id || idx} index={idx}>
                     <div
                       className={`service-img-card ${isCardSelected ? 'builder-element-selected' : ''}`}
+                      onMouseMove={handleTiltMove}
+                      onMouseLeave={handleTiltLeave}
                       onClick={(e) => {
                         if (isEditorActive && !editorCtx.isPreviewMode) {
                           e.stopPropagation();
@@ -2193,6 +2196,8 @@ export const DynamicSectionRenderer = ({
                       padding: 0,
                       alignItems: 'stretch'
                     }}
+                    onMouseMove={handleTiltMove}
+                    onMouseLeave={handleTiltLeave}
                     onClick={(e) => {
                       if (isEditorActive && !editorCtx.isPreviewMode) {
                         e.stopPropagation();

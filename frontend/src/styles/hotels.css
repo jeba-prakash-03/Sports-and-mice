@@ -102,6 +102,8 @@
 
 /* Tour Card Styling */
 .tour-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
@@ -115,13 +117,20 @@
   border: 1px solid var(--hairline-border) !important;
   box-shadow: var(--shadow-spatial) !important;
   overflow: hidden !important;
-  transition: all 0.4s var(--transition-smooth) !important;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) !important;
+  transition: transform 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth) !important;
 }
 
 .tour-card:hover {
-  transform: translateY(-8px) !important;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-8px) !important;
   box-shadow: 0 28px 56px -12px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(255, 0, 0, 0.2) !important;
   border-color: rgba(255, 0, 0, 0.3) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-card {
+    transform: none !important;
+  }
 }
 
 /* Card Image with Shimmer & Zoom */
