@@ -207,13 +207,13 @@
   content: '01 / STATEMENT';
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   color: var(--primary-red);
-  margin-bottom: 24px;
+  margin-bottom: 14px;
   text-transform: uppercase;
 }
 
@@ -245,49 +245,59 @@
   margin: 0;
 }
 
-/* Alternate sequential card styling on mobile */
+/* Mobile & Small Screen Editorial Refinement */
 @media (max-width: 860px) {
   .home-intro-section {
-    padding: clamp(60px, 8vw, 85px) 0;
+    padding: clamp(52px, 7vw, 76px) 0;
+  }
+
+  .home-intro-section::before {
+    margin-bottom: 10px;
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
   }
   
   .home-intro-title {
-    font-size: clamp(1.85rem, 5.8vw, 2.4rem);
-    line-height: 1.18;
-    margin-bottom: 28px;
+    font-size: clamp(1.45rem, 5.2vw, 2.05rem);
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+    margin-bottom: 22px;
+    width: 100%;
   }
 
   .home-intro-text-wrapper {
     display: flex !important;
     flex-direction: column !important;
-    gap: 20px !important;
+    gap: 16px !important;
     border-top: none;
     padding-top: 0;
+    width: 100%;
   }
 
   .home-intro-para {
     background: #ffffff;
-    border: 1px solid var(--hairline-border);
-    border-radius: var(--radius-md);
-    padding: 20px 22px;
-    box-shadow: var(--shadow-xs);
-    font-size: 15px;
-    line-height: 1.75;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 12px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.03);
+    font-size: 15.5px;
+    line-height: 1.68;
+    color: var(--text-secondary);
+    margin: 0;
   }
 
   .home-intro-para:first-child {
-    border-left: 4px solid var(--primary-red);
-    box-shadow: 0 4px 16px rgba(255, 0, 0, 0.04);
+    border-left: 2px solid var(--primary-red);
   }
 
   .home-intro-para:nth-child(2) {
     background: var(--light-bg);
-    border-color: rgba(15, 23, 42, 0.12);
+    border-left: 1px solid rgba(15, 23, 42, 0.08);
   }
 
   .home-intro-para:nth-child(3) {
     background: #ffffff;
-    border-left: 4px solid var(--primary-blue);
+    border-left: 2px solid var(--primary-blue);
   }
 }
 
@@ -305,14 +315,35 @@
   content: '02 / PILLARS OF EXCELLENCE';
   display: block;
   font-family: var(--font-heading);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   color: var(--primary-red);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
   max-width: 1440px;
   margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 48px);
+  padding-inline: clamp(16px, 4vw, 48px);
+}
+
+@media (max-width: 860px) {
+  .home-cards-section {
+    padding: clamp(52px, 7.5vw, 78px) 0;
+  }
+
+  .home-cards-section::before {
+    margin-bottom: 10px;
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
+    padding-inline: 0;
+  }
+
+  .home-cards-section .section-main-title {
+    font-size: clamp(1.45rem, 5.2vw, 2.05rem);
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
 }
 
 .section-main-title {
