@@ -205,16 +205,17 @@
 
 .home-intro-section::before {
   content: '01 / STATEMENT';
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  display: block;
   font-family: var(--font-heading);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   color: var(--primary-red);
-  margin-bottom: 14px;
+  margin-bottom: 20px;
   text-transform: uppercase;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 48px);
 }
 
 .home-intro-title {
@@ -252,9 +253,7 @@
   }
 
   .home-intro-section::before {
-    margin-bottom: 10px;
-    font-size: 0.76rem;
-    letter-spacing: 0.16em;
+    margin-bottom: 16px;
   }
   
   .home-intro-title {
@@ -315,15 +314,15 @@
   content: '02 / PILLARS OF EXCELLENCE';
   display: block;
   font-family: var(--font-heading);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   color: var(--primary-red);
-  margin-bottom: 14px;
+  margin-bottom: 20px;
   text-transform: uppercase;
   max-width: 1440px;
   margin-inline: auto;
-  padding-inline: clamp(16px, 4vw, 48px);
+  padding-inline: clamp(20px, 4vw, 48px);
 }
 
 @media (max-width: 860px) {
@@ -332,10 +331,7 @@
   }
 
   .home-cards-section::before {
-    margin-bottom: 10px;
-    font-size: 0.76rem;
-    letter-spacing: 0.16em;
-    padding-inline: 0;
+    margin-bottom: 16px;
   }
 
   .home-cards-section .section-main-title {
