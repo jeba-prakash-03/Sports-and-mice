@@ -25,7 +25,6 @@ const AdminLayout = lazy(() => import('./layouts/AdminLayout'));
 const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminPages = lazy(() => import('./pages/admin/AdminPages'));
-const AdminSections = lazy(() => import('./pages/admin/AdminSections'));
 const AdminMedia = lazy(() => import('./pages/admin/AdminMedia'));
 const AdminButtons = lazy(() => import('./pages/admin/AdminButtons'));
 const AdminAnimations = lazy(() => import('./pages/admin/AdminAnimations'));
@@ -149,7 +148,11 @@ const AppRoutes = () => {
         {/* Website Builder Sub-routes */}
         <Route path="builder/visual" element={<Navigate to="/admin/website-builder" replace />} />
         <Route path="builder/pages" element={<Suspense fallback={<AdminLoadingFallback />}><AdminPages /></Suspense>} />
-        <Route path="builder/sections" element={<Suspense fallback={<AdminLoadingFallback />}><AdminSections /></Suspense>} />
+        {/* Section reorder/enable/edit now lives only in the Visual Builder's
+            own Layers panel (EditorContext's moveSection/toggleSectionVisibility/
+            deleteSection) — AdminSections.jsx was a second, unsynced path to
+            the same data and has been removed. */}
+        <Route path="builder/sections" element={<Navigate to="/admin/website-builder" replace />} />
         <Route path="builder/media" element={<Suspense fallback={<AdminLoadingFallback />}><AdminMedia /></Suspense>} />
         <Route path="builder/buttons" element={<Suspense fallback={<AdminLoadingFallback />}><AdminButtons /></Suspense>} />
         <Route path="builder/animations" element={<Suspense fallback={<AdminLoadingFallback />}><AdminAnimations /></Suspense>} />

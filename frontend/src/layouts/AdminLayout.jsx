@@ -73,7 +73,6 @@ const AdminLayout = () => {
   const getPageTitle = () => {
     const path = location.pathname;
     if (path.includes('/admin/builder/pages')) return 'Website Builder — Pages';
-    if (path.includes('/admin/builder/sections')) return 'Website Builder — Sections & Layout';
     if (path.includes('/admin/builder/media')) return 'Website Builder — Media Library';
     if (path.includes('/admin/builder/theme')) return 'Website Builder — Theme & Colors';
     if (path.includes('/admin/builder/animations')) return 'Website Builder — Motion & Animations';
