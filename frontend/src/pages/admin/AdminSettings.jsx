@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useSite } from '../../context/SiteContext';
 import { resetConfig, API_BASE_URL } from '../../services/api';
-import { Save, Check, RefreshCw, Mail, Phone, Server, Send, AlertTriangle, RotateCcw, ShieldAlert, Loader2 } from 'lucide-react';
+import { Save, Check, RefreshCw, Mail, Server, AlertTriangle, RotateCcw, ShieldAlert, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AdminSettings = () => {
   const { token } = useAuth();
   const { refreshSettings, loadSiteConfig } = useSite();
-  const [activeTab, setActiveTab] = useState('general');
+  const [activeTab, setActiveTab] = useState('email');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [resetting, setResetting] = useState(false);
@@ -17,17 +17,7 @@ const AdminSettings = () => {
   const [msg, setMsg] = useState(null);
 
   const [settings, setSettings] = useState({
-    site_name: '',
-    company_name: '',
-    founder_name: '',
-    phone: '',
-    fax: '',
-    email: '',
     admin_notification_email: '',
-    address_street: '',
-    address_city: '',
-    address_country: '',
-    linkedin_url: '',
     smtp_host: '',
     smtp_port: '587',
     smtp_user: '',
@@ -126,7 +116,7 @@ const AdminSettings = () => {
               Website Settings & Email Alerts
             </h2>
             <p style={{ margin: '4px 0 0 0', color: '#64748b', fontSize: '13px' }}>
-              Manage website contact details, automated visitor emails, and SMTP parameters stored in database.
+              Automated visitor/admin notification emails and SMTP delivery settings. Contact details, logo, and navigation are managed in Header & Footer.
             </p>
           </div>
           {activeTab !== 'advanced' && (
@@ -142,14 +132,7 @@ const AdminSettings = () => {
 
         {/* Tab selector */}
         <div className="admin-tabs" style={{ marginTop: '16px', marginBottom: 0 }}>
-          <button 
-            className={`admin-tab-btn ${activeTab === 'general' ? 'active' : ''}`}
-            onClick={() => setActiveTab('general')}
-            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
-          >
-            <Phone size={15} /> Contact & Branding
-          </button>
-          <button 
+          <button
             className={`admin-tab-btn ${activeTab === 'email' ? 'active' : ''}`}
             onClick={() => setActiveTab('email')}
             style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
@@ -199,118 +182,15 @@ const AdminSettings = () => {
         </div>
       ) : (
         <form onSubmit={handleSave}>
-          {/* Tab 1: General & Contact Info */}
-          {activeTab === 'general' && (
-            <div className="admin-card">
-              <div className="card-header-flex">
-                <h3 className="card-heading">Contact Details & Public Info</h3>
-              </div>
+          {/* Contact/company/address/social fields are managed in one place:
+              Admin > Header & Footer (AdminHeaderFooter.jsx), which is what
+              the public site actually reads (via cmsConfig.footer). This
+              tab used to duplicate those same fields into the separate
+              site_settings table, where editing them had no visible effect
+              on the public site at all — removed rather than left as a
+              confusing dead end. */}
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-                <div className="admin-input-group">
-                  <label>Website Name</label>
-                  <input 
-                    type="text" 
-                    value={settings.site_name || ''}
-                    onChange={(e) => handleChange('site_name', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>Company Legal Name</label>
-                  <input 
-                    type="text" 
-                    value={settings.company_name || ''}
-                    onChange={(e) => handleChange('company_name', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>Founder / Managing Director</label>
-                  <input 
-                    type="text" 
-                    value={settings.founder_name || ''}
-                    onChange={(e) => handleChange('founder_name', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>Public Contact Email</label>
-                  <input 
-                    type="email" 
-                    value={settings.email || ''}
-                    onChange={(e) => handleChange('email', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>Phone Number</label>
-                  <input 
-                    type="text" 
-                    value={settings.phone || ''}
-                    onChange={(e) => handleChange('phone', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>Fax Number</label>
-                  <input 
-                    type="text" 
-                    value={settings.fax || ''}
-                    onChange={(e) => handleChange('fax', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>Street Address</label>
-                  <input 
-                    type="text" 
-                    value={settings.address_street || ''}
-                    onChange={(e) => handleChange('address_street', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>City & Zip Code</label>
-                  <input 
-                    type="text" 
-                    value={settings.address_city || ''}
-                    onChange={(e) => handleChange('address_city', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>Country</label>
-                  <input 
-                    type="text" 
-                    value={settings.address_country || ''}
-                    onChange={(e) => handleChange('address_country', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-
-                <div className="admin-input-group">
-                  <label>LinkedIn Profile URL</label>
-                  <input 
-                    type="url" 
-                    value={settings.linkedin_url || ''}
-                    onChange={(e) => handleChange('linkedin_url', e.target.value)}
-                    className="admin-text-input"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Tab 2: Notifications */}
+          {/* Notifications */}
           {activeTab === 'email' && (
             <div className="admin-card">
               <div className="card-header-flex">
