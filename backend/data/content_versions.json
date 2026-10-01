@@ -1,5 +1,135 @@
 [
     {
+        "id": "1790869387_596",
+        "version_number": 27,
+        "page_id": "global",
+        "status": "published",
+        "summary": "Clean up test nav items",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:43:07",
+        "published_at": "2026-10-01 17:43:07"
+    },
+    {
+        "id": "1790869387_198",
+        "version_number": 26,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 1 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:43:07",
+        "published_at": null
+    },
+    {
+        "id": "1790869352_596",
+        "version_number": 26,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 1 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:42:32",
+        "published_at": null
+    },
+    {
+        "id": "1790869312_914",
+        "version_number": 26,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 1 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:41:52",
+        "published_at": null
+    },
+    {
+        "id": "1790869040_861",
+        "version_number": 26,
+        "page_id": "global",
+        "status": "published",
+        "summary": "Fix saveDraft shallow-merge data loss bug; restore header\/footer",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:37:20",
+        "published_at": "2026-10-01 17:37:20"
+    },
+    {
+        "id": "1790869040_548",
+        "version_number": 25,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 2 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:37:20",
+        "published_at": null
+    },
+    {
+        "id": "1790869019_570",
+        "version_number": 25,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 2 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:36:59",
+        "published_at": null
+    },
+    {
+        "id": "1790869019_598",
+        "version_number": 25,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 2 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:36:59",
+        "published_at": null
+    },
+    {
+        "id": "1790868997_670",
+        "version_number": 25,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 2 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:36:37",
+        "published_at": null
+    },
+    {
+        "id": "1790868981_129",
+        "version_number": 25,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 2 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:36:21",
+        "published_at": null
+    },
+    {
+        "id": "1790868796_966",
+        "version_number": 25,
+        "page_id": "global",
+        "status": "published",
+        "summary": "Restore copyright text after validation testing",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:33:16",
+        "published_at": "2026-10-01 17:33:16"
+    },
+    {
+        "id": "1790868796_608",
+        "version_number": 24,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 1 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:33:16",
+        "published_at": null
+    },
+    {
+        "id": "1790868779_534",
+        "version_number": 24,
+        "page_id": "global",
+        "status": "draft",
+        "summary": "Draft updated with 1 pending changes",
+        "created_by": "admin@sportsandmice.com",
+        "created_at": "2026-10-01 17:32:59",
+        "published_at": null
+    },
+    {
         "id": "1790842358_430",
         "version_number": 24,
         "page_id": "global",
@@ -367,136 +497,6 @@
         "summary": "Draft updated with 1 pending changes",
         "created_by": "admin@sportsandmice.com",
         "created_at": "2026-09-28 07:20:28",
-        "published_at": null
-    },
-    {
-        "id": "1790580023_242",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:20:23",
-        "published_at": null
-    },
-    {
-        "id": "1790580012_263",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:20:12",
-        "published_at": null
-    },
-    {
-        "id": "1790580010_414",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:20:10",
-        "published_at": null
-    },
-    {
-        "id": "1790580008_114",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:20:08",
-        "published_at": null
-    },
-    {
-        "id": "1790580007_145",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:20:07",
-        "published_at": null
-    },
-    {
-        "id": "1790580005_932",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:20:05",
-        "published_at": null
-    },
-    {
-        "id": "1790580004_654",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:20:04",
-        "published_at": null
-    },
-    {
-        "id": "1790579791_915",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:16:31",
-        "published_at": null
-    },
-    {
-        "id": "1790579789_739",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:16:29",
-        "published_at": null
-    },
-    {
-        "id": "1790579784_897",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:16:24",
-        "published_at": null
-    },
-    {
-        "id": "1790579782_949",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:16:22",
-        "published_at": null
-    },
-    {
-        "id": "1790579780_283",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:16:20",
-        "published_at": null
-    },
-    {
-        "id": "1790579777_280",
-        "version_number": 18,
-        "page_id": "global",
-        "status": "draft",
-        "summary": "Draft updated with 1 pending changes",
-        "created_by": "admin@sportsandmice.com",
-        "created_at": "2026-09-28 07:16:17",
         "published_at": null
     }
 ]

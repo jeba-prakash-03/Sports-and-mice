@@ -2,6 +2,9 @@
 // backend/models/CmsConfig.php
 
 class CmsConfig {
+    // Matches MAX_NAV_ITEMS in frontend/src/context/EditorContext.jsx — keep both in sync.
+    const MAX_NAV_ITEMS = 7;
+
     private $db;
     private $publishedFile;
     private $draftFile;
@@ -95,6 +98,8 @@ class CmsConfig {
                 'phone' => '+49 2241 343320',
                 'fax' => '+49 2241 344316',
                 'email' => 'contact@sportsandmice.com',
+                'whatsapp' => '',
+                'business_hours' => '',
                 'copyright_text' => '© 2026 www.Sportsandmice.Com',
                 'social_links' => [
                     ['platform' => 'LinkedIn', 'url' => 'https://linkedin.com', 'enabled' => true],
@@ -775,12 +780,88 @@ class CmsConfig {
      * The public website reads getPublished(), so it will NEVER see these draft edits
      * until publish() is explicitly called!
      */
+    /**
+     * Server-side guards mirroring the frontend checks in
+     * src/utils/adminValidation.js and EditorContext.jsx's addNavItem —
+     * never trust the client alone. Throws InvalidArgumentException with a
+     * user-facing message; api/admin/config.php turns that into a 400.
+     */
+    private function validateIncomingConfig($newConfig) {
+        if (isset($newConfig['header']['nav_items']) && is_array($newConfig['header']['nav_items'])) {
+            if (count($newConfig['header']['nav_items']) > self::MAX_NAV_ITEMS) {
+                throw new InvalidArgumentException('Maximum ' . self::MAX_NAV_ITEMS . ' navigation items are allowed.');
+            }
+        }
+    }
+
+    /**
+     * Strips HTML/script tags and clamps runaway string lengths on every
+     * string value in the incoming config, recursively. Defense in depth
+     * against injected markup and UI-breaking walls of text — the specific
+     * per-field length limits are enforced client-side (adminValidation.js);
+     * this is just a broad backstop, not a replacement for those.
+     */
+    private function sanitizeConfigStrings($data, $maxLen = 5000) {
+        if (is_array($data)) {
+            $out = [];
+            foreach ($data as $k => $v) {
+                $out[$k] = $this->sanitizeConfigStrings($v, $maxLen);
+            }
+            return $out;
+        }
+        if (is_string($data)) {
+            $clean = strip_tags($data);
+            if (strlen($clean) > $maxLen) {
+                $clean = substr($clean, 0, $maxLen);
+            }
+            return $clean;
+        }
+        return $data;
+    }
+
+    /**
+     * Recursively merges $overrides into $base instead of blindly replacing
+     * whole nested objects. Without this, saving a partial object for a
+     * top-level key (e.g. {"footer": {"copyright_text": "x"}} to update just
+     * one field) wiped out every sibling field of that key — a real, severe
+     * data-loss bug confirmed in testing. Sequential (list-style) arrays are
+     * still treated as a full replacement, since every caller that sends one
+     * (nav_items, sections, card collections) already builds and sends the
+     * complete array, not a sparse patch.
+     */
+    private function deepMerge($base, $overrides) {
+        if (!is_array($overrides) || !is_array($base)) {
+            return $overrides;
+        }
+        // empty() short-circuits here deliberately: an empty array has to be
+        // treated as "replace with empty" (e.g. deleting the last social
+        // link), not "merge nothing, keep the old list" — range(0, -1)
+        // doesn't equal [] in PHP, so this edge case needs its own check.
+        $isList = empty($overrides) || array_keys($overrides) === range(0, count($overrides) - 1);
+        if ($isList) {
+            return $overrides;
+        }
+        foreach ($overrides as $key => $value) {
+            if (is_array($value) && isset($base[$key]) && is_array($base[$key])) {
+                $base[$key] = $this->deepMerge($base[$key], $value);
+            } else {
+                $base[$key] = $value;
+            }
+        }
+        return $base;
+    }
+
     public function saveDraft($newConfig, $adminEmail = 'admin@sportsandmice.com') {
+        $this->validateIncomingConfig($newConfig);
+        $newConfig = $this->sanitizeConfigStrings($newConfig);
+
         $currentDraft = $this->getDraft();
 
         foreach ($newConfig as $key => $val) {
             if ($key === 'sections' && is_array($val)) {
                 $currentDraft['sections'] = $val;
+            } elseif (is_array($val) && isset($currentDraft[$key]) && is_array($currentDraft[$key])) {
+                $currentDraft[$key] = $this->deepMerge($currentDraft[$key], $val);
             } else {
                 $currentDraft[$key] = $val;
             }

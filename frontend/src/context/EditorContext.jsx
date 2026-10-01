@@ -21,6 +21,9 @@ export const parseYouTubeUrl = (url) => {
 
 const EditorContext = createContext();
 
+// Matches the limit enforced server-side in CmsConfig::saveDraft() — keep both in sync.
+export const MAX_NAV_ITEMS = 7;
+
 export const EditorProvider = ({ children }) => {
   const { token } = useAuth();
   const { cmsConfig, setCmsConfig, loadSiteConfig } = useSite();
@@ -1752,9 +1755,15 @@ export const EditorProvider = ({ children }) => {
 
   // ================= NAVBAR MANAGEMENT =================
   const addNavItem = ({ name_en, name_de, path, parent_id = null }) => {
-    if (!cmsConfig) return;
+    if (!cmsConfig) return { success: false, error: 'Site configuration not loaded yet.' };
     const navItems = [...(cmsConfig.header?.nav_items || [])];
     const newId = `nav_${Date.now().toString().slice(-5)}`;
+
+    // Only top-level items count toward the limit — a submenu child isn't a
+    // main navigation item. Matches the same count the backend validates.
+    if (!parent_id && navItems.length >= MAX_NAV_ITEMS) {
+      return { success: false, error: `Maximum ${MAX_NAV_ITEMS} navigation items are allowed.` };
+    }
 
     if (parent_id) {
       // Add as child to parent item
@@ -1777,7 +1786,7 @@ export const EditorProvider = ({ children }) => {
         }
       };
       pushState(newConfig, true);
-      return;
+      return { success: true };
     }
 
     navItems.push({
@@ -1797,6 +1806,31 @@ export const EditorProvider = ({ children }) => {
       }
     };
 
+    pushState(newConfig, true);
+    return { success: true };
+  };
+
+  const reorderNavItem = (navId, direction) => {
+    if (!cmsConfig) return;
+    const navItems = [...(cmsConfig.header?.nav_items || [])];
+    const index = navItems.findIndex(item => item.id === navId);
+    if (index === -1) return;
+
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= navItems.length) return;
+
+    const temp = navItems[index];
+    navItems[index] = navItems[targetIndex];
+    navItems[targetIndex] = temp;
+    navItems.forEach((item, idx) => { item.order = idx + 1; });
+
+    const newConfig = {
+      ...cmsConfig,
+      header: {
+        ...cmsConfig.header,
+        nav_items: navItems
+      }
+    };
     pushState(newConfig, true);
   };
 
@@ -2064,6 +2098,7 @@ export const EditorProvider = ({ children }) => {
       addNavItem,
       updateNavItem,
       deleteNavItem,
+      reorderNavItem,
       // Undo / Redo
       handleUndo,
       handleRedo,
@@ -2141,7 +2176,8 @@ export const useEditor = () => {
       pasteElement: () => {},
       addNavItem: () => {},
       updateNavItem: () => {},
-      deleteNavItem: () => {}
+      deleteNavItem: () => {},
+      reorderNavItem: () => {}
     };
   }
   return context;

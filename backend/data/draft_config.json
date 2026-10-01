@@ -72,6 +72,7 @@
         "email": "contact@sportsandmice.com",
         "phone": "+49 2241 343320",
         "street": "Fritz-Pullig-Strasse 9",
+        "whatsapp": "",
         "company_name": "K-Consulting Sports & MICE",
         "social_links": [
             {
@@ -90,12 +91,58 @@
                 "platform": "Instagram"
             }
         ],
+        "business_hours": "",
         "copyright_text": "\u00a9 2026 www.sportsandmice.com",
         "city_country_de": "53757 Sankt Augustin\nDeutschland",
         "city_country_en": "53757 Sankt Augustin\nGermany"
     },
     "header": {
-        "brand_title": "Sports & MICE"
+        "sticky": true,
+        "logo_url": "\/assets\/images\/logo.png",
+        "nav_items": [
+            {
+                "id": "nav_home",
+                "path": "\/",
+                "order": 1,
+                "enabled": true,
+                "name_de": "Startseite",
+                "name_en": "Home"
+            },
+            {
+                "id": "nav_service",
+                "path": "\/en\/Service\/",
+                "order": 2,
+                "enabled": true,
+                "name_de": "Dienstleistung",
+                "name_en": "Service"
+            },
+            {
+                "id": "nav_about",
+                "path": "\/en\/About-us\/",
+                "order": 3,
+                "enabled": true,
+                "name_de": "\u00dcber uns",
+                "name_en": "About us"
+            },
+            {
+                "id": "nav_hotels",
+                "path": "\/en\/Hotels-more\/",
+                "order": 4,
+                "enabled": true,
+                "name_de": "Hotels & mehr",
+                "name_en": "Hotels & more"
+            },
+            {
+                "id": "nav_contact",
+                "path": "\/en\/Contact\/",
+                "order": 5,
+                "enabled": true,
+                "name_de": "Kontakt",
+                "name_en": "Contact"
+            }
+        ],
+        "brand_title": "Sports & MICE",
+        "show_language_selector": true
     },
     "gallery": [
         {
@@ -168,7 +215,7 @@
             "external_url": ""
         }
     ],
-    "version": 24,
+    "version": 27,
     "sections": {
         "home": [
             {
@@ -620,8 +667,8 @@
         "stagger_children": true,
         "reduced_motion_support": true
     },
-    "last_saved_at": "2026-10-01 10:12:28",
-    "last_published_at": "2026-10-01 10:12:38",
+    "last_saved_at": "2026-10-01 17:43:07",
+    "last_published_at": "2026-10-01 17:43:07",
     "draft_changes_count": 0,
     "draft_changes_summary": [],
     "has_unpublished_changes": false

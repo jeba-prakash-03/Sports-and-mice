@@ -691,12 +691,17 @@ const AdminWebsiteBuilder = () => {
       return;
     }
 
-    addNavItem({
+    const result = addNavItem({
       name_en: newNavItemForm.name_en,
       name_de: newNavItemForm.name_de || newNavItemForm.name_en,
       path: newNavItemForm.path.startsWith('/') ? newNavItemForm.path : `/${newNavItemForm.path}`,
       parent_id: newNavItemForm.parent_id || null
     });
+
+    if (result && result.success === false) {
+      alert(result.error);
+      return;
+    }
 
     setNewNavItemForm({ name_en: '', name_de: '', path: '', parent_id: '' });
   };

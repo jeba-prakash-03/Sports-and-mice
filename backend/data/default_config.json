@@ -1,7 +1,7 @@
 {
     "version": 1,
-    "last_published_at": "2026-10-01 10:37:32",
-    "last_saved_at": "2026-10-01 10:37:32",
+    "last_published_at": "2026-10-01 17:43:37",
+    "last_saved_at": "2026-10-01 17:43:37",
     "has_unpublished_changes": false,
     "theme": {
         "primary_color": "#ff0000",
@@ -160,6 +160,8 @@
         "phone": "+49 2241 343320",
         "fax": "+49 2241 344316",
         "email": "contact@sportsandmice.com",
+        "whatsapp": "",
+        "business_hours": "",
         "copyright_text": "\u00a9 2026 www.Sportsandmice.Com",
         "social_links": [
             {

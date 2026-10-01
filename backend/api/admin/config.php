@@ -47,7 +47,13 @@ try {
 
         if ($action === 'save_draft') {
             $config = $data['config'] ?? [];
-            $saved = $cms->saveDraft($config, $userEmail);
+            try {
+                $saved = $cms->saveDraft($config, $userEmail);
+            } catch (InvalidArgumentException $validationError) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => $validationError->getMessage()]);
+                exit;
+            }
             $audit->log($userEmail, 'Saved Draft Changes', $data['section_name'] ?? 'Website Builder', 'Draft version updated with ' . ($saved['draft_changes_count'] ?? 0) . ' changes');
 
             http_response_code(200);
