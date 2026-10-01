@@ -336,6 +336,34 @@ img {
   transform: translateY(0);
 }
 
+/*
+ * Magnetic pull (see magneticButton.js): the button drifts a few px toward
+ * the cursor while hovered. `.btn-magnetic` is appended alongside
+ * `.btn-red-pill` on every CTA rendered via renderEditableButton, and its
+ * rules here come after `.btn-red-pill`'s own hover rule so this `transform`
+ * wins (same specificity, later in source) while background/color/shadow
+ * stay exactly as `.btn-red-pill:hover` already defined them.
+ */
+.btn-magnetic {
+  --magnet-x: 0px;
+  --magnet-y: 0px;
+  transform: translate(var(--magnet-x), var(--magnet-y));
+}
+
+.btn-magnetic:hover {
+  transform: translate(var(--magnet-x), var(--magnet-y)) translateY(-2px) scale(1.02);
+}
+
+.btn-magnetic:active {
+  transform: translate(var(--magnet-x), var(--magnet-y)) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-magnetic {
+    transform: none !important;
+  }
+}
+
 /* Responsive 16:9 Video Box */
 .responsive-video-box {
   position: relative;

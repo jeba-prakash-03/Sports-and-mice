@@ -60,6 +60,7 @@ import {
 import { motion } from 'framer-motion';
 import { getResponsiveValue, buildElementStyles } from '../utils/responsiveStyles';
 import { handleTiltMove, handleTiltLeave } from '../utils/tilt';
+import { handleMagnetMove, handleMagnetLeave } from '../utils/magneticButton';
 import { QuickAddGrid } from './admin/EditorUI';
 
 export const DEFAULT_NEW_SECTIONS = {
@@ -1065,9 +1066,11 @@ export const DynamicSectionRenderer = ({
         <NavLink
           to={isEditorActive && !editorCtx.isPreviewMode ? '#' : resolvedLink}
           target={isEditorActive && !editorCtx.isPreviewMode ? undefined : resolvedTarget}
-          className={`${className} ${isSelected ? 'builder-element-selected' : ''}`}
+          className={`${className} btn-magnetic ${isSelected ? 'builder-element-selected' : ''}`}
           style={btnStyle}
           onClick={handleClick}
+          onMouseMove={handleMagnetMove}
+          onMouseLeave={handleMagnetLeave}
           title={isEditorActive && !editorCtx.isPreviewMode ? 'Click to customize button link, text, and colors' : undefined}
         >
           <span>
