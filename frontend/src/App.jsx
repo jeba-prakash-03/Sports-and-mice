@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollProgressBar from './components/ScrollProgressBar';
 import FloatingWidgets from './components/FloatingWidgets';
+import CustomCursor from './components/CustomCursor';
 
 // Public Pages
 import Home from './pages/Home';
@@ -94,6 +95,7 @@ const ScrollToTop = () => {
 const PublicLayout = ({ children }) => {
   return (
     <div className="site-wrapper">
+      <CustomCursor />
       <ScrollProgressBar />
       <ScrollToTop />
       <Header />
