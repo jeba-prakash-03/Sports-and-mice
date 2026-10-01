@@ -49,11 +49,31 @@ const Header = () => {
 
   const [activeDropdown, setActiveDropdown] = useState(null);
 
-  // Track scroll for navbar elevation
+  // Track scroll for navbar elevation.
+  // rAF-throttled + only calls setState when the boolean actually flips, so a
+  // scrolled page doesn't re-render Header on every scroll tick (this was the
+  // source of the scroll jank — combined with layout-affecting CSS transitions,
+  // see header.css).
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    let ticking = false;
+    let lastScrolled = window.scrollY > 20;
+
+    const checkScroll = () => {
+      const isScrolled = window.scrollY > 20;
+      if (isScrolled !== lastScrolled) {
+        lastScrolled = isScrolled;
+        setScrolled(isScrolled);
+      }
+      ticking = false;
     };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(checkScroll);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

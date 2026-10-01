@@ -1,30 +1,21 @@
 /* Header Styles - Ultra-Premium International Agency Navbar */
 
+/*
+ * Performance note: every property that changes between the default and
+ * `.header-scrolled` state here is transform/opacity/background/shadow —
+ * never width/height/padding/top/font-size. Those are layout-affecting
+ * properties and animating them on scroll (the previous implementation)
+ * forces a synchronous reflow on every frame of the transition while the
+ * user is actively scrolling, which is what caused the jitter. The visual
+ * "shrink + float" effect is done entirely with `transform: scale()` and
+ * `translateY()` on a layer that's promoted with `will-change`, so the
+ * browser can composite it on the GPU without ever touching layout.
+ */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
   width: 100%;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.02);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (min-width: 1024px) {
-  .site-header.header-scrolled {
-    top: 14px;
-    width: min(1380px, calc(100% - 48px));
-    margin: 0 auto;
-    border-radius: var(--radius-full);
-    background-color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(24px) saturate(190%);
-    -webkit-backdrop-filter: blur(24px) saturate(190%);
-    box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-  }
 }
 
 .header-container {
@@ -36,12 +27,39 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: height 0.35s var(--transition-smooth), padding 0.35s ease;
+  background-color: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.02);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 0;
+  transform: translateY(0) scale(1);
+  transform-origin: top center;
+  will-change: transform;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease,
+    border-radius 0.4s ease;
 }
 
-.header-scrolled .header-container {
-  height: 72px;
-  padding: 0 clamp(18px, 2.5vw, 36px);
+@media (min-width: 1024px) {
+  .header-scrolled .header-container {
+    transform: translateY(14px) scale(0.93);
+    border-radius: var(--radius-full);
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.07);
+    border-bottom-color: transparent;
+  }
+}
+
+@media (max-width: 1023px) {
+  .header-scrolled .header-container {
+    transform: translateY(0) scale(0.96);
+    background-color: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 8px 24px -8px rgba(15, 23, 42, 0.14);
+  }
 }
 
 /* Brand Logo and Title in Left Corner */
@@ -69,12 +87,7 @@
   width: auto;
   object-fit: contain;
   display: block;
-  transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06));
-}
-
-.header-scrolled .brand-logo {
-  height: 56px;
 }
 
 .brand-title {
@@ -87,11 +100,6 @@
   background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition: font-size 0.3s ease;
-}
-
-.header-scrolled .brand-title {
-  font-size: 26px;
 }
 
 /* Desktop Navigation with Animated Indicators */
@@ -427,15 +435,8 @@
     padding: 0 20px;
     height: 88px;
   }
-  .header-scrolled .header-container {
-    height: 76px;
-    padding: 0 20px;
-  }
   .brand-logo {
     height: 60px;
-  }
-  .header-scrolled .brand-logo {
-    height: 52px;
   }
   .brand-title {
     font-size: 26px;
@@ -451,18 +452,11 @@
     padding: 0 16px;
     height: 76px;
   }
-  .header-scrolled .header-container {
-    height: 68px;
-    padding: 0 16px;
-  }
   .brand-link {
     gap: 12px;
   }
   .brand-logo {
     height: 48px;
-  }
-  .header-scrolled .brand-logo {
-    height: 42px;
   }
   .brand-title {
     font-size: 20px;
@@ -573,18 +567,11 @@
     padding: 0 12px;
     height: 68px;
   }
-  .header-scrolled .header-container {
-    height: 62px;
-    padding: 0 12px;
-  }
   .brand-link {
     gap: 8px;
   }
   .brand-logo {
     height: 42px;
-  }
-  .header-scrolled .brand-logo {
-    height: 38px;
   }
   .brand-title {
     font-size: 18px;

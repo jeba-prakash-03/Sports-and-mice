@@ -57,7 +57,12 @@ body {
   background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* `overflow-x: hidden` forces the browser to compute overflow-y as `auto`
+     per spec (pairing a non-visible axis with `visible` on the other axis
+     is disallowed — the visible one always becomes `auto`), which turns
+     body into its own scroll container and breaks any `position: sticky`
+     descendant. `overflow-x: clip` avoids that forced pairing entirely. */
+  overflow-x: clip;
   width: 100%;
   line-height: 1.6;
 }
@@ -217,7 +222,10 @@ img {
   min-height: 100vh;
   position: relative;
   width: 100%;
-  overflow-x: hidden;
+  /* Same overflow-x/overflow-y forced-pairing issue as `body` above — use
+     `clip` instead of `hidden` so this doesn't become a scroll container
+     and break the sticky header. */
+  overflow-x: clip;
 }
 
 .main-content {
