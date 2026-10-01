@@ -205,33 +205,36 @@
 
 .home-intro-section::before {
   content: '01 / STATEMENT';
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-heading);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   color: var(--primary-red);
   margin-bottom: 24px;
+  text-transform: uppercase;
 }
 
 .home-intro-title {
   max-width: 1200px;
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
   font-weight: 700;
-  line-height: 1.14;
+  line-height: 1.12;
   letter-spacing: -0.035em;
   color: var(--text-primary);
-  margin-bottom: clamp(32px, 4vw, 48px);
+  margin-bottom: clamp(36px, 4.5vw, 54px);
 }
 
 .home-intro-text-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(24px, 4vw, 48px);
+  gap: clamp(28px, 4.5vw, 52px);
   max-width: 1200px;
   border-top: 1px solid var(--hairline-border);
-  padding-top: clamp(24px, 3vw, 36px);
+  padding-top: clamp(28px, 3.5vw, 42px);
 }
 
 .home-intro-para {
@@ -240,6 +243,52 @@
   color: var(--text-secondary);
   line-height: 1.85;
   margin: 0;
+}
+
+/* Alternate sequential card styling on mobile */
+@media (max-width: 860px) {
+  .home-intro-section {
+    padding: clamp(60px, 8vw, 85px) 0;
+  }
+  
+  .home-intro-title {
+    font-size: clamp(1.85rem, 5.8vw, 2.4rem);
+    line-height: 1.18;
+    margin-bottom: 28px;
+  }
+
+  .home-intro-text-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .home-intro-para {
+    background: #ffffff;
+    border: 1px solid var(--hairline-border);
+    border-radius: var(--radius-md);
+    padding: 20px 22px;
+    box-shadow: var(--shadow-xs);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .home-intro-para:first-child {
+    border-left: 4px solid var(--primary-red);
+    box-shadow: 0 4px 16px rgba(255, 0, 0, 0.04);
+  }
+
+  .home-intro-para:nth-child(2) {
+    background: var(--light-bg);
+    border-color: rgba(15, 23, 42, 0.12);
+  }
+
+  .home-intro-para:nth-child(3) {
+    background: #ffffff;
+    border-left: 4px solid var(--primary-blue);
+  }
 }
 
 /* 3. BENTO GRID 3 PILLARS / FEATURE CARDS */
