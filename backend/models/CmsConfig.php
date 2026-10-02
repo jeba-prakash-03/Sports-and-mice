@@ -2,8 +2,10 @@
 // backend/models/CmsConfig.php
 
 class CmsConfig {
-    // Matches MAX_NAV_ITEMS in frontend/src/context/EditorContext.jsx — keep both in sync.
-    const MAX_NAV_ITEMS = 7;
+    // Sanity ceiling only — matches MAX_NAV_ITEMS in frontend/src/context/EditorContext.jsx.
+    // The public header displays the first 7 items directly and folds the rest into an
+    // overflow dropdown, so this is defense-in-depth against a garbage/huge array, not a UX limit.
+    const MAX_NAV_ITEMS = 20;
 
     private $db;
     private $publishedFile;
@@ -476,6 +478,12 @@ class CmsConfig {
                     'active' => true,
                     'order' => 1
                 ]
+            ],
+
+            // Carousel-wide playback settings, editable from the Hero Carousel admin tab.
+            'hero_carousel_settings' => [
+                'autoplay' => true,
+                'duration_ms' => 6000
             ],
 
             // Content Collections (Services CRUD)

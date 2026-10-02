@@ -84,11 +84,11 @@ export const runValidators = (fields) => {
 
 // Shared length/line limits, matching the numbers in the CMS feature request.
 export const LIMITS = {
-  NAV_LABEL: 30,
-  BUTTON_TEXT: 30,
+  NAV_LABEL: 18,
+  BUTTON_TEXT: 18,
   HERO_HEADING: 80,
   HERO_HEADING_LINES: 2,
   HERO_SUBTITLE_LINES: 20,
-  CARD_TITLE: 60,
-  CARD_DESCRIPTION: 300
+  CARD_TITLE: 30,
+  CARD_DESCRIPTION: 120
 };

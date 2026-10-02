@@ -21,8 +21,10 @@ export const parseYouTubeUrl = (url) => {
 
 const EditorContext = createContext();
 
-// Matches the limit enforced server-side in CmsConfig::saveDraft() — keep both in sync.
-export const MAX_NAV_ITEMS = 7;
+// Sanity ceiling only — matches the limit enforced server-side in CmsConfig::saveDraft().
+// The public header shows the first 7 items directly and folds the rest into a "⋯"
+// overflow dropdown (see Header.jsx), so this is no longer a practical UX limit.
+export const MAX_NAV_ITEMS = 20;
 
 export const EditorProvider = ({ children }) => {
   const { token } = useAuth();

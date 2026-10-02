@@ -15,8 +15,13 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [moreMenuOpen, setMoreMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const moreDropdownRef = useRef(null);
   const location = useLocation();
+
+  // Max direct nav slots before items overflow into the "⋯" dropdown
+  const MAX_VISIBLE_NAV_ITEMS = 7;
 
   const isEditing = editorMode && !isPreviewMode;
 
@@ -49,6 +54,9 @@ const Header = () => {
 
   const [activeDropdown, setActiveDropdown] = useState(null);
 
+  const visibleNavItems = navItems.slice(0, MAX_VISIBLE_NAV_ITEMS);
+  const overflowNavItems = navItems.slice(MAX_VISIBLE_NAV_ITEMS);
+
   // Track scroll for navbar elevation.
   // rAF-throttled + only calls setState when the boolean actually flips, so a
   // scrolled page doesn't re-render Header on every scroll tick (this was the
@@ -78,11 +86,14 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close dropdown on outside click
+  // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
+      }
+      if (moreDropdownRef.current && !moreDropdownRef.current.contains(event.target)) {
+        setMoreMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -93,6 +104,7 @@ const Header = () => {
   useEffect(() => {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
+    setMoreMenuOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -171,7 +183,7 @@ const Header = () => {
         {/* Desktop Navigation with Animated Indicators & Submenus */}
         <nav className="desktop-nav" onMouseLeave={() => { setHoveredIndex(null); setActiveDropdown(null); }}>
           <ul className="nav-list">
-            {navItems.map((item, index) => {
+            {visibleNavItems.map((item, index) => {
               const hasSubmenu = item.children && item.children.length > 0;
               const isActive = isPathActive(item.path) || (hasSubmenu && item.children.some(c => isPathActive(c.path)));
               const isSubmenuOpen = activeDropdown === (item.id || index);
@@ -271,6 +283,52 @@ const Header = () => {
                 </li>
               );
             })}
+
+            {overflowNavItems.length > 0 && (
+              <li className="nav-item nav-item-more" ref={moreDropdownRef}>
+                <button
+                  type="button"
+                  className={`nav-link nav-more-trigger ${moreMenuOpen ? 'combobox-open' : ''}`}
+                  onClick={() => setMoreMenuOpen((open) => !open)}
+                  aria-haspopup="true"
+                  aria-expanded={moreMenuOpen}
+                  aria-label="More navigation items"
+                >
+                  <span className="nav-text-span">&#8943;</span>
+                </button>
+
+                <AnimatePresence>
+                  {moreMenuOpen && (
+                    <motion.ul
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="nav-more-dropdown"
+                      role="menu"
+                    >
+                      {overflowNavItems.map((item, idx) => (
+                        <li key={item.path || item.id || idx} role="none">
+                          <NavLink
+                            role="menuitem"
+                            to={isEditing ? '#' : item.path}
+                            className={`nav-more-link ${isPathActive(item.path) ? 'active' : ''}`}
+                            onClick={(e) => {
+                              setMoreMenuOpen(false);
+                              if (isEditing) {
+                                handleEditorClick(e, { type: 'navbar_item', navId: item.id, item });
+                              }
+                            }}
+                          >
+                            {item.name}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
+              </li>
+            )}
           </ul>
         </nav>
 

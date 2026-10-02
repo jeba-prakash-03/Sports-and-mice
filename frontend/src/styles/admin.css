@@ -1094,6 +1094,9 @@ textarea.admin-text-input:focus {
   font-size: 13px;
   font-weight: 600;
   color: #334155;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .cms-input, .cms-select, .cms-textarea {
@@ -1150,6 +1153,27 @@ textarea.admin-text-input:focus {
   color: #b45309;
   background: #fffbeb;
   border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 8px;
+}
+
+.cms-char-counter {
+  font-size: 11.5px;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.cms-char-counter.over-limit {
+  color: #dc2626;
+}
+
+.cms-info-msg {
+  font-size: 12.5px;
+  color: #106cc2;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 6px;
   padding: 8px 12px;
   margin-top: 8px;

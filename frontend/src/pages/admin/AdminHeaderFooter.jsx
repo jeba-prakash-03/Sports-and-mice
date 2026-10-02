@@ -3,6 +3,7 @@ import { saveDraftConfig, uploadMediaFile } from '../../services/api';
 import { useSite } from '../../context/SiteContext';
 import { useEditor, MAX_NAV_ITEMS } from '../../context/EditorContext';
 import AdminCmsHeader from '../../components/admin/AdminCmsHeader';
+import CharCounter from '../../components/CharCounter';
 import {
   ArrowUp,
   ArrowDown,
@@ -61,6 +62,11 @@ const AdminHeaderFooter = () => {
 
   const navItems = cmsConfig?.header?.nav_items || [];
   const navLimitReached = navItems.length >= MAX_NAV_ITEMS;
+  // The public header shows the first 7 items directly; anything beyond that
+  // folds into a "⋯" overflow dropdown automatically (see Header.jsx) — so
+  // this is just an informational heads-up, not a hard limit like MAX_NAV_ITEMS.
+  const VISIBLE_NAV_COUNT = 7;
+  const navOverflowCount = Math.max(0, navItems.length - VISIBLE_NAV_COUNT);
 
   // Load the DRAFT (not published) config, matching the Visual Builder's own
   // mount behavior — otherwise nav edits here could clobber an in-progress
@@ -296,7 +302,7 @@ const AdminHeaderFooter = () => {
           <div className="cms-divider" />
 
           <div className="panel-header-with-action">
-            <h4 className="cms-section-heading" style={{ margin: 0 }}>Navigation Menu ({navItems.length}/{MAX_NAV_ITEMS})</h4>
+            <h4 className="cms-section-heading" style={{ margin: 0 }}>Navigation Menu ({navItems.length})</h4>
             <button
               type="button"
               onClick={() => setShowAddNav(v => !v)}
@@ -309,6 +315,12 @@ const AdminHeaderFooter = () => {
             </button>
           </div>
 
+          {navOverflowCount > 0 && !navLimitReached && (
+            <div className="cms-info-msg">
+              Showing the first {VISIBLE_NAV_COUNT} items directly — the remaining {navOverflowCount} will appear in a "⋯" overflow menu on the public site.
+            </div>
+          )}
+
           {navLimitReached && (
             <div className="cms-limit-reached-msg">
               Maximum {MAX_NAV_ITEMS} navigation items are allowed. Delete one to add another.
@@ -319,7 +331,10 @@ const AdminHeaderFooter = () => {
             <form onSubmit={handleNavFormSubmit} className="cms-panel-card" style={{ background: '#f8fafc', marginTop: '10px', marginBottom: '10px' }}>
               <div className="form-group-row">
                 <div className="form-group">
-                  <label className="cms-label">Label (EN)</label>
+                  <label className="cms-label">
+                    Label (EN)
+                    <CharCounter value={navForm.name_en} max={LIMITS.NAV_LABEL} />
+                  </label>
                   <input
                     type="text"
                     value={navForm.name_en}
@@ -329,7 +344,10 @@ const AdminHeaderFooter = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="cms-label">Label (DE)</label>
+                  <label className="cms-label">
+                    Label (DE)
+                    <CharCounter value={navForm.name_de} max={LIMITS.NAV_LABEL} />
+                  </label>
                   <input
                     type="text"
                     value={navForm.name_de}
