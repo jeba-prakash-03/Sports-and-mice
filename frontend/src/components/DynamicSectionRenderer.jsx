@@ -7,6 +7,12 @@ import { AnimatedSection, AnimatedCard } from './AnimatedSection';
 import { AnimatedCounter } from './AnimatedCounter';
 import { VideoFacade } from './VideoFacade';
 import HeroParallaxBg from './HeroParallaxBg';
+import HeroCarousel from './HeroCarousel';
+import Cinematic3DHero from './Cinematic3DHero';
+import BentoSportsSection from './BentoSportsSection';
+import TrophySection from './TrophySection';
+import ParallelSportsShowcase from './ParallelSportsShowcase';
+import SportsMarqueeTicker from './SportsMarqueeTicker';
 import {
   Trophy,
   Globe2,
@@ -1093,74 +1099,36 @@ export const DynamicSectionRenderer = ({
   const renderSectionInner = () => {
     // 1. HOME HERO (Only on Home page)
     if (section.id === 'home_hero' || (pageKey === 'home' && (section.type === 'hero' || section.type === 'hero_banner'))) {
-      const prefix = lang === 'de' ? (section.heading_prefix_de || section.heading_prefix_en) : section.heading_prefix_en;
-      const tag1 = lang === 'de' ? (section.tag1_de || section.tag1_en) : section.tag1_en;
-      const tag2 = lang === 'de' ? (section.tag2_de || section.tag2_en) : section.tag2_en;
-      const subtitle = lang === 'de' ? (section.subtitle_de || section.subtitle_en) : section.subtitle_en;
-      const bgImage = section.bg_image !== undefined ? section.bg_image : '/assets/images/home_hero_bg.jpg';
+      // Same condition in builder mode and on the public site — the builder
+      // canvas must show what's actually live, never a different hero
+      // treatment than what visitors see. Cinematic3DHero (below) only
+      // renders as a fallback when hero_slides is completely empty, which
+      // shouldn't normally happen since CmsConfig always seeds one slide.
+      const activeSlides = (cmsConfig?.hero_slides || []).filter(s => s.active !== false);
+      if (activeSlides.length > 0) {
+        const renderSlideButton = (slide, slideLang) => {
+          const text = slideLang === 'de'
+            ? (slide.cta_button_text_de || slide.cta_button_text_en)
+            : slide.cta_button_text_en;
+          if (!text) return null;
+          return (
+            <div style={{ marginTop: '28px' }}>
+              <NavLink to={slide.cta_button_link || '/en/Contact/'} className="btn-red-pill btn-magnetic" onMouseMove={handleMagnetMove} onMouseLeave={handleMagnetLeave}>
+                <span>{text}</span>
+                <ArrowRight size={16} />
+              </NavLink>
+            </div>
+          );
+        };
 
-      return (
-        <section
-          className={`home-hero ${isBuilderMode ? 'builder-section-preview' : ''}`}
-          style={customStyle}
-        >
-          <HeroParallaxBg bgImage={bgImage} />
-          <div className="container home-hero-container">
-            <AnimatedSection direction={anim.type} duration={anim.duration} delay={anim.delay} distance={30} className="home-hero-content">
-              <h1 className="hero-heading-prefix" style={{ color: section.heading_color || undefined }}>
-                {renderInlineText(
-                  lang === 'de' ? 'heading_prefix_de' : 'heading_prefix_en',
-                  prefix,
-                  'Sports associations &',
-                  'span'
-                )}
-              </h1>
+        return (
+          <section className="home-hero" style={customStyle}>
+            <HeroCarousel slides={activeSlides} lang={lang} renderButton={renderSlideButton} />
+          </section>
+        );
+      }
 
-              <motion.div
-                className="hero-blue-box"
-                initial={isBuilderMode ? false : { scale: 0.96, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-              >
-                <div className="blue-box-line">
-                  {renderInlineText(
-                    lang === 'de' ? 'tag1_de' : 'tag1_en',
-                    tag1,
-                    'Meetings ♢ Incentives',
-                    'span'
-                  )}
-                </div>
-                <div className="blue-box-line">
-                  {renderInlineText(
-                    lang === 'de' ? 'tag2_de' : 'tag2_en',
-                    tag2,
-                    'Conferences ♢ Events',
-                    'span'
-                  )}
-                </div>
-              </motion.div>
-
-              <p className="hero-subtitle">
-                {renderInlineText(
-                  lang === 'de' ? 'subtitle_de' : 'subtitle_en',
-                  subtitle,
-                  'Sport needs professional structures when traveling to competitions...',
-                  'span'
-                )}
-              </p>
-
-              {section.cta_button_enabled !== false && (
-                renderEditableButton({
-                  fieldPrefix: 'cta_button',
-                  fallbackText: 'Get Free Consultation',
-                  defaultLink: '/en/Contact/',
-                  wrapperStyle: { marginTop: '28px' }
-                })
-              )}
-            </AnimatedSection>
-          </div>
-        </section>
-      );
+      return <Cinematic3DHero section={section} pageKey={pageKey} />;
     }
 
     // 2. HOME INTRO EXPLANATION SECTION
@@ -1336,76 +1304,7 @@ export const DynamicSectionRenderer = ({
         }
       ];
 
-      return (
-        <section
-          className={`home-cards-section ${isBuilderMode ? 'builder-section-preview' : ''}`}
-          style={customStyle}
-          onClick={() => {
-            if (isEditorActive && !editorCtx.isPreviewMode) {
-              editorCtx.setSelectedSectionId(section.id);
-              editorCtx.setSelectedElement({ type: 'section', sectionId: section.id, section });
-            }
-          }}
-        >
-          <div className="container">
-            <AnimatedSection direction={anim.type} distance={20}>
-              <h2 className="section-main-title" style={{ color: section.heading_color || undefined }}>
-                {renderInlineText(
-                  lang === 'de' ? 'title_de' : 'title_en',
-                  secTitle,
-                  'Together for success! Travel and meet like the pros!',
-                  'span'
-                )}
-              </h2>
-            </AnimatedSection>
-
-            {/* Desktop & Tablet Grid (>= 768px or in Editor Mode) */}
-            <div className={`home-cards-grid desktop-cards-grid ${cards.length === 3 ? 'cards-grid-3' : ''} ${isEditorActive && !editorCtx.isPreviewMode ? 'builder-always-show' : ''}`}>
-              {cards.map((c, idx) => (
-                <AnimatedCard key={idx} index={idx}>
-                  <Pillar3DCard
-                    card={c}
-                    idx={idx}
-                    lang={lang}
-                    isEditorActive={isEditorActive}
-                    editorCtx={editorCtx}
-                    sectionId={section.id}
-                    isMobileDeck={false}
-                  />
-                </AnimatedCard>
-              ))}
-
-              {/* Add Card Slot in Builder Mode */}
-              {isEditorActive && !editorCtx.isPreviewMode && (
-                <div
-                  className="pillar-card-add-placeholder"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    editorCtx.addSectionCard(section.id);
-                  }}
-                  title="Add a new feature card"
-                >
-                  <Plus size={22} color="#0284c7" />
-                  <span>+ Add Pillar Card</span>
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Swipe Deck (< 768px when not in active builder inline edit) */}
-            {(!isEditorActive || editorCtx.isPreviewMode) && (
-              <div className="mobile-cards-deck-container">
-                <PillarCardsMobileDeck
-                  cards={cards}
-                  lang={lang}
-                  isEditorActive={isEditorActive}
-                  editorCtx={editorCtx}
-                  sectionId={section.id}
-                />
-              </div>
-            )}
-          </div>
-        </section>
-      );
+      return <BentoSportsSection section={section} />;
     }
 
     // 4. HOME EXPERTISE SECTION (Use our expertise for your sporting success!)
@@ -1684,8 +1583,14 @@ export const DynamicSectionRenderer = ({
               </AnimatedSection>
             </div>
           </div>
+          <ParallelSportsShowcase />
         </section>
       );
+    }
+
+    // 5b. MULTI-TRACK PARALLEL SCROLL SHOWCASE
+    if (section.type === 'parallel' || section.type === 'gallery_parallel' || section.type === 'scrubber') {
+      return <ParallelSportsShowcase />;
     }
 
     // 6. SERVICE HERO VIDEO & INTERACTIVE HERO
@@ -2022,6 +1927,11 @@ export const DynamicSectionRenderer = ({
           </div>
         </section>
       );
+    }
+
+    // 11.5 TROPHY & CHAMPIONSHIP SECTION
+    if (section.type === 'trophy' || section.type === 'championship') {
+      return <TrophySection title={section.title_en} subtitle={section.subtitle_en} />;
     }
 
     // 12. ABOUT STORY / FOUNDER
@@ -2610,7 +2520,8 @@ export const DynamicSectionRenderer = ({
             }
           }}
         >
-          <div className="container">
+          <SportsMarqueeTicker />
+          <div className="container" style={{ marginTop: '30px' }}>
             <AnimatedSection direction={anim.type} distance={20}>
               <div className="upcoming-banner-box">
                 <div className="upcoming-icon-pill">

@@ -1,0 +1,53 @@
+/* Infinite Sports Marquee Ticker Styles */
+
+.sports-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, #00f0ff 0%, #2563eb 50%, #00f0ff 100%);
+  padding: 14px 0;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+}
+
+.sports-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: max-content;
+  animation: marqueeScroll 25s linear infinite;
+}
+
+.sports-marquee-wrapper:hover .sports-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.marquee-icon {
+  color: #ffffff;
+}
+
+.marquee-label {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.marquee-bullet {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  margin-left: 10px;
+}

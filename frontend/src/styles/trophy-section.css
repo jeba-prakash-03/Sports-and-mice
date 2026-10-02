@@ -1,0 +1,164 @@
+/* Trophy / Championship Section Styles */
+
+.trophy-championship-section {
+  position: relative;
+  width: 100%;
+  padding: 110px 0;
+  background-color: #030611;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.trophy-ambient-spotlight {
+  position: absolute;
+  top: 10%;
+  right: 20%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(202, 138, 4, 0.05) 50%, transparent 75%);
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.trophy-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 60px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.trophy-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.trophy-championship-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #f59e0b;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.text-amber { color: #f59e0b; }
+
+.trophy-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 3.8vw, 56px);
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #ca8a04 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 15px rgba(245, 158, 11, 0.3));
+}
+
+.trophy-description {
+  font-size: clamp(15px, 1.1vw, 18px);
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.trophy-highlights-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.trophy-highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.trophy-cta-wrap {
+  margin-top: 10px;
+}
+
+.btn-spatial-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 36px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-size: 15.5px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.35);
+  transition: all 0.3s ease;
+}
+
+.btn-spatial-gold:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(245, 158, 11, 0.5);
+  color: #ffffff;
+}
+
+/* 3D Showcase */
+.trophy-3d-showcase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trophy-image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trophy-3d-img {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.35));
+  transform-style: preserve-3d;
+}
+
+.trophy-pedestal-shadow {
+  width: 280px;
+  height: 30px;
+  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.4) 0%, rgba(0, 0, 0, 0.8) 50%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(10px);
+  margin-top: -20px;
+}
+
+@media (max-width: 1024px) {
+  .trophy-container {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+}

@@ -106,7 +106,7 @@
                 "order": 1,
                 "enabled": true,
                 "name_de": "Startseite",
-                "name_en": "Home"
+                "name_en": ""
             },
             {
                 "id": "nav_service",
@@ -215,7 +215,7 @@
             "external_url": ""
         }
     ],
-    "version": 27,
+    "version": 28,
     "sections": {
         "home": [
             {
@@ -667,8 +667,28 @@
         "stagger_children": true,
         "reduced_motion_support": true
     },
-    "last_saved_at": "2026-10-01 17:43:07",
-    "last_published_at": "2026-10-01 17:43:07",
+    "hero_slides": [
+        {
+            "id": "slide_1",
+            "order": 1,
+            "active": true,
+            "tag1_de": "Besprechungen \u2662 Teambildung",
+            "tag1_en": "Meetings \u2662 Incentives",
+            "tag2_de": "Konferenzen \u2662 Veranstaltungen",
+            "tag2_en": "Conferences \u2662 Events",
+            "bg_image": "\/assets\/images\/home_hero_bg.jpg",
+            "subtitle_de": "Der Sport braucht professionelle Strukturen bei Reisen zu Wettk\u00e4mpfen, Teambildung und Konferenzen weltweit",
+            "subtitle_en": "Sport needs professional structures when traveling to competitions, team building and conferences around the world",
+            "cta_button_link": "\/en\/Contact\/",
+            "heading_prefix_de": "Sportverb\u00e4nde &",
+            "heading_prefix_en": "Sports associations &",
+            "cta_button_enabled": true,
+            "cta_button_text_de": "Kostenlose Beratung anfragen",
+            "cta_button_text_en": "Get Free Consultation"
+        }
+    ],
+    "last_saved_at": "2026-10-02 09:33:39",
+    "last_published_at": "2026-10-02 09:38:31",
     "draft_changes_count": 0,
     "draft_changes_summary": [],
     "has_unpublished_changes": false

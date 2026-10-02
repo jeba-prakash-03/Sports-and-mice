@@ -451,6 +451,33 @@ class CmsConfig {
                 ]
             ],
 
+            // Hero Carousel Slides — seeded with exactly one slide built from
+            // this same default config's home_hero section fields, so
+            // introducing this collection doesn't change what's currently
+            // live. DynamicSectionRenderer renders a carousel only when more
+            // than one active slide exists; one slide looks identical to the
+            // previous single-hero-object behavior.
+            'hero_slides' => [
+                [
+                    'id' => 'slide_1',
+                    'bg_image' => '/assets/images/home_hero_bg.jpg',
+                    'heading_prefix_en' => 'Sports associations &',
+                    'heading_prefix_de' => 'Sportverbände &',
+                    'tag1_en' => 'Meetings ♢ Incentives',
+                    'tag1_de' => 'Besprechungen ♢ Teambildung',
+                    'tag2_en' => 'Conferences ♢ Events',
+                    'tag2_de' => 'Konferenzen ♢ Veranstaltungen',
+                    'subtitle_en' => 'Sport needs professional structures when traveling to competitions, team building and conferences around the world',
+                    'subtitle_de' => 'Der Sport braucht professionelle Strukturen bei Reisen zu Wettkämpfen, Teambildung und Konferenzen weltweit',
+                    'cta_button_text_en' => 'Get Free Consultation',
+                    'cta_button_text_de' => 'Kostenlose Beratung anfragen',
+                    'cta_button_link' => '/en/Contact/',
+                    'cta_button_enabled' => true,
+                    'active' => true,
+                    'order' => 1
+                ]
+            ],
+
             // Content Collections (Services CRUD)
             'services' => [
                 [

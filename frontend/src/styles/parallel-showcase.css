@@ -1,0 +1,182 @@
+/* Multi-Track Parallel Sports Showcase Styles */
+
+.parallel-showcase-section {
+  position: relative;
+  width: 100%;
+  padding: 100px 0;
+  background-color: #040816;
+  overflow: hidden;
+}
+
+.parallel-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 60px auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.parallel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: #00f0ff;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.parallel-title {
+  font-family: var(--font-heading);
+  font-size: clamp(30px, 3.5vw, 52px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.text-cyan-gradient {
+  background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3));
+}
+
+.parallel-subtitle {
+  font-size: clamp(15px, 1.1vw, 18px);
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Parallel Tracks Container */
+.parallel-tracks-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.track-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.track-inner {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Individual Parallel Card */
+.parallel-card {
+  width: 380px;
+  flex-shrink: 0;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  overflow: hidden;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.parallel-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 25px 50px rgba(0, 240, 255, 0.25);
+}
+
+.card-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 230px;
+  overflow: hidden;
+}
+
+.parallel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.parallel-card:hover .parallel-img {
+  transform: scale(1.1);
+}
+
+.card-glass-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(4, 8, 22, 0.85) 100%);
+}
+
+.card-category-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  color: #00f0ff;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(10px);
+}
+
+.category-gold {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #f59e0b;
+}
+
+.card-info {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.card-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.text-cyan { color: #00f0ff; }
+.text-gold { color: #f59e0b; }
+
+@media (max-width: 768px) {
+  .parallel-card { width: 300px; }
+  .card-image-wrap { height: 180px; }
+}

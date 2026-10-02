@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+  <defs>
+    <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#040914"/>
+      <stop offset="100%" stop-color="#0a1226"/>
+    </linearGradient>
+    <linearGradient id="glowCyan1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="600" fill="url(#bgGrad1)"/>
+  
+  <!-- Track Lines -->
+  <path d="M 0 500 L 1000 500" stroke="rgba(255,255,255,0.15)" stroke-width="4"/>
+  <path d="M 0 540 L 1000 540" stroke="rgba(0,240,255,0.3)" stroke-width="6"/>
+
+  <!-- Frame 1: Coiled Position at Block -->
+  <g transform="translate(180, 220)">
+    <!-- Motion Trail Glow -->
+    <ellipse cx="140" cy="220" rx="120" ry="25" fill="url(#glowCyan1)" filter="blur(15px)"/>
+    
+    <!-- Athlete Pose 1 -->
+    <path d="M 120 120 C 140 100 160 120 180 150 L 140 220 L 80 200 Z" fill="#00f0ff" opacity="0.9"/>
+    <circle cx="200" cy="110" r="28" fill="#ffffff"/>
+    <path d="M 170 140 L 240 190 L 220 250" stroke="#00f0ff" stroke-width="14" stroke-linecap="round" fill="none"/>
+    <path d="M 140 160 L 90 220 L 50 250" stroke="#3b82f6" stroke-width="14" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Telemetry HUD Overlay Frame 1 -->
+  <text x="50" y="70" fill="#00f0ff" font-family="monospace" font-size="20" font-weight="bold">FRAME 01 // START POSITION • VELOCITY: 0.0 m/s</text>
+</svg>

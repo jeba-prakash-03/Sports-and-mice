@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#040914"/>
+      <stop offset="100%" stop-color="#111c3a"/>
+    </linearGradient>
+    <linearGradient id="glowCyan3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="600" fill="url(#bgGrad3)"/>
+  
+  <!-- High Speed Streaks -->
+  <line x1="100" y1="150" x2="600" y2="150" stroke="#00f0ff" stroke-width="4" opacity="0.6"/>
+  <line x1="50" y1="300" x2="700" y2="300" stroke="#3b82f6" stroke-width="5" opacity="0.7"/>
+
+  <path d="M 0 500 L 1000 500" stroke="rgba(255,255,255,0.25)" stroke-width="4"/>
+  <path d="M 0 540 L 1000 540" stroke="#00f0ff" stroke-width="6"/>
+
+  <!-- Frame 3: Peak Velocity Stride -->
+  <g transform="translate(480, 140)">
+    <ellipse cx="100" cy="280" rx="200" ry="35" fill="url(#glowCyan3)" filter="blur(20px)"/>
+    
+    <!-- Athlete Pose 3 -->
+    <path d="M 120 80 L 210 90 L 160 180 L 90 150 Z" fill="#00f0ff"/>
+    <circle cx="240" cy="65" r="28" fill="#ffffff"/>
+    <path d="M 190 100 L 320 120 L 360 220" stroke="#00f0ff" stroke-width="18" stroke-linecap="round" fill="none"/>
+    <path d="M 130 130 L 60 210 L 10 270" stroke="#3b82f6" stroke-width="18" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Telemetry HUD Overlay Frame 3 -->
+  <text x="50" y="70" fill="#00f0ff" font-family="monospace" font-size="20" font-weight="bold">FRAME 03 // PEAK ACCELERATION • VELOCITY: 11.8 m/s</text>
+</svg>

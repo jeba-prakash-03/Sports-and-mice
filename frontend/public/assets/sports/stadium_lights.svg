@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" width="1440" height="900" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="beamCyan" x1="0%" y1="0%" x2="40%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#3b82f6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="beamBlue" x1="100%" y1="0%" x2="60%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#00f0ff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="centerSpot" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="50%" stop-color="#00f0ff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Left Stadium Beam -->
+  <polygon points="100,0 250,0 750,900 450,900" fill="url(#beamCyan)"/>
+  
+  <!-- Right Stadium Beam -->
+  <polygon points="1340,0 1190,0 690,900 990,900" fill="url(#beamBlue)"/>
+
+  <!-- Center Overhead Spotlight -->
+  <ellipse cx="720" cy="180" rx="600" ry="300" fill="url(#centerSpot)"/>
+</svg>

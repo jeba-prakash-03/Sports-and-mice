@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { fetchAdminConfig, saveDraftConfig } from '../../services/api';
+import { fetchAdminConfig, saveDraftConfig, uploadMediaFile } from '../../services/api';
 import AdminCmsHeader from '../../components/admin/AdminCmsHeader';
 import { 
   Plus, 
@@ -18,19 +18,29 @@ import {
   X 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {
+  validateRequired,
+  validateMaxLength,
+  validateMaxLines,
+  validateUrl,
+  LIMITS
+} from '../../utils/adminValidation';
 
 const AdminContentCRUD = () => {
   const location = useLocation();
   const [configData, setConfigData] = useState(null);
-  const [activeTab, setActiveTab] = useState('services'); // 'services', 'team', 'testimonials', 'faqs', 'gallery'
+  const [activeTab, setActiveTab] = useState('services'); // 'services', 'team', 'testimonials', 'faqs', 'gallery', 'hero_slides'
   const [collections, setCollections] = useState({
     services: [],
     team: [],
     testimonials: [],
     faqs: [],
-    gallery: []
+    gallery: [],
+    hero_slides: []
   });
   const [editingModal, setEditingModal] = useState(null); // { type, item, isNew }
+  const [modalErrors, setModalErrors] = useState({});
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
@@ -41,6 +51,7 @@ const AdminContentCRUD = () => {
     else if (path.includes('/admin/content/testimonials')) setActiveTab('testimonials');
     else if (path.includes('/admin/content/faqs')) setActiveTab('faqs');
     else if (path.includes('/admin/content/gallery')) setActiveTab('gallery');
+    else if (path.includes('/admin/content/hero-slides')) setActiveTab('hero_slides');
     else if (path.includes('/admin/content/services')) setActiveTab('services');
   }, [location.pathname]);
 
@@ -54,7 +65,8 @@ const AdminContentCRUD = () => {
         team: draft.team || [],
         testimonials: draft.testimonials || [],
         faqs: draft.faqs || [],
-        gallery: draft.gallery || []
+        gallery: draft.gallery || [],
+        hero_slides: draft.hero_slides || []
       });
     }
   };
@@ -130,10 +142,70 @@ const AdminContentCRUD = () => {
         newItem = { ...newItem, question_en: '', question_de: '', answer_en: '', answer_de: '' };
       } else if (type === 'gallery') {
         newItem = { ...newItem, title: '', hotel_name: '', location: '', image: '/assets/images/hotel_cancun.jpg', external_url: '', desc_en: '', desc_de: '' };
+      } else if (type === 'hero_slides') {
+        newItem = {
+          ...newItem, bg_image: '/assets/images/home_hero_bg.jpg',
+          heading_prefix_en: '', heading_prefix_de: '',
+          tag1_en: '', tag1_de: '', tag2_en: '', tag2_de: '',
+          subtitle_en: '', subtitle_de: '',
+          cta_button_text_en: 'Get Free Consultation', cta_button_text_de: '',
+          cta_button_link: '/en/Contact/', cta_button_enabled: true
+        };
       }
       setEditingModal({ type, item: newItem, isNew: true });
+      setModalErrors({});
     } else {
       setEditingModal({ type, item: { ...item }, isNew: false });
+      setModalErrors({});
+    }
+  };
+
+  /** Only hero_slides has real validation right now — the one collection this
+   *  CMS feature pass added fields+limits for. Returns {} when there's
+   *  nothing to check (every other existing type), or a field->message map. */
+  const validateModalItem = (type, item) => {
+    if (type !== 'hero_slides') return {};
+    const errors = {};
+    errors.heading_prefix_en = validateRequired(item.heading_prefix_en, 'Heading') ||
+      validateMaxLength(item.heading_prefix_en, LIMITS.HERO_HEADING, 'Heading') ||
+      validateMaxLines(item.heading_prefix_en, LIMITS.HERO_HEADING_LINES, 'Heading');
+    errors.subtitle_en = validateMaxLines(item.subtitle_en, LIMITS.HERO_SUBTITLE_LINES, 'Subtitle');
+    errors.cta_button_text_en = validateMaxLength(item.cta_button_text_en, LIMITS.BUTTON_TEXT, 'Button text');
+    if (item.cta_button_enabled !== false) {
+      errors.cta_button_link = validateRequired(item.cta_button_link, 'Button link') ||
+        validateUrl(item.cta_button_link, 'Button link');
+    }
+    errors.bg_image = validateRequired(item.bg_image, 'Background image');
+    return Object.fromEntries(Object.entries(errors).filter(([, v]) => v));
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !editingModal) return;
+
+    if (!file.type.startsWith('image/')) {
+      setModalErrors(prev => ({ ...prev, bg_image: 'Please choose an image file.' }));
+      return;
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      setModalErrors(prev => ({ ...prev, bg_image: 'Image is too large (max 8MB).' }));
+      return;
+    }
+
+    setUploadingImage(true);
+    try {
+      const res = await uploadMediaFile(file, editingModal.item.heading_prefix_en || 'Hero Slide', 'Hero');
+      if (res.success && res.url) {
+        setEditingModal(prev => ({ ...prev, item: { ...prev.item, bg_image: res.url } }));
+        setModalErrors(prev => ({ ...prev, bg_image: null }));
+      } else {
+        setModalErrors(prev => ({ ...prev, bg_image: res.error || 'Upload failed.' }));
+      }
+    } catch (err) {
+      setModalErrors(prev => ({ ...prev, bg_image: 'Upload failed — please try again.' }));
+    } finally {
+      setUploadingImage(false);
+      e.target.value = '';
     }
   };
 
@@ -141,6 +213,13 @@ const AdminContentCRUD = () => {
     e.preventDefault();
     if (!editingModal) return;
     const { type, item, isNew } = editingModal;
+
+    const errors = validateModalItem(type, item);
+    if (Object.keys(errors).length > 0) {
+      setModalErrors(errors);
+      return;
+    }
+
     const list = [...(collections[type] || [])];
 
     if (isNew) {
@@ -157,6 +236,7 @@ const AdminContentCRUD = () => {
   };
 
   const tabs = [
+    { key: 'hero_slides', label: 'Hero Carousel' },
     { key: 'services', label: 'Services (Offerings)' },
     { key: 'team', label: 'Team & Founder' },
     { key: 'testimonials', label: 'Testimonials' },
@@ -177,7 +257,7 @@ const AdminContentCRUD = () => {
       <div className="cms-page-header-row">
         <div>
           <h2 className="cms-page-title">Content Collections Management</h2>
-          <p className="cms-page-subtitle">Add, edit, reorder, and remove dynamic cards for Services, Team members, Testimonials, FAQs, and Hotel Tours.</p>
+          <p className="cms-page-subtitle">Add, edit, reorder, and remove dynamic cards for the Hero Carousel, Services, Team members, Testimonials, FAQs, and Hotel Tours.</p>
         </div>
 
         <button 
@@ -240,22 +320,25 @@ const AdminContentCRUD = () => {
                 </div>
 
                 <div className="crud-preview-cell" style={{ width: '80px' }}>
-                  {item.image || item.photo ? (
-                    <img src={item.image || item.photo} alt="Thumb" className="crud-thumb" />
+                  {item.image || item.photo || item.bg_image ? (
+                    <img src={item.image || item.photo || item.bg_image} alt="Thumb" className="crud-thumb" />
                   ) : (
                     <div className="crud-no-thumb">No Img</div>
                   )}
                 </div>
 
                 <div className="crud-title-cell" style={{ flex: 1.5 }}>
-                  <strong>{item.title_en || item.title || item.name || item.question_en}</strong>
+                  <strong>{item.title_en || item.title || item.name || item.question_en || item.heading_prefix_en}</strong>
                   {item.designation && <p className="crud-sub">{item.designation}</p>}
                   {item.hotel_name && <p className="crud-sub">{item.hotel_name}</p>}
+                  {activeTab === 'hero_slides' && (
+                    <p className="crud-sub">{item.cta_button_enabled !== false ? 'Button shown' : 'Button hidden'}</p>
+                  )}
                 </div>
 
                 <div className="crud-desc-cell" style={{ flex: 2 }}>
                   <p className="crud-desc-clamp">
-                    {item.desc_en || item.bio_en || item.review || item.answer_en}
+                    {item.desc_en || item.bio_en || item.review || item.answer_en || item.subtitle_en}
                   </p>
                 </div>
 
@@ -582,6 +665,118 @@ const AdminContentCRUD = () => {
                         className="cms-textarea"
                       />
                     </div>
+                  </>
+                )}
+
+                {/* Dynamic Fields for Hero Carousel Slides */}
+                {editingModal.type === 'hero_slides' && (
+                  <>
+                    <div className="form-group">
+                      <label className="cms-label">Slide Background Image</label>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                        <div style={{
+                          width: '96px', height: '60px', border: '1px dashed #cbd5e1', borderRadius: '8px',
+                          overflow: 'hidden', background: '#0f172a', flexShrink: 0
+                        }}>
+                          {editingModal.item.bg_image && (
+                            <img src={editingModal.item.bg_image} alt="Slide preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          )}
+                        </div>
+                        <div>
+                          <input type="file" accept="image/*" id="hero-slide-image-input" style={{ display: 'none' }} onChange={handleImageUpload} />
+                          <button type="button" className="btn-add-item-sm" disabled={uploadingImage} onClick={() => document.getElementById('hero-slide-image-input').click()}>
+                            {uploadingImage ? 'Uploading...' : 'Upload Image'}
+                          </button>
+                        </div>
+                      </div>
+                      {modalErrors.bg_image && <div className="cms-field-error">{modalErrors.bg_image}</div>}
+                    </div>
+
+                    <div className="form-group-row">
+                      <div className="form-group">
+                        <label className="cms-label">Heading (English)</label>
+                        <input
+                          type="text"
+                          value={editingModal.item.heading_prefix_en || ''}
+                          onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, heading_prefix_en: e.target.value } }))}
+                          className={`cms-input ${modalErrors.heading_prefix_en ? 'has-error' : ''}`}
+                          maxLength={LIMITS.HERO_HEADING}
+                        />
+                        {modalErrors.heading_prefix_en && <div className="cms-field-error">{modalErrors.heading_prefix_en}</div>}
+                      </div>
+                      <div className="form-group">
+                        <label className="cms-label">Heading (German)</label>
+                        <input
+                          type="text"
+                          value={editingModal.item.heading_prefix_de || ''}
+                          onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, heading_prefix_de: e.target.value } }))}
+                          className="cms-input"
+                          maxLength={LIMITS.HERO_HEADING}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group-row">
+                      <div className="form-group">
+                        <label className="cms-label">Tag 1 (EN)</label>
+                        <input type="text" value={editingModal.item.tag1_en || ''} onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, tag1_en: e.target.value } }))} className="cms-input" />
+                      </div>
+                      <div className="form-group">
+                        <label className="cms-label">Tag 2 (EN)</label>
+                        <input type="text" value={editingModal.item.tag2_en || ''} onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, tag2_en: e.target.value } }))} className="cms-input" />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="cms-label">Subtitle (English) — up to {LIMITS.HERO_SUBTITLE_LINES} lines</label>
+                      <textarea
+                        rows="3"
+                        value={editingModal.item.subtitle_en || ''}
+                        onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, subtitle_en: e.target.value } }))}
+                        className={`cms-textarea ${modalErrors.subtitle_en ? 'has-error' : ''}`}
+                      />
+                      {modalErrors.subtitle_en && <div className="cms-field-error">{modalErrors.subtitle_en}</div>}
+                    </div>
+
+                    <div className="cms-divider" />
+
+                    <div className="form-group-row" style={{ alignItems: 'center' }}>
+                      <label className="cms-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 0 }}>
+                        <input
+                          type="checkbox"
+                          checked={editingModal.item.cta_button_enabled !== false}
+                          onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, cta_button_enabled: e.target.checked } }))}
+                        />
+                        Show Button
+                      </label>
+                    </div>
+
+                    {editingModal.item.cta_button_enabled !== false && (
+                      <div className="form-group-row">
+                        <div className="form-group">
+                          <label className="cms-label">Button Text (EN)</label>
+                          <input
+                            type="text"
+                            value={editingModal.item.cta_button_text_en || ''}
+                            onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, cta_button_text_en: e.target.value } }))}
+                            className={`cms-input ${modalErrors.cta_button_text_en ? 'has-error' : ''}`}
+                            maxLength={LIMITS.BUTTON_TEXT}
+                          />
+                          {modalErrors.cta_button_text_en && <div className="cms-field-error">{modalErrors.cta_button_text_en}</div>}
+                        </div>
+                        <div className="form-group">
+                          <label className="cms-label">Button Link</label>
+                          <input
+                            type="text"
+                            value={editingModal.item.cta_button_link || ''}
+                            onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, cta_button_link: e.target.value } }))}
+                            className={`cms-input ${modalErrors.cta_button_link ? 'has-error' : ''}`}
+                            placeholder="/en/Contact/"
+                          />
+                          {modalErrors.cta_button_link && <div className="cms-field-error">{modalErrors.cta_button_link}</div>}
+                        </div>
+                      </div>
+                    )}
                   </>
                 )}
 

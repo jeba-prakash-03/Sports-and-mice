@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+  <defs>
+    <linearGradient id="bgGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#040914"/>
+      <stop offset="100%" stop-color="#142147"/>
+    </linearGradient>
+    <linearGradient id="glowCyan4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#60a5fa" stop-opacity="0.5"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="600" fill="url(#bgGrad4)"/>
+  
+  <!-- Sonic Bloom Lines -->
+  <circle cx="680" cy="250" r="180" fill="none" stroke="rgba(0,240,255,0.3)" stroke-width="2"/>
+  <circle cx="680" cy="250" r="260" fill="none" stroke="rgba(0,240,255,0.15)" stroke-width="2"/>
+
+  <path d="M 0 500 L 1000 500" stroke="rgba(255,255,255,0.3)" stroke-width="4"/>
+  <path d="M 0 540 L 1000 540" stroke="#00f0ff" stroke-width="6"/>
+
+  <!-- Frame 4: Max Velocity Sprint -->
+  <g transform="translate(620, 110)">
+    <ellipse cx="80" cy="300" rx="220" ry="40" fill="url(#glowCyan4)" filter="blur(22px)"/>
+    
+    <!-- Athlete Pose 4 -->
+    <path d="M 100 70 L 190 75 L 140 160 L 70 140 Z" fill="#00f0ff"/>
+    <circle cx="220" cy="50" r="28" fill="#ffffff"/>
+    <path d="M 160 85 L 290 110 L 330 220" stroke="#00f0ff" stroke-width="18" stroke-linecap="round" fill="none"/>
+    <path d="M 110 110 L 40 190 L -10 250" stroke="#60a5fa" stroke-width="18" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Telemetry HUD Overlay Frame 4 -->
+  <text x="50" y="70" fill="#00f0ff" font-family="monospace" font-size="20" font-weight="bold">FRAME 04 // MAXIMUM SPRINT VELOCITY • VELOCITY: 12.4 m/s</text>
+</svg>
