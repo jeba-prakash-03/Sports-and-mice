@@ -262,7 +262,7 @@ const Cinematic3DHero = ({ section, pageKey = 'home' }) => {
                 to={isEditing ? '#' : '/en/Service/'} 
                 className="btn-spatial-glass"
               >
-                <Zap size={16} style={{ color: '#00f0ff' }} />
+                <Zap size={16} style={{ color: '#106cc2' }} />
                 <span>Explore Services</span>
               </NavLink>
             </motion.div>

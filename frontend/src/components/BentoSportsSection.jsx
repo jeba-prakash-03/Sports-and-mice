@@ -40,7 +40,7 @@ const BentoSportsSection = ({ section }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Activity size={15} style={{ color: '#00f0ff' }} />
+            <Activity size={15} style={{ color: '#106cc2' }} />
             <span>SPORTS & MICE DASHBOARD</span>
           </motion.div>
 

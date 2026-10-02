@@ -1,13 +1,13 @@
-/* Bento Sports Dashboard Styles - Spatial Glassmorphism */
+/* Bento Sports Dashboard Styles - Spatial Glassmorphism (Light Theme) */
 
 .bento-sports-section {
   position: relative;
   width: 100%;
   padding: 100px 0;
-  background-color: #060b19;
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.07) 0%, transparent 40%);
+  background-color: var(--light-bg);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(16, 108, 194, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255, 0, 0, 0.03) 0%, transparent 40%);
   overflow: hidden;
 }
 
@@ -33,10 +33,10 @@
   align-items: center;
   gap: 8px;
   padding: 8px 18px;
-  border-radius: 9999px;
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  color: #00f0ff;
+  border-radius: var(--radius-full);
+  background: rgba(16, 108, 194, 0.07);
+  border: 1px solid rgba(16, 108, 194, 0.25);
+  color: var(--primary-blue);
   font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 700;
@@ -48,21 +48,21 @@
   font-family: var(--font-heading);
   font-size: clamp(30px, 3.5vw, 52px);
   font-weight: 900;
-  color: #ffffff;
+  color: var(--text-primary);
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin: 0;
 }
 
 .title-cyan {
-  background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, var(--primary-blue) 0%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .bento-subtitle {
   font-size: clamp(15px, 1.1vw, 18px);
-  color: #94a3b8;
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.6;
 }
@@ -77,13 +77,11 @@
 /* Base Bento Card */
 .bento-card {
   position: relative;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  border-radius: var(--radius-xl);
   padding: 30px;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-md);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
@@ -92,14 +90,31 @@
 }
 
 .bento-card:hover {
-  border-color: rgba(0, 240, 255, 0.4);
-  box-shadow: 0 25px 50px rgba(0, 240, 255, 0.15);
+  border-color: rgba(16, 108, 194, 0.3);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Card 1: Large Match Card (Spans 2 columns) */
+/* Card 1: Featured Inspection Tour (Spans 2 columns, image background) */
 .card-large-match {
   grid-column: span 2;
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(6, 12, 28, 0.9) 100%);
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: #ffffff;
+}
+
+.card-large-match::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.1) 0%, rgba(15, 23, 42, 0.75) 100%);
+  z-index: 0;
+}
+
+.card-large-match > * {
+  position: relative;
+  z-index: 1;
 }
 
 .bento-card-header {
@@ -114,22 +129,23 @@
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  border-radius: 9999px;
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
   font-family: var(--font-heading);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.05em;
+  backdrop-filter: blur(10px);
 }
 
 .pulsing-red-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #ef4444;
-  box-shadow: 0 0 10px #ef4444;
+  background: var(--primary-red);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
   animation: pulseRed 1.4s ease-in-out infinite;
 }
 
@@ -139,64 +155,27 @@
   100% { transform: scale(0.9); opacity: 0.7; }
 }
 
-.tournament-tag {
+.featured-tour-info {
+  margin-top: auto;
+  padding-bottom: 20px;
+}
+
+.featured-tour-title {
   font-family: var(--font-heading);
-  font-size: 13px;
-  font-weight: 600;
-  color: #94a3b8;
-}
-
-/* Match Scoreboard */
-.match-scoreboard {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 30px 0;
-}
-
-.team-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.team-flag {
-  font-size: 44px;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
-}
-
-.team-name {
-  font-family: var(--font-heading);
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 0.02em;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
 }
 
-.score-center {
+.featured-tour-location {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 6px;
-}
-
-.live-score-display {
-  font-family: var(--font-heading);
-  font-size: 48px;
-  font-weight: 900;
-  color: #00f0ff;
-  letter-spacing: 0.04em;
-  text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
-}
-
-.match-time-badge {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #94a3b8;
-  background: rgba(255, 255, 255, 0.06);
-  padding: 4px 12px;
-  border-radius: 9999px;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
 }
 
 .bento-card-footer {
@@ -204,7 +183,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .venue-info {
@@ -212,13 +191,13 @@
   align-items: center;
   gap: 8px;
   font-size: 13.5px;
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .btn-bento-link {
   background: transparent;
   border: none;
-  color: #00f0ff;
+  color: #ffffff;
   font-family: var(--font-heading);
   font-size: 14px;
   font-weight: 700;
@@ -226,11 +205,13 @@
   align-items: center;
   gap: 6px;
   cursor: pointer;
+  text-decoration: none;
   transition: transform 0.2s ease;
 }
 
 .btn-bento-link:hover {
   transform: translateX(4px);
+  color: #ffffff;
 }
 
 /* Card 2: Trophy & Stats */
@@ -250,7 +231,7 @@
 .bento-trophy-img {
   height: 130px;
   object-fit: contain;
-  filter: drop-shadow(0 15px 25px rgba(234, 179, 8, 0.4));
+  filter: drop-shadow(0 12px 20px rgba(255, 0, 0, 0.15));
   transition: transform 0.4s ease;
 }
 
@@ -258,11 +239,17 @@
   transform: scale(1.1) rotate(5deg);
 }
 
+.trophy-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .stat-counter-wrap .stat-number {
   font-family: var(--font-heading);
   font-size: 42px;
   font-weight: 900;
-  color: #ffffff;
+  color: var(--text-primary);
   display: block;
 }
 
@@ -270,14 +257,14 @@
   font-family: var(--font-heading);
   font-size: 14px;
   font-weight: 700;
-  color: #00f0ff;
+  color: var(--primary-blue);
   display: block;
   margin-top: 4px;
 }
 
 .stat-desc {
   font-size: 13px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   margin-top: 10px;
   line-height: 1.5;
 }
@@ -298,19 +285,19 @@
 
 .mini-label {
   font-size: 13px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   display: block;
 }
 
 .mini-stat-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.08);
 }
 
-.text-cyan { color: #00f0ff; }
-.text-gold { color: #f59e0b; }
+.text-cyan { color: var(--primary-blue); }
+.text-gold { color: var(--primary-red); }
 
-/* Card 4: Player Profile */
+/* Card 4: Founder Profile */
 .card-player-profile {
   grid-column: span 1;
   display: flex;
@@ -329,23 +316,9 @@
 .player-img {
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   object-fit: cover;
-  border: 2px solid rgba(0, 240, 255, 0.4);
-}
-
-.rating-badge {
-  position: absolute;
-  bottom: -6px;
-  right: -6px;
-  background: #f59e0b;
-  color: #000000;
-  font-family: var(--font-heading);
-  font-size: 11px;
-  font-weight: 900;
-  padding: 2px 8px;
-  border-radius: 9999px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(16, 108, 194, 0.25);
 }
 
 .player-details {
@@ -359,20 +332,20 @@
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.06em;
-  color: #00f0ff;
+  color: var(--primary-blue);
 }
 
 .player-name {
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .player-metrics {
   font-size: 12.5px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   display: flex;
   gap: 6px;
 }
@@ -387,7 +360,7 @@
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.06em;
-  color: #94a3b8;
+  color: var(--text-secondary);
   margin: 0 0 16px 0;
 }
 
@@ -399,10 +372,10 @@
 
 .cat-chip {
   padding: 8px 16px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #e2e8f0;
+  border-radius: var(--radius-full);
+  background: var(--light-bg);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  color: var(--text-primary);
   font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 600;
@@ -411,9 +384,9 @@
 }
 
 .cat-chip:hover, .cat-chip.active {
-  background: rgba(0, 240, 255, 0.15);
-  border-color: rgba(0, 240, 255, 0.4);
-  color: #00f0ff;
+  background: rgba(16, 108, 194, 0.1);
+  border-color: rgba(16, 108, 194, 0.3);
+  color: var(--primary-blue);
 }
 
 /* Responsive Grid Breakpoints */
@@ -432,9 +405,5 @@
   }
   .card-large-match, .card-trophy-stats, .card-fast-stats, .card-player-profile, .card-categories {
     grid-column: span 1;
-  }
-  .match-scoreboard {
-    flex-direction: column;
-    gap: 20px;
   }
 }

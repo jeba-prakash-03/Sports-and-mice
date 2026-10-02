@@ -74,7 +74,7 @@ const ParallelSportsShowcase = () => {
 
   return (
     <section ref={sectionRef} className="parallel-showcase-section">
-      <ParticleBackground particleCount={25} color="#00f0ff" />
+      <ParticleBackground particleCount={25} color="#93c5fd" />
 
       {/* Header */}
       <div className="parallel-header">
@@ -84,7 +84,7 @@ const ParallelSportsShowcase = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <Sparkles size={15} style={{ color: '#00f0ff' }} />
+          <Sparkles size={15} style={{ color: '#106cc2' }} />
           <span>PARALLEL SCROLL SHOWCASE • REAL SPORTS VISUALS</span>
         </motion.div>
 

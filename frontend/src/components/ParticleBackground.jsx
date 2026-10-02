@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
  * Represents stadium atmosphere & motion light particles without main thread overhead.
  * Automatically disabled under prefers-reduced-motion or mobile low-power mode.
  */
-const ParticleBackground = ({ particleCount = 28, color = '#00f0ff' }) => {
+const ParticleBackground = ({ particleCount = 28, color = '#106cc2' }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const ParticleBackground = ({ particleCount = 28, color = '#00f0ff' }) => {
       size: Math.random() * 2.5 + 1,
       speedX: (Math.random() - 0.5) * 0.4,
       speedY: (Math.random() - 0.5) * 0.4 - 0.2,
-      opacity: Math.random() * 0.6 + 0.2
+      opacity: Math.random() * 0.3 + 0.08
     }));
 
     const render = () => {
@@ -55,7 +55,7 @@ const ParticleBackground = ({ particleCount = 28, color = '#00f0ff' }) => {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.globalAlpha = p.opacity;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 4;
         ctx.shadowColor = color;
         ctx.fill();
       });

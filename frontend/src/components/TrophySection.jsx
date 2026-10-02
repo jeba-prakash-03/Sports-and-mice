@@ -19,7 +19,7 @@ const TrophySection = ({ title, subtitle }) => {
 
   return (
     <section ref={sectionRef} className="trophy-championship-section">
-      <ParticleBackground particleCount={20} color="#f59e0b" />
+      <ParticleBackground particleCount={20} color="#f87171" />
       
       <div className="trophy-ambient-spotlight" />
 

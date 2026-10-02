@@ -1,10 +1,10 @@
-/* Trophy / Championship Section Styles */
+/* Trophy / Excellence Section Styles (Light Theme) */
 
 .trophy-championship-section {
   position: relative;
   width: 100%;
   padding: 110px 0;
-  background-color: #030611;
+  background-color: #ffffff;
   overflow: hidden;
   perspective: 1200px;
 }
@@ -15,7 +15,7 @@
   right: 20%;
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(202, 138, 4, 0.05) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(255, 0, 0, 0.06) 0%, rgba(255, 0, 0, 0.02) 50%, transparent 75%);
   filter: blur(60px);
   pointer-events: none;
 }
@@ -43,38 +43,37 @@
   align-items: center;
   gap: 8px;
   padding: 8px 18px;
-  border-radius: 9999px;
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  color: #f59e0b;
+  border-radius: var(--radius-full);
+  background: rgba(255, 0, 0, 0.06);
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  color: var(--primary-red);
   font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.05em;
 }
 
-.text-amber { color: #f59e0b; }
+.text-amber { color: var(--primary-red); }
 
 .trophy-heading {
   font-family: var(--font-heading);
   font-size: clamp(32px, 3.8vw, 56px);
   font-weight: 900;
-  color: #ffffff;
+  color: var(--text-primary);
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 0;
 }
 
 .text-gold-gradient {
-  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #ca8a04 100%);
+  background: linear-gradient(135deg, var(--primary-red) 0%, #b91c1c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 15px rgba(245, 158, 11, 0.3));
 }
 
 .trophy-description {
   font-size: clamp(15px, 1.1vw, 18px);
-  color: #94a3b8;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
 }
@@ -93,7 +92,7 @@
   font-family: var(--font-heading);
   font-size: 15px;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--text-primary);
 }
 
 .trophy-cta-wrap {
@@ -105,20 +104,20 @@
   align-items: center;
   gap: 12px;
   padding: 16px 36px;
-  border-radius: 9999px;
-  background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-hover) 100%);
   color: #ffffff;
   font-family: var(--font-heading);
   font-size: 15.5px;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.25);
   transition: all 0.3s ease;
 }
 
 .btn-spatial-gold:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 18px 40px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 18px 40px rgba(255, 0, 0, 0.35);
   color: #ffffff;
 }
 
@@ -143,14 +142,14 @@
   height: auto;
   max-height: 480px;
   object-fit: contain;
-  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 25px rgba(245, 158, 11, 0.35));
+  filter: drop-shadow(0 25px 35px rgba(15, 23, 42, 0.15)) drop-shadow(0 0 20px rgba(255, 0, 0, 0.12));
   transform-style: preserve-3d;
 }
 
 .trophy-pedestal-shadow {
   width: 280px;
   height: 30px;
-  background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.4) 0%, rgba(0, 0, 0, 0.8) 50%, transparent 80%);
+  background: radial-gradient(ellipse at center, rgba(15, 23, 42, 0.18) 0%, rgba(15, 23, 42, 0.08) 50%, transparent 80%);
   border-radius: 50%;
   filter: blur(10px);
   margin-top: -20px;

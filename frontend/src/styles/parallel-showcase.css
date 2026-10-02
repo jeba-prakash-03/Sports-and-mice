@@ -1,10 +1,10 @@
-/* Multi-Track Parallel Sports Showcase Styles */
+/* Multi-Track Parallel Sports Showcase Styles (Light Theme) */
 
 .parallel-showcase-section {
   position: relative;
   width: 100%;
   padding: 100px 0;
-  background-color: #040816;
+  background-color: #ffffff;
   overflow: hidden;
 }
 
@@ -24,10 +24,10 @@
   align-items: center;
   gap: 8px;
   padding: 8px 18px;
-  border-radius: 9999px;
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid rgba(0, 240, 255, 0.3);
-  color: #00f0ff;
+  border-radius: var(--radius-full);
+  background: rgba(16, 108, 194, 0.07);
+  border: 1px solid rgba(16, 108, 194, 0.25);
+  color: var(--primary-blue);
   font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 700;
@@ -39,22 +39,21 @@
   font-family: var(--font-heading);
   font-size: clamp(30px, 3.5vw, 52px);
   font-weight: 900;
-  color: #ffffff;
+  color: var(--text-primary);
   letter-spacing: -0.02em;
   line-height: 1.1;
   margin: 0;
 }
 
 .text-cyan-gradient {
-  background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, var(--primary-blue) 0%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3));
 }
 
 .parallel-subtitle {
   font-size: clamp(15px, 1.1vw, 18px);
-  color: #94a3b8;
+  color: var(--text-secondary);
   margin: 0;
   line-height: 1.6;
 }
@@ -84,13 +83,11 @@
 .parallel-card {
   width: 380px;
   flex-shrink: 0;
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-md);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
@@ -98,8 +95,8 @@
 
 .parallel-card:hover {
   transform: translateY(-8px) scale(1.02);
-  border-color: rgba(0, 240, 255, 0.5);
-  box-shadow: 0 25px 50px rgba(0, 240, 255, 0.25);
+  border-color: rgba(16, 108, 194, 0.35);
+  box-shadow: var(--shadow-lg);
 }
 
 .card-image-wrap {
@@ -123,7 +120,7 @@
 .card-glass-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 50%, rgba(4, 8, 22, 0.85) 100%);
+  background: linear-gradient(180deg, transparent 55%, rgba(15, 23, 42, 0.55) 100%);
 }
 
 .card-category-badge {
@@ -131,10 +128,10 @@
   top: 16px;
   left: 16px;
   padding: 6px 14px;
-  border-radius: 9999px;
-  background: rgba(0, 240, 255, 0.15);
-  border: 1px solid rgba(0, 240, 255, 0.4);
-  color: #00f0ff;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(16, 108, 194, 0.3);
+  color: var(--primary-blue);
   font-family: var(--font-heading);
   font-size: 11px;
   font-weight: 800;
@@ -143,9 +140,8 @@
 }
 
 .category-gold {
-  background: rgba(245, 158, 11, 0.15);
-  border-color: rgba(245, 158, 11, 0.4);
-  color: #f59e0b;
+  border-color: rgba(255, 0, 0, 0.3);
+  color: var(--primary-red);
 }
 
 .card-info {
@@ -159,7 +155,7 @@
   font-family: var(--font-heading);
   font-size: 18px;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text-primary);
   margin: 0;
   line-height: 1.35;
 }
@@ -169,12 +165,12 @@
   align-items: center;
   gap: 8px;
   font-size: 13.5px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
-.text-cyan { color: #00f0ff; }
-.text-gold { color: #f59e0b; }
+.text-cyan { color: var(--primary-blue); }
+.text-gold { color: var(--primary-red); }
 
 @media (max-width: 768px) {
   .parallel-card { width: 300px; }
