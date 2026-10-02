@@ -10,23 +10,26 @@ import HeroParallaxBg from './HeroParallaxBg';
  * the same heading/tag/subtitle/button markup — just sourced from the
  * slide object instead of the single legacy `section` object.
  *
- * Auto-advances every 6s, pauses on hover, and skips auto-advance entirely
+ * Auto-advances per `settings.duration_ms` (default 6s), pauses on hover,
+ * and skips auto-advance entirely when `settings.autoplay` is false or
  * under prefers-reduced-motion (arrows/dots still work either way).
  */
-const HeroCarousel = ({ slides, lang, renderButton }) => {
+const HeroCarousel = ({ slides, lang, renderButton, settings }) => {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const autoplay = settings?.autoplay !== false;
+  const durationMs = settings?.duration_ms > 0 ? settings.duration_ms : 6000;
 
   const goTo = useCallback((i) => {
     setIndex(((i % slides.length) + slides.length) % slides.length);
   }, [slides.length]);
 
   useEffect(() => {
-    if (prefersReducedMotion || paused || slides.length <= 1) return undefined;
-    const timer = setInterval(() => goTo(index + 1), 6000);
+    if (!autoplay || prefersReducedMotion || paused || slides.length <= 1) return undefined;
+    const timer = setInterval(() => goTo(index + 1), durationMs);
     return () => clearInterval(timer);
-  }, [index, paused, prefersReducedMotion, slides.length, goTo]);
+  }, [index, paused, prefersReducedMotion, slides.length, goTo, autoplay, durationMs]);
 
   const slide = slides[index];
   const prefix = lang === 'de' ? (slide.heading_prefix_de || slide.heading_prefix_en) : slide.heading_prefix_en;

@@ -25,6 +25,9 @@ import {
   validateUrl,
   LIMITS
 } from '../../utils/adminValidation';
+import CharCounter from '../../components/CharCounter';
+
+const DEFAULT_CAROUSEL_SETTINGS = { autoplay: true, duration_ms: 6000 };
 
 const AdminContentCRUD = () => {
   const location = useLocation();
@@ -43,6 +46,8 @@ const AdminContentCRUD = () => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [carouselSettings, setCarouselSettings] = useState(DEFAULT_CAROUSEL_SETTINGS);
+  const [durationInput, setDurationInput] = useState('6');
 
   // Parse path for direct tab selection
   useEffect(() => {
@@ -68,6 +73,9 @@ const AdminContentCRUD = () => {
         gallery: draft.gallery || [],
         hero_slides: draft.hero_slides || []
       });
+      const settings = draft.hero_carousel_settings || DEFAULT_CAROUSEL_SETTINGS;
+      setCarouselSettings(settings);
+      setDurationInput(String(Math.round((settings.duration_ms || 6000) / 1000)));
     }
   };
 
@@ -84,6 +92,22 @@ const AdminContentCRUD = () => {
 
     const res = await saveDraftConfig(updatedConfig, logContext || `Content Manager (${activeTab})`);
     if (res.success) {
+      setSaveSuccess(true);
+      await loadData();
+      setTimeout(() => setSaveSuccess(false), 3000);
+    }
+    setSaving(false);
+  };
+
+  const handleSaveCarouselSettings = async (newSettings) => {
+    setSaving(true);
+    const updatedConfig = {
+      ...(configData?.draft || {}),
+      hero_carousel_settings: newSettings
+    };
+    const res = await saveDraftConfig(updatedConfig, 'Updated hero carousel settings');
+    if (res.success) {
+      setCarouselSettings(newSettings);
       setSaveSuccess(true);
       await loadData();
       setTimeout(() => setSaveSuccess(false), 3000);
@@ -284,6 +308,41 @@ const AdminContentCRUD = () => {
           </button>
         ))}
       </div>
+
+      {activeTab === 'hero_slides' && (
+        <div className="cms-panel-card" style={{ marginTop: '16px', display: 'flex', alignItems: 'center', gap: '28px', flexWrap: 'wrap' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '14px' }}>
+            <input
+              type="checkbox"
+              checked={carouselSettings.autoplay !== false}
+              onChange={(e) => handleSaveCarouselSettings({ ...carouselSettings, autoplay: e.target.checked })}
+            />
+            Autoplay
+          </label>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <label style={{ fontWeight: 600, fontSize: '14px' }}>Slide duration (seconds)</label>
+            <input
+              type="number"
+              min="2"
+              max="30"
+              className="cms-input"
+              style={{ width: '80px' }}
+              value={durationInput}
+              onChange={(e) => setDurationInput(e.target.value)}
+              onBlur={() => {
+                const seconds = Math.min(30, Math.max(2, parseInt(durationInput, 10) || 6));
+                setDurationInput(String(seconds));
+                handleSaveCarouselSettings({ ...carouselSettings, duration_ms: seconds * 1000 });
+              }}
+            />
+          </div>
+
+          <span className="cms-info-msg" style={{ margin: 0 }}>
+            Applies to the public Hero Carousel. Arrows and dots always work regardless of autoplay.
+          </span>
+        </div>
+      )}
 
       {/* Items List Table / Grid */}
       <div className="cms-panel-card" style={{ marginTop: '20px' }}>
@@ -694,7 +753,10 @@ const AdminContentCRUD = () => {
 
                     <div className="form-group-row">
                       <div className="form-group">
-                        <label className="cms-label">Heading (English)</label>
+                        <label className="cms-label">
+                          Heading (English)
+                          <CharCounter value={editingModal.item.heading_prefix_en} max={LIMITS.HERO_HEADING} />
+                        </label>
                         <input
                           type="text"
                           value={editingModal.item.heading_prefix_en || ''}
@@ -754,7 +816,10 @@ const AdminContentCRUD = () => {
                     {editingModal.item.cta_button_enabled !== false && (
                       <div className="form-group-row">
                         <div className="form-group">
-                          <label className="cms-label">Button Text (EN)</label>
+                          <label className="cms-label">
+                            Button Text (EN)
+                            <CharCounter value={editingModal.item.cta_button_text_en} max={LIMITS.BUTTON_TEXT} />
+                          </label>
                           <input
                             type="text"
                             value={editingModal.item.cta_button_text_en || ''}

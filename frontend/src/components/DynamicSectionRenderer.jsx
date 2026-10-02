@@ -1123,7 +1123,7 @@ export const DynamicSectionRenderer = ({
 
         return (
           <section className="home-hero" style={customStyle}>
-            <HeroCarousel slides={activeSlides} lang={lang} renderButton={renderSlideButton} />
+            <HeroCarousel slides={activeSlides} lang={lang} renderButton={renderSlideButton} settings={cmsConfig?.hero_carousel_settings} />
           </section>
         );
       }
