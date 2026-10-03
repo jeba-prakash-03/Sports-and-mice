@@ -3,18 +3,26 @@
   --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  --primary-red: #ff0000;
-  --primary-red-hover: #e60000;
-  --primary-blue: #106cc2;
-  --primary-blue-hover: #0c4d8b;
-  --dark-bg: #0b0f19;
-  --dark-surface: #121826;
-  --dark-surface-elevated: #1a2236;
+  --primary-purple: #8b5cf6;
+  --primary-purple-hover: #7e22ce;
+  --primary-purple-light: #f3e8ff;
+  --primary-purple-dark: #5b21b6;
+  --primary-gold: #f5b800;
+
+  /* Mapped legacy color variables to Purple Design System */
+  --primary-red: #8b5cf6;
+  --primary-red-hover: #7e22ce;
+  --primary-blue: #8b5cf6;
+  --primary-blue-hover: #7e22ce;
+
+  --dark-bg: #ffffff;
+  --dark-surface: #f8fafc;
+  --dark-surface-elevated: #f1f5f9;
   --light-bg: #f8fafc;
   --card-bg: #ffffff;
   --card-border: rgba(15, 23, 42, 0.08);
   --hairline-border: rgba(15, 23, 42, 0.09);
-  --hairline-border-dark: rgba(255, 255, 255, 0.1);
+  --hairline-border-dark: rgba(15, 23, 42, 0.1);
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
@@ -26,7 +34,7 @@
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
   --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
-  --shadow-glow: 0 0 25px rgba(255, 0, 0, 0.25);
+  --shadow-glow: 0 0 25px rgba(139, 92, 246, 0.25);
   --shadow-spatial: 0 24px 48px -12px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(15, 23, 42, 0.05);
   
   --radius-xs: 4px;
@@ -53,15 +61,10 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--font-body);
-  color: var(--text-primary);
+  color: #0f172a;
   background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* `overflow-x: hidden` forces the browser to compute overflow-y as `auto`
-     per spec (pairing a non-visible axis with `visible` on the other axis
-     is disallowed — the visible one always becomes `auto`), which turns
-     body into its own scroll container and breaks any `position: sticky`
-     descendant. `overflow-x: clip` avoids that forced pairing entirely. */
   overflow-x: clip;
   width: 100%;
   line-height: 1.6;
@@ -293,7 +296,7 @@ img {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--btn-custom-bg, linear-gradient(135deg, #ff0000 0%, #e60000 100%));
+  background: var(--btn-custom-bg, linear-gradient(135deg, #8b5cf6 0%, #7e22ce 100%));
   color: var(--btn-custom-color, #ffffff);
   padding: 12px clamp(24px, 4vw, 36px);
   min-height: 44px;
@@ -303,7 +306,7 @@ img {
   text-decoration: none;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(255, 0, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
   transition: all 0.3s var(--transition-smooth);
   overflow: hidden;
   white-space: nowrap;
@@ -322,10 +325,10 @@ img {
 }
 
 .btn-red-pill:hover {
-  background: var(--btn-custom-hover-bg, linear-gradient(135deg, #e60000 0%, #cc0000 100%));
+  background: var(--btn-custom-hover-bg, linear-gradient(135deg, #7e22ce 0%, #5b21b6 100%));
   color: var(--btn-custom-hover-color, var(--btn-custom-color, #ffffff));
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 0, 0, 0.45);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.45);
 }
 
 .btn-red-pill:hover::after {
@@ -493,10 +496,10 @@ img {
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 4px 14px rgba(255, 0, 0, 0.35);
+    box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
   }
   50% {
-    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.65), 0 0 15px rgba(255, 0, 0, 0.4);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.65), 0 0 15px rgba(139, 92, 246, 0.4);
   }
 }
 
@@ -601,14 +604,14 @@ button:not(:disabled):active,
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  padding: 11px 22px;
+  background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%);
   color: #ffffff;
   border-radius: 50px;
-  font-weight: 700;
-  font-size: 13.5px;
+  font-weight: 800;
+  font-size: 14px;
   text-decoration: none;
-  box-shadow: 0 4px 18px rgba(255, 0, 0, 0.45);
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.45);
   border: 1.5px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
   pointer-events: auto;
@@ -644,8 +647,8 @@ button:not(:disabled):active,
 }
 
 .floating-top-btn:hover {
-  background-color: #ff0000;
-  border-color: #ff0000;
+  background-color: #8b5cf6;
+  border-color: #8b5cf6;
 }
 
 @media (max-width: 640px) {

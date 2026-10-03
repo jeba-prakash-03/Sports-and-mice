@@ -70,6 +70,8 @@
   width: 100%;
   overflow: hidden;
   position: relative;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 
 .track-inner {
@@ -77,6 +79,46 @@
   gap: 28px;
   width: max-content;
   will-change: transform;
+}
+
+/* Continuous Auto-Sliding Marquee Track Animations */
+.track-marquee-left {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  animation: scrollMarqueeLeft 35s linear infinite;
+  will-change: transform;
+}
+
+.track-marquee-right {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  animation: scrollMarqueeRight 35s linear infinite;
+  will-change: transform;
+}
+
+.track-container:hover .track-marquee-left,
+.track-container:hover .track-marquee-right {
+  animation-play-state: paused;
+}
+
+@keyframes scrollMarqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes scrollMarqueeRight {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 /* Individual Parallel Card */
@@ -140,7 +182,7 @@
 }
 
 .category-gold {
-  border-color: rgba(255, 0, 0, 0.3);
+  border-color: rgba(139, 92, 246, 0.3);
   color: var(--primary-red);
 }
 

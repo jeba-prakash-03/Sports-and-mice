@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useSite } from '../context/SiteContext';
 import { useEditor } from '../context/EditorContext';
@@ -19,6 +19,14 @@ const Header = () => {
   const dropdownRef = useRef(null);
   const moreDropdownRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleMobileNavigate = (path) => {
+    setMobileMenuOpen(false);
+    if (path && path !== '#') {
+      navigate(path);
+    }
+  };
 
   // Max direct nav slots before items overflow into the "⋯" dropdown
   const MAX_VISIBLE_NAV_ITEMS = 7;
@@ -26,11 +34,11 @@ const Header = () => {
   const isEditing = editorMode && !isPreviewMode;
 
   const headerSettings = cmsConfig?.header || {};
-  const logoUrl = headerSettings.logo_url || '/assets/images/logo.png';
-  const brandTitle = headerSettings.brand_title || 'Sports & MICE';
+  const logoUrl = headerSettings.logo_url || '/assets/images/logo.jpeg';
+  const brandTitle = headerSettings.brand_title || '';
 
   // Dynamic Navigation Items from CMS
-  const rawNavItems = headerSettings.nav_items && headerSettings.nav_items.length > 0 
+  const rawNavItems = headerSettings.nav_items && headerSettings.nav_items.length > 0
     ? headerSettings.nav_items.filter(item => item.enabled !== false)
     : [
       { id: 'nav_home', name_en: t.nav.home, name_de: t.nav.home, path: '/' },
@@ -127,16 +135,16 @@ const Header = () => {
     if (!path) return false;
     const cleanPath = path.replace(/^\/+|\/+$/g, '');
     const currentClean = location.pathname.replace(/^\/+|\/+$/g, '');
-    
+
     if (cleanPath === '' || path === '/') {
       return currentClean === '' || currentClean === 'en';
     }
-    return currentClean === cleanPath || 
-           currentClean.startsWith(cleanPath + '/') ||
-           (cleanPath.includes('Service') && currentClean.includes('Dienstleistung')) || 
-           (cleanPath.includes('About') && currentClean.includes('Über-uns')) || 
-           (cleanPath.includes('Hotels') && currentClean.includes('Hotels-mehr')) || 
-           (cleanPath.includes('Contact') && currentClean.includes('Kontakt'));
+    return currentClean === cleanPath ||
+      currentClean.startsWith(cleanPath + '/') ||
+      (cleanPath.includes('Service') && currentClean.includes('Dienstleistung')) ||
+      (cleanPath.includes('About') && currentClean.includes('Über-uns')) ||
+      (cleanPath.includes('Hotels') && currentClean.includes('Hotels-mehr')) ||
+      (cleanPath.includes('Contact') && currentClean.includes('Kontakt'));
   };
 
   return (
@@ -144,8 +152,8 @@ const Header = () => {
       <div className="header-container">
         {/* Brand Logo & Title in Left Corner */}
         <div className="header-brand">
-          <NavLink 
-            to={isEditing ? '#' : '/'} 
+          <NavLink
+            to={isEditing ? '#' : '/'}
             className="brand-link"
             onClick={(e) => {
               if (isEditing) {
@@ -157,26 +165,19 @@ const Header = () => {
               }
             }}
           >
-            <motion.div 
+            <motion.div
               className="logo-wrapper"
               whileHover={{ scale: 1.05, rotate: [-1, 1, 0] }}
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <img 
-                src={logoUrl} 
-                alt="K-Consulting Logo" 
+              <img
+                src={logoUrl}
+                alt="K-Consulting Logo"
                 className="brand-logo"
               />
             </motion.div>
-            <motion.span 
-              className="brand-title"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              {brandTitle}
-            </motion.span>
+            
           </NavLink>
         </div>
 
@@ -190,8 +191,8 @@ const Header = () => {
               const isItemSelected = isEditing && selectedElement?.type === 'navbar_item' && selectedElement?.navId === item.id;
 
               return (
-                <li 
-                  key={item.path || item.id || index} 
+                <li
+                  key={item.path || item.id || index}
                   className={`nav-item ${hasSubmenu ? 'nav-item-dropdown' : ''}`}
                   onMouseEnter={() => {
                     setHoveredIndex(index);
@@ -335,7 +336,7 @@ const Header = () => {
         {/* Right tools: Language Selector */}
         <div className="header-right-tools">
           <div className="language-selector-wrapper" ref={dropdownRef}>
-            <motion.div 
+            <motion.div
               className={`lang-combobox ${dropdownOpen ? 'combobox-open' : ''}`}
               onClick={() => setDropdownOpen(!dropdownOpen)}
               whileHover={{ scale: 1.03, borderColor: '#ff0000' }}
@@ -343,14 +344,14 @@ const Header = () => {
               transition={{ duration: 0.2 }}
             >
               <Globe size={15} className="lang-globe-icon" />
-              <input 
-                type="text" 
-                readOnly 
-                value={lang === 'de' ? 'Deutsch' : 'English'} 
+              <input
+                type="text"
+                readOnly
+                value={lang === 'de' ? 'Deutsch' : 'English'}
                 className="lang-input"
               />
               <button type="button" className="lang-dropdown-btn">
-                <motion.span 
+                <motion.span
                   className="caret-arrow"
                   animate={{ rotate: dropdownOpen ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
@@ -362,21 +363,21 @@ const Header = () => {
 
             <AnimatePresence>
               {dropdownOpen && (
-                <motion.ul 
+                <motion.ul
                   initial={{ opacity: 0, y: 8, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   className="lang-dropdown-menu"
                 >
-                  <motion.li 
+                  <motion.li
                     whileHover={{ x: 4, backgroundColor: '#fff0f0' }}
                     className={lang === 'de' ? 'active-lang' : ''}
                     onClick={() => handleLanguageChange('de')}
                   >
                     <span>🇩🇪</span> Deutsch
                   </motion.li>
-                  <motion.li 
+                  <motion.li
                     whileHover={{ x: 4, backgroundColor: '#fff0f0' }}
                     className={lang === 'en' ? 'active-lang' : ''}
                     onClick={() => handleLanguageChange('en')}
@@ -390,7 +391,7 @@ const Header = () => {
         </div>
 
         {/* Mobile Hamburger Toggle */}
-        <motion.button 
+        <motion.button
           whileTap={{ scale: 0.9 }}
           className="mobile-menu-toggle"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -407,7 +408,7 @@ const Header = () => {
       {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -420,8 +421,8 @@ const Header = () => {
                 const isMobileActive = isPathActive(item.path);
 
                 return (
-                  <motion.li 
-                    key={item.path || item.id || index} 
+                  <motion.li
+                    key={item.path || item.id || index}
                     className="mobile-nav-item"
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -431,7 +432,10 @@ const Header = () => {
                       to={item.path}
                       className={`mobile-nav-link ${isMobileActive ? 'active' : ''}`}
                       end={item.path === '/'}
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleMobileNavigate(item.path);
+                      }}
                     >
                       {item.name}
                     </NavLink>
@@ -443,7 +447,10 @@ const Header = () => {
                             <NavLink
                               to={child.path}
                               className={`mobile-submenu-link ${isPathActive(child.path) ? 'active' : ''}`}
-                              onClick={() => setMobileMenuOpen(false)}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleMobileNavigate(child.path);
+                              }}
                             >
                               ↳ {child.name}
                             </NavLink>
@@ -462,14 +469,14 @@ const Header = () => {
                 <Globe size={14} style={{ marginRight: '6px' }} /> Language:
               </span>
               <div className="mobile-lang-buttons">
-                <button 
+                <button
                   type="button"
                   className={`mobile-lang-btn ${lang === 'de' ? 'active' : ''}`}
                   onClick={() => { handleLanguageChange('de'); setMobileMenuOpen(false); }}
                 >
                   🇩🇪 Deutsch
                 </button>
-                <button 
+                <button
                   type="button"
                   className={`mobile-lang-btn ${lang === 'en' ? 'active' : ''}`}
                   onClick={() => { handleLanguageChange('en'); setMobileMenuOpen(false); }}

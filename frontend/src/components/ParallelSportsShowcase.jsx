@@ -103,13 +103,13 @@ const ParallelSportsShowcase = () => {
         </p>
       </div>
 
-      {/* Dual Parallel Tracks */}
+      {/* Dual Parallel Tracks - Auto Continuous Carousel */}
       <div className="parallel-tracks-wrapper">
         
-        {/* TRACK 1 (Moves Left on Scroll) */}
+        {/* TRACK 1 (Auto Slides Left Continuously) */}
         <div className="track-container">
-          <motion.div className="track-inner" style={{ x: track1X }}>
-            {[...trackA, ...trackA].map((item, idx) => (
+          <div className="track-marquee-left">
+            {[...trackA, ...trackA, ...trackA, ...trackA].map((item, idx) => (
               <div key={idx} className="parallel-card">
                 <div className="card-image-wrap">
                   <img src={item.img} alt={item.title} className="parallel-img" />
@@ -125,13 +125,13 @@ const ParallelSportsShowcase = () => {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
-        {/* TRACK 2 (Moves Right on Scroll in Parallel) */}
+        {/* TRACK 2 (Auto Slides Right Continuously) */}
         <div className="track-container">
-          <motion.div className="track-inner" style={{ x: track2X }}>
-            {[...trackB, ...trackB].map((item, idx) => (
+          <div className="track-marquee-right">
+            {[...trackB, ...trackB, ...trackB, ...trackB].map((item, idx) => (
               <div key={idx} className="parallel-card">
                 <div className="card-image-wrap">
                   <img src={item.img} alt={item.title} className="parallel-img" />
@@ -147,7 +147,7 @@ const ParallelSportsShowcase = () => {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
       </div>

@@ -129,7 +129,7 @@ export const VideoFacade = ({
               width: '84px',
               height: '84px',
               borderRadius: '50%',
-              background: 'rgba(255, 0, 0, 0.28)',
+              background: 'rgba(168, 85, 247, 0.35)',
               animation: 'pulseRing 2.2s cubic-bezier(0.25, 0.1, 0.25, 1) infinite'
             }}
           />
@@ -140,8 +140,8 @@ export const VideoFacade = ({
               width: '68px',
               height: '68px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #ff0000 0%, #cc0000 100%)',
-              boxShadow: '0 0 28px rgba(255, 0, 0, 0.7), 0 8px 24px rgba(0,0,0,0.5)',
+              background: 'linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)',
+              boxShadow: '0 0 28px rgba(168, 85, 247, 0.7), 0 8px 24px rgba(0,0,0,0.5)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -174,7 +174,7 @@ export const VideoFacade = ({
             boxShadow: '0 4px 16px rgba(0,0,0,0.4)'
           }}
         >
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#ff3333', boxShadow: '0 0 8px #ff3333' }} />
+          <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#a855f7', boxShadow: '0 0 8px #a855f7' }} />
           <span>Watch Video</span>
         </div>
       </div>

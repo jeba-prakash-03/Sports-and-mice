@@ -1,7 +1,7 @@
 {
     "version": 1,
-    "last_published_at": "2026-10-01 17:43:37",
-    "last_saved_at": "2026-10-01 17:43:37",
+    "last_published_at": "2026-10-03 17:38:54",
+    "last_saved_at": "2026-10-03 17:38:54",
     "has_unpublished_changes": false,
     "theme": {
         "primary_color": "#ff0000",
@@ -105,8 +105,8 @@
         }
     },
     "header": {
-        "logo_url": "\/assets\/images\/logo.png",
-        "brand_title": "Sports & MICE",
+        "logo_url": "\/assets\/images\/logo.jpeg",
+        "brand_title": "",
         "sticky": true,
         "show_language_selector": true,
         "nav_items": [
@@ -520,6 +520,30 @@
             }
         ]
     },
+    "hero_slides": [
+        {
+            "id": "slide_1",
+            "bg_image": "\/assets\/images\/home_hero_bg.jpg",
+            "heading_prefix_en": "Sports associations &",
+            "heading_prefix_de": "Sportverb\u00e4nde &",
+            "tag1_en": "Meetings \u2662 Incentives",
+            "tag1_de": "Besprechungen \u2662 Teambildung",
+            "tag2_en": "Conferences \u2662 Events",
+            "tag2_de": "Konferenzen \u2662 Veranstaltungen",
+            "subtitle_en": "Sport needs professional structures when traveling to competitions, team building and conferences around the world",
+            "subtitle_de": "Der Sport braucht professionelle Strukturen bei Reisen zu Wettk\u00e4mpfen, Teambildung und Konferenzen weltweit",
+            "cta_button_text_en": "Get Free Consultation",
+            "cta_button_text_de": "Kostenlose Beratung anfragen",
+            "cta_button_link": "\/en\/Contact\/",
+            "cta_button_enabled": true,
+            "active": true,
+            "order": 1
+        }
+    ],
+    "hero_carousel_settings": {
+        "autoplay": true,
+        "duration_ms": 6000
+    },
     "services": [
         {
             "id": "svc_1",
@@ -688,6 +712,42 @@
             "desc_en": "Ideal for sport thanks to its good hotels, good sports event infrastructure and great team building activities.",
             "desc_de": "Ideal f\u00fcr Sport dank guter Hotels und Teambuilding-Aktivit\u00e4ten.",
             "order": 5,
+            "active": true
+        },
+        {
+            "id": "tour_kenya",
+            "title": "Tour - Kenya - Nairobi",
+            "hotel_name": "Fairmont The Norfolk Nairobi",
+            "location": "Nairobi, Kenya",
+            "image": "\/assets\/images\/service_hero_bg.jpg",
+            "external_url": "https:\/\/www.fairmont.com\/norfolk-hotel-nairobi\/",
+            "desc_en": "High-altitude training facilities and world-class luxury hotels make Kenya an exceptional destination for athletic delegations and international MICE events.",
+            "desc_de": "H\u00f6hentrainingslager und erstklassige Luxushotels machen Kenia zu einem au\u00dfergew\u00f6hnlichen Ziel f\u00fcr Sportdelegationen und internationale MICE-Events.",
+            "order": 6,
+            "active": true
+        },
+        {
+            "id": "tour_japan",
+            "title": "Tour - Japan - Tokyo",
+            "hotel_name": "The Grand Hyatt Tokyo",
+            "location": "Tokyo, Japan",
+            "image": "\/assets\/images\/service_teambuilding.png",
+            "external_url": "https:\/\/www.hyatt.com\/en-US\/hotel\/japan\/grand-hyatt-tokyo\/tokgh",
+            "desc_en": "State-of-the-art Olympic sports facilities combined with ultra-modern MICE conference venues. Perfect for elite team preparations and global congresses.",
+            "desc_de": "Hochmoderne olympische Sportst\u00e4tten kombiniert mit hochmodernen MICE-Konferenzzentren. Perfekt f\u00fcr die Vorbereitung von Spitzenteams und globale Kongresse.",
+            "order": 7,
+            "active": true
+        },
+        {
+            "id": "travel_rio",
+            "title": "Rio de Janeiro - Brazil",
+            "hotel_name": "Coastal MICE Resort",
+            "location": "Rio de Janeiro, Brazil",
+            "image": "\/assets\/images\/about_rio.jpg",
+            "external_url": "",
+            "desc_en": "Vibrant beach sports culture, World Cup venue infrastructure, and coastal conference facilities.",
+            "desc_de": "Lebendige Strandsportkultur, WM-Stadioninfrastruktur und erstklassige Tagungsm\u00f6glichkeiten an der K\u00fcste.",
+            "order": 8,
             "active": true
         }
     ]

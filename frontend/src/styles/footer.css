@@ -1,9 +1,9 @@
 /* ==========================================================================
-   FOOTER - ULTRA-PREMIUM EDITORIAL AGENCY FOOTER
+   FOOTER - ULTRA-PREMIUM EDITORIAL AGENCY FOOTER (PURPLE DESIGN SYSTEM)
    ========================================================================== */
 
 .site-footer {
-  background: radial-gradient(circle at 50% 0%, rgba(255, 0, 0, 0.08) 0%, transparent 60%),
+  background: radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.12) 0%, transparent 60%),
               linear-gradient(180deg, #0f172a 0%, #080c16 100%);
   color: #ffffff;
   padding: clamp(52px, 7vw, 75px) 0 30px 0;
@@ -21,7 +21,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 0, 0, 0.7) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(168, 85, 247, 0.8) 50%, transparent 100%);
 }
 
 .footer-container {
@@ -86,11 +86,11 @@
 }
 
 .linkedin-link:hover {
-  background: rgba(255, 0, 0, 0.15);
-  border-color: rgba(255, 0, 0, 0.4);
-  color: #ff4d4d;
+  background: rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.5);
+  color: #c084fc;
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(255, 0, 0, 0.25);
+  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.3);
 }
 
 .linkedin-icon {
@@ -109,10 +109,10 @@
 }
 
 .footer-icon {
-  color: #ff4d4d;
+  color: #c084fc;
   flex-shrink: 0;
   margin-top: 2px;
-  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.35));
+  filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.4));
 }
 
 .contact-text p,
@@ -131,7 +131,7 @@
 }
 
 .contact-text a:hover {
-  color: #ff6666;
+  color: #c084fc;
   padding-left: 2px;
 }
 
@@ -147,7 +147,7 @@
 }
 
 .imprint-link:hover {
-  color: #ff6666;
+  color: #c084fc;
   transform: translateX(3px);
 }
 
@@ -174,7 +174,7 @@
 }
 
 .copyright-text a:hover {
-  color: #ff6666;
+  color: #c084fc;
   text-decoration: underline;
 }
 

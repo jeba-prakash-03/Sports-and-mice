@@ -25,8 +25,8 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 80% 40%, rgba(255, 0, 0, 0.1) 0%, transparent 65%),
-              radial-gradient(circle at 20% 80%, rgba(16, 108, 194, 0.15) 0%, transparent 60%),
+  background: radial-gradient(circle at 80% 40%, rgba(168, 85, 247, 0.15) 0%, transparent 65%),
+              radial-gradient(circle at 20% 80%, rgba(126, 34, 206, 0.15) 0%, transparent 60%),
               linear-gradient(135deg, rgba(11, 15, 25, 0.94) 0%, rgba(15, 23, 42, 0.9) 100%);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -41,7 +41,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 0, 0, 0.6) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(168, 85, 247, 0.6) 50%, transparent 100%);
   pointer-events: none;
   z-index: 2;
 }
@@ -90,9 +90,9 @@
   gap: 8px;
   padding: 6px 16px;
   border-radius: var(--radius-full);
-  background: rgba(255, 0, 0, 0.1);
-  border: 1px solid rgba(255, 0, 0, 0.25);
-  color: #ff4d4d;
+  background: #f3e8ff;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #7e22ce;
   font-family: var(--font-heading);
   font-size: 11.5px;
   font-weight: 700;
@@ -197,18 +197,18 @@
   max-width: 600px;
   border-radius: 28px;
   padding: 3px;
-  background: linear-gradient(135deg, rgba(255, 0, 0, 0.6) 0%, rgba(255, 255, 255, 0.18) 50%, rgba(255, 51, 51, 0.45) 100%);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(255, 0, 0, 0.25);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.6) 0%, rgba(255, 255, 255, 0.18) 50%, rgba(139, 92, 246, 0.45) 100%);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(168, 85, 247, 0.25);
   animation: borderGlow 4s ease-in-out infinite alternate;
   box-sizing: border-box !important;
 }
 
 @keyframes borderGlow {
   0% {
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 25px rgba(255, 0, 0, 0.2);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65), 0 0 25px rgba(168, 85, 247, 0.2);
   }
   100% {
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 0 0 45px rgba(255, 0, 0, 0.35);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 0 0 45px rgba(168, 85, 247, 0.35);
   }
 }
 
@@ -250,9 +250,9 @@
   border: 0;
 }
 
-/* 2. INTRO TEXT SECTION */
+/* 2. INTRO TEXT SECTION - 2 COLUMN SPLIT WITH CIRCULAR IMAGE CONTAINER */
 .service-intro-section {
-  padding: clamp(45px, 6vw, 75px) 0 clamp(35px, 5vw, 55px) 0;
+  padding: clamp(55px, 7vw, 90px) 0 clamp(45px, 6vw, 70px) 0;
   background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
   position: relative;
   width: 100% !important;
@@ -269,6 +269,18 @@
   background: linear-gradient(90deg, transparent 0%, #e5e7eb 50%, transparent 100%);
 }
 
+.service-intro-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+
+.service-intro-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .service-main-heading {
   font-size: clamp(1.6rem, 3.2vw, 2.4rem);
   font-weight: 800;
@@ -282,71 +294,197 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 920px;
 }
 
 .service-intro-text p {
-  font-size: clamp(15px, 1.2vw, 16.5px);
+  font-size: clamp(15px, 1.15vw, 16.5px);
   color: #4b5563;
   line-height: 1.75;
   margin: 0;
 }
 
+/* Circular Image Frame on Right Side */
+.service-intro-circle-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.service-intro-circle-container {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-glowing-ring {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(168, 85, 247, 0.45), rgba(59, 130, 246, 0.35), rgba(236, 72, 153, 0.45), rgba(168, 85, 247, 0.45));
+  filter: blur(16px);
+  opacity: 0.75;
+  z-index: 1;
+  animation: spinRing 12s linear infinite;
+}
+
+@keyframes spinRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.circle-image-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #ffffff;
+  box-shadow: 
+    0 25px 60px -10px rgba(168, 85, 247, 0.28),
+    0 10px 25px -5px rgba(15, 23, 42, 0.14),
+    inset 0 0 20px rgba(255, 255, 255, 0.8);
+  z-index: 2;
+}
+
+.circle-image-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.circle-image-frame:hover img {
+  transform: scale(1.08);
+}
+
+@media (max-width: 991px) {
+  .service-intro-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .service-intro-circle-container {
+    max-width: 300px;
+  }
+}
+
 /* 3. SERVICE 4-CARD FEATURE GRID */
+/* 3. SERVICE 4-CARD FEATURE GRID (EXACT REFERENCE UI MATCH) */
+/* 3. SERVICE 4-CARD FEATURE GRID (LIQUID GLASS UI) */
 .service-cards-section {
-  padding: clamp(30px, 4vw, 45px) 0 clamp(50px, 7vw, 85px) 0;
-  background-color: #f9fafb;
+  padding: clamp(65px, 7vw, 95px) 0 clamp(75px, 8vw, 105px) 0;
+  background: 
+    radial-gradient(circle at 12% 20%, rgba(168, 85, 247, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 88% 80%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 50% 45%, rgba(192, 132, 252, 0.16) 0%, transparent 55%),
+    linear-gradient(180deg, #fafafd 0%, #f3f0ff 50%, #ffffff 100%);
   width: 100% !important;
   box-sizing: border-box !important;
   position: relative;
+  overflow: hidden;
+}
+
+/* Ambient Liquid Ambient Mesh Pulse behind Glass Cards */
+.service-cards-section::before {
+  content: '';
+  position: absolute;
+  top: -15%;
+  left: 20%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, rgba(216, 180, 254, 0.08) 50%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  animation: liquidMeshPulse 12s ease-in-out infinite alternate;
+}
+
+@keyframes liquidMeshPulse {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.15) translate(-25px, 35px); }
+}
+
+.service-header-wrapper {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto clamp(36px, 4vw, 52px) auto;
+  position: relative;
+  z-index: 2;
 }
 
 .service-sub-heading {
-  font-size: clamp(1.4rem, 2.8vw, 2rem);
-  font-weight: 800;
-  color: #111827;
-  margin: 0 0 32px 0;
-  letter-spacing: -0.3px;
+  font-size: clamp(2.1rem, 3.8vw, 2.85rem);
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 14px 0;
+  letter-spacing: -0.9px;
+  line-height: 1.18;
+}
+
+.service-sub-desc {
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  color: #64748b;
+  margin: 0;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .service-cards-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(18px, 2vw, 26px);
+  gap: clamp(16px, 2vw, 24px);
   width: 100% !important;
   box-sizing: border-box !important;
+  align-items: stretch;
+  position: relative;
+  z-index: 2;
 }
 
 .service-cards-grid > * {
   min-width: 0 !important;
   width: 100% !important;
   box-sizing: border-box !important;
+  display: flex !important;
 }
 
+/* Translucent Liquid Glass Card */
 .service-img-card {
   --tilt-x: 0deg;
   --tilt-y: 0deg;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border-radius: 18px;
-  overflow: hidden;
-  border: 1px solid rgba(229, 231, 235, 0.8);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  /* perspective/rotate handle the mouse tilt (see tilt.js); translateY is
-     added back in on hover below. Both are transform-only. */
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+  border-radius: 28px !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 
+    0 20px 40px -10px rgba(15, 23, 42, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.6),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.95) !important;
   transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-  padding-bottom: 20px;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  padding: 16px !important;
   height: 100%;
   width: 100% !important;
   box-sizing: border-box !important;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.service-img-card:hover {
-  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(255, 0, 0, 0.15);
-  border-color: rgba(255, 0, 0, 0.25);
+.service-img-card:not(.featured-service-card):hover {
+  background: rgba(255, 255, 255, 0.65) !important;
+  border-color: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 
+    0 24px 48px -10px rgba(139, 92, 246, 0.14),
+    0 0 0 1px rgba(168, 85, 247, 0.35),
+    inset 0 1.5px 3px rgba(255, 255, 255, 1) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -355,13 +493,16 @@
   }
 }
 
+/* Top Image Container inside Cards */
 .card-img-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  height: 205px;
+  border-radius: 20px;
   overflow: hidden;
-  background-color: #0f172a;
+  background-color: #f1f5f9;
   margin-bottom: 16px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 .card-img-wrapper::after {
@@ -371,7 +512,7 @@
   left: -100%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
   transform: skewX(-25deg);
   transition: all 0.85s ease;
   pointer-events: none;
@@ -389,7 +530,7 @@
 }
 
 .service-img-card:hover .card-img-wrapper img {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .congress-icon-wrap {
@@ -397,34 +538,176 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #111b33 0%, #080d1a 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .congress-icon-img {
   width: 85px !important;
   height: 85px !important;
   object-fit: contain !important;
-  transition: transform 0.4s ease;
   filter: brightness(1.3) contrast(1);
 }
 
-.service-img-card:hover .congress-icon-img {
-  transform: scale(1.12) rotate(3deg);
-  filter: brightness(1.5) contrast(1.1);
+/* Translucent Floating Liquid Glass Bottom Tile for Unselected Cards */
+.card-bottom-tile {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+  padding: 14px 16px !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  transition: all 0.35s ease;
+}
+
+.service-img-card:hover .card-bottom-tile {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(192, 132, 252, 0.5) !important;
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.12) !important;
+}
+
+.card-icon-box {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 12px;
+  background: rgba(139, 92, 246, 0.12);
+  color: #7c3aed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.service-img-card:hover .card-icon-box {
+  transform: scale(1.08);
+  background: rgba(139, 92, 246, 0.2);
 }
 
 .img-card-title {
-  font-size: clamp(15px, 1.35vw, 17px);
+  font-size: 0.98rem;
   font-weight: 700;
-  color: #111827;
+  color: #0f172a;
   margin: 0;
-  line-height: 1.4;
-  padding: 0 18px;
+  line-height: 1.35;
+  padding: 0;
+}
+
+/* ===================================================
+   ACTIVE / HOVERED SELECTED CARD STYLING
+   Vibrant Glowing Purple Liquid Glass Gradient
+   =================================================== */
+.featured-service-card,
+.featured-service-card:hover {
+  background: linear-gradient(155deg, #7c3aed 0%, #6d28d9 65%, #4c1d95 100%) !important;
+  backdrop-filter: blur(32px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
+  border: 1.5px solid rgba(233, 213, 255, 0.85) !important;
+  box-shadow: 
+    0 28px 65px -10px rgba(124, 58, 237, 0.6),
+    0 0 40px rgba(168, 85, 247, 0.45),
+    inset 0 1.5px 3px rgba(255, 255, 255, 0.6) !important;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-8px) scale(1.02) !important;
+}
+
+.featured-service-card:hover {
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(-12px) scale(1.03) !important;
+  box-shadow: 
+    0 35px 75px -10px rgba(124, 58, 237, 0.75),
+    0 0 50px rgba(192, 132, 252, 0.6),
+    inset 0 1.5px 3px rgba(255, 255, 255, 0.75) !important;
+}
+
+.featured-service-card .card-img-wrapper {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  margin-bottom: 18px;
+  height: 195px;
+}
+
+.featured-card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 4px 6px 4px 6px;
+  justify-content: space-between;
+}
+
+.featured-card-title {
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: #ffffff !important;
+  margin: 0 0 10px 0;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.featured-card-tags {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.92) !important;
+  line-height: 1.55;
+  margin: 0 0 20px 0;
+  font-weight: 400;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.featured-explore-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 14px;
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25) !important;
+  cursor: pointer;
+}
+
+.featured-explore-btn:hover {
+  background: rgba(255, 255, 255, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.85) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Bottom Tagline Footer Bar */
+.service-bottom-tagline {
+  text-align: center;
+  margin-top: 52px;
+  color: #94a3b8;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+@media (max-width: 1024px) {
+  .service-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .service-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 /* 4. WORKFLOW STEP SECTION - SPATIAL DARK CONTRAST */
 .service-workflow-section {
-  background: radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.08) 0%, transparent 60%),
+  background: radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.12) 0%, transparent 60%),
               linear-gradient(180deg, #0b0f19 0%, #111827 100%);
   color: #ffffff;
   padding: clamp(60px, 8vw, 95px) 0;
@@ -471,8 +754,8 @@
 
 .workflow-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 0, 0, 0.2);
-  border-color: rgba(255, 0, 0, 0.5);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5), 0 0 25px rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.5);
   background: rgba(255, 255, 255, 0.07);
 }
 
@@ -480,7 +763,7 @@
   font-family: var(--font-heading);
   font-size: clamp(22px, 2.4vw, 28px);
   font-weight: 800;
-  color: #ff3333;
+  color: #a855f7;
   margin-bottom: 14px;
   display: flex;
   align-items: center;
@@ -505,7 +788,7 @@
   margin: 0;
 }
 
-/* 5. CALL TO ACTION BANNER */
+/* 5. CALL TO ACTION BANNER (SPATIAL PURPLE LIQUID GLASS THEME) */
 .service-cta-banner {
   position: relative;
   background-size: cover;
@@ -517,40 +800,81 @@
   background-color: #0c111d;
 }
 
-.service-cta-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 80% 50%, rgba(255, 0, 0, 0.25) 0%, transparent 60%),
-              linear-gradient(90deg, rgba(8, 12, 22, 0.94) 0%, rgba(15, 23, 42, 0.88) 100%);
-  pointer-events: none;
+.service-cta-banner-spatial {
+  position: relative !important;
+  overflow: hidden !important;
+  background: radial-gradient(circle at 15% 30%, rgba(147, 51, 234, 0.38) 0%, transparent 50%),
+              radial-gradient(circle at 85% 70%, rgba(217, 70, 239, 0.32) 0%, transparent 55%),
+              linear-gradient(180deg, #090414 0%, #1c0836 50%, #0c051a 100%) !important;
+  padding: clamp(60px, 7vw, 95px) 0 !important;
+  color: #ffffff !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border-top: 1px solid rgba(192, 132, 252, 0.25) !important;
+  border-bottom: 1px solid rgba(192, 132, 252, 0.25) !important;
 }
 
-.cta-container {
+.cta-glass-card {
   position: relative;
   z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 28px;
   width: 100% !important;
-  box-sizing: border-box !important;
+  padding: clamp(32px, 5vw, 48px) clamp(24px, 4vw, 48px) !important;
+  background: rgba(30, 15, 55, 0.48) !important;
+  border: 1.5px solid rgba(216, 180, 254, 0.38) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border-radius: 36px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
-.cta-text {
-  font-size: clamp(1.4rem, 2.8vw, 2rem);
+.cta-glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(216, 180, 254, 0.65) !important;
+  box-shadow: 0 30px 65px rgba(0, 0, 0, 0.65), 0 0 35px rgba(168, 85, 247, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.6) !important;
+}
+
+.cta-text-spatial {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
   font-weight: 800;
   color: #ffffff;
   margin: 0;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
-  letter-spacing: -0.3px;
-  max-width: 750px;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  max-width: 720px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.cta-btn {
-  font-size: 15px;
-  padding: 14px 40px;
-  white-space: nowrap;
+.btn-liquid-purple-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 14px 38px !important;
+  border-radius: 50px !important;
+  background: linear-gradient(135deg, #a855f7 0%, #7e22ce 50%, #6b21a8 100%) !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+  border: 1.5px solid rgba(233, 213, 255, 0.65) !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.48), inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  white-space: nowrap !important;
+  cursor: pointer;
+}
+
+.btn-liquid-purple-pill:hover {
+  background: linear-gradient(135deg, #c084fc 0%, #9333ea 50%, #7e22ce 100%) !important;
+  box-shadow: 0 14px 35px rgba(168, 85, 247, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+  transform: translateY(-3px) scale(1.02) !important;
 }
 
 /* ==========================================================================

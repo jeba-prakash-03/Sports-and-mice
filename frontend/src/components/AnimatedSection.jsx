@@ -52,15 +52,47 @@ export const AnimatedSection = ({
   );
 };
 
-export const AnimatedCard = ({ children, className = '', index = 0, style = {} }) => {
+export const AnimatedCard = ({ 
+  children, 
+  className = '', 
+  index = 0, 
+  style = {},
+  direction = 'up',
+  totalCards = 3,
+  distance = 60
+}) => {
+  const getInitialProps = () => {
+    if (direction === 'asymmetrical' || direction === 'split') {
+      if (totalCards <= 2) {
+        if (index === 0) return { opacity: 0, x: -distance, y: 0, scale: 0.96 };
+        return { opacity: 0, x: distance, y: 0, scale: 0.96 };
+      } else if (totalCards === 3) {
+        if (index === 0) return { opacity: 0, x: -distance, y: 0, scale: 0.96 };
+        if (index === 1) return { opacity: 0, x: 0, y: distance, scale: 0.96 };
+        return { opacity: 0, x: distance, y: 0, scale: 0.96 };
+      } else {
+        if (index === 0) return { opacity: 0, x: -distance, y: 0, scale: 0.96 };
+        if (index === totalCards - 1) return { opacity: 0, x: distance, y: 0, scale: 0.96 };
+        return { opacity: 0, x: 0, y: distance, scale: 0.96 };
+      }
+    } else if (direction === 'left') {
+      return { opacity: 0, x: distance, y: 0, scale: 0.96 };
+    } else if (direction === 'right') {
+      return { opacity: 0, x: -distance, y: 0, scale: 0.96 };
+    } else if (direction === 'down') {
+      return { opacity: 0, x: 0, y: -distance, scale: 0.96 };
+    }
+    return { opacity: 0, x: 0, y: distance, scale: 0.96 };
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 25, scale: 0.97 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={getInitialProps()}
+      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
       viewport={{ once: false, amount: 0.15 }}
       transition={{ 
-        duration: 0.5, 
-        delay: (index % 6) * 0.1,
+        duration: 0.65, 
+        delay: (index % 6) * 0.12,
         ease: [0.16, 1, 0.3, 1] 
       }}
       whileHover={{ 

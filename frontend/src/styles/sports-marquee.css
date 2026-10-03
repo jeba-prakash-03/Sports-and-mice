@@ -1,53 +1,147 @@
-/* Infinite Sports Marquee Ticker Styles (Light Theme) */
+/* Infinite Sports Marquee Ticker Styles (Spatial Liquid Glass Capsule UI) */
 
-.sports-marquee-wrapper {
-  position: relative;
+.sports-marquee-outer-container {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0;
+  box-sizing: border-box;
+}
+
+.sports-marquee-glass-capsule {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 1200px;
+  height: 64px;
+  border-radius: 9999px;
+  padding: 6px 14px 6px 8px;
+  
+  /* Soft Lavender Frosted Glass Capsule (Matching Contact Page Glass Cards) */
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  
+  /* Specular White Glass Borders & Soft Violet Shadow */
+  border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 
+    0 14px 40px rgba(124, 58, 237, 0.12),
+    0 0 0 1px rgba(221, 214, 254, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 1),
+    inset 0 -2px 5px rgba(192, 132, 252, 0.15) !important;
+  
   overflow: hidden;
-  background: linear-gradient(90deg, var(--primary-blue) 0%, #2563eb 50%, var(--primary-blue) 100%);
-  padding: 14px 0;
-  box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
+  transition: all 0.4s ease;
+}
+
+.sports-marquee-glass-capsule:hover {
+  border-color: #ffffff !important;
+  box-shadow: 
+    0 20px 50px rgba(124, 58, 237, 0.18),
+    0 0 0 1px rgba(221, 214, 254, 0.8),
+    inset 0 2px 6px rgba(255, 255, 255, 1) !important;
+}
+
+/* Left Fixed Glass Badge Pill ("UPCOMING TOURS") */
+.marquee-badge-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 4px 16px rgba(109, 40, 217, 0.3),
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+  z-index: 3;
+}
+
+.badge-compass-icon {
+  color: #ffffff;
+}
+
+/* Right Infinite Scrolling Track Wrapper */
+.marquee-track-wrapper {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
 }
 
 .sports-marquee-track {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
   width: max-content;
-  animation: marqueeScroll 25s linear infinite;
+  animation: marqueeScroll 35s linear infinite;
 }
 
-.sports-marquee-wrapper:hover .sports-marquee-track {
+.sports-marquee-glass-capsule:hover .sports-marquee-track {
   animation-play-state: paused;
 }
 
 @keyframes marqueeScroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(-33.333%); }
 }
 
 .marquee-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
   white-space: nowrap;
 }
 
-.marquee-icon {
-  color: #ffffff;
-}
-
 .marquee-label {
-  font-family: var(--font-heading);
-  font-size: 14px;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: 0.06em;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
+.highlight-item .marquee-label {
+  color: #6d28d9;
+  font-weight: 800;
+}
+
 .marquee-bullet {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
-  margin-left: 10px;
+  color: #8b5cf6;
+  font-size: 1.1rem;
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .sports-marquee-glass-capsule {
+    height: 56px;
+    padding: 4px 10px;
+    gap: 12px;
+  }
+  
+  .marquee-badge-pill {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+  }
+
+  .marquee-label {
+    font-size: 0.8rem;
+  }
 }

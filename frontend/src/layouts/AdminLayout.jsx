@@ -2,30 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL } from '../services/api';
-import { 
-  LayoutDashboard, 
-  Inbox, 
-  FileText, 
-  Layers, 
-  Image as ImageIcon, 
-  Palette, 
-  Sparkles, 
-  Link as LinkIcon, 
-  Sliders, 
-  Settings, 
-  User, 
-  LogOut, 
-  ExternalLink, 
-  Menu, 
-  X, 
-  ChevronDown, 
-  ChevronRight, 
-  Award, 
-  Users, 
-  MessageSquareQuote, 
-  HelpCircle, 
-  Compass, 
-  History 
+import {
+  LayoutDashboard,
+  Inbox,
+  FileText,
+  Layers,
+  Image as ImageIcon,
+  Palette,
+  Sparkles,
+  Link as LinkIcon,
+  Sliders,
+  Settings,
+  User,
+  LogOut,
+  ExternalLink,
+  Menu,
+  X,
+  ChevronDown,
+  ChevronRight,
+  Award,
+  Users,
+  MessageSquareQuote,
+  HelpCircle,
+  Compass,
+  History
 } from 'lucide-react';
 import '../styles/admin.css';
 
@@ -93,7 +93,7 @@ const AdminLayout = () => {
     <div className="admin-wrapper">
       {/* Sidebar Overlay for Mobile */}
       {mobileSidebarOpen && (
-        <div 
+        <div
           className="admin-sidebar-overlay"
           onClick={() => setMobileSidebarOpen(false)}
         />
@@ -103,7 +103,7 @@ const AdminLayout = () => {
       <aside className={`admin-sidebar ${mobileSidebarOpen ? 'open' : ''}`}>
         {/* Brand */}
         <NavLink to="/admin/dashboard" className="sidebar-brand">
-          <img src="/assets/images/logo.png" alt="Logo" className="sidebar-logo" />
+          <img src="/assets/images/logo.jpeg" alt="Logo" className="sidebar-logo" />
           <div>
             <span className="sidebar-brand-title">Sports & MICE</span>
             <span className="sidebar-brand-badge">CMS PANEL</span>
@@ -112,8 +112,8 @@ const AdminLayout = () => {
 
         {/* Nav list */}
         <div className="sidebar-nav">
-          <NavLink 
-            to="/admin/dashboard" 
+          <NavLink
+            to="/admin/dashboard"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
             end
           >
@@ -131,8 +131,8 @@ const AdminLayout = () => {
 
           {builderOpen && (
             <div className="sidebar-sub-menu">
-              <NavLink 
-                to="/admin/website-builder" 
+              <NavLink
+                to="/admin/website-builder"
                 className={({ isActive }) => `sidebar-sub-item ${isActive ? 'active' : ''}`}
                 style={{ backgroundColor: 'rgba(59, 130, 246, 0.12)', color: '#38bdf8', fontWeight: 600 }}
               >
@@ -140,16 +140,16 @@ const AdminLayout = () => {
                 <span>Visual Page Builder</span>
               </NavLink>
 
-              <NavLink 
-                to="/admin/builder/pages" 
+              <NavLink
+                to="/admin/builder/pages"
                 className={({ isActive }) => `sidebar-sub-item ${isActive ? 'active' : ''}`}
               >
                 <FileText size={15} />
                 <span>Pages</span>
               </NavLink>
 
-              <NavLink 
-                to="/admin/builder/media" 
+              <NavLink
+                to="/admin/builder/media"
                 className={({ isActive }) => `sidebar-sub-item ${isActive ? 'active' : ''}`}
               >
                 <ImageIcon size={15} />
@@ -166,40 +166,40 @@ const AdminLayout = () => {
 
           {contentOpen && (
             <div className="sidebar-sub-menu">
-              <NavLink 
-                to="/admin/content/services" 
+              <NavLink
+                to="/admin/content/services"
                 className={({ isActive }) => `sidebar-sub-item ${isActive ? 'active' : ''}`}
               >
                 <Award size={15} />
                 <span>Services</span>
               </NavLink>
 
-              <NavLink 
-                to="/admin/content/team" 
+              <NavLink
+                to="/admin/content/team"
                 className={({ isActive }) => `sidebar-sub-item ${isActive ? 'active' : ''}`}
               >
                 <Users size={15} />
                 <span>Team</span>
               </NavLink>
 
-              <NavLink 
-                to="/admin/content/testimonials" 
+              <NavLink
+                to="/admin/content/testimonials"
                 className={({ isActive }) => `sidebar-sub-item ${isActive ? 'active' : ''}`}
               >
                 <MessageSquareQuote size={15} />
                 <span>Testimonials</span>
               </NavLink>
 
-              <NavLink 
-                to="/admin/content/faqs" 
+              <NavLink
+                to="/admin/content/faqs"
                 className={({ isActive }) => `sidebar-sub-item ${isActive ? 'active' : ''}`}
               >
                 <HelpCircle size={15} />
                 <span>FAQs</span>
               </NavLink>
 
-              <NavLink 
-                to="/admin/content/gallery" 
+              <NavLink
+                to="/admin/content/gallery"
                 className={({ isActive }) => `sidebar-sub-item ${isActive ? 'active' : ''}`}
               >
                 <Compass size={15} />
@@ -211,8 +211,8 @@ const AdminLayout = () => {
           {/* Group 3: Inquiries */}
           <div className="sidebar-section-title">Inquiries</div>
 
-          <NavLink 
-            to="/admin/forms" 
+          <NavLink
+            to="/admin/forms"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <div className="sidebar-item-left">
@@ -227,8 +227,8 @@ const AdminLayout = () => {
           {/* Group 4: Settings */}
           <div className="sidebar-section-title">Settings</div>
 
-          <NavLink 
-            to="/admin/settings" 
+          <NavLink
+            to="/admin/settings"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <div className="sidebar-item-left">
@@ -237,8 +237,8 @@ const AdminLayout = () => {
             </div>
           </NavLink>
 
-          <NavLink 
-            to="/admin/builder/header" 
+          <NavLink
+            to="/admin/builder/header"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <div className="sidebar-item-left">
@@ -247,8 +247,8 @@ const AdminLayout = () => {
             </div>
           </NavLink>
 
-          <NavLink 
-            to="/admin/audit-logs" 
+          <NavLink
+            to="/admin/audit-logs"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <div className="sidebar-item-left">
@@ -257,8 +257,8 @@ const AdminLayout = () => {
             </div>
           </NavLink>
 
-          <NavLink 
-            to="/admin/profile" 
+          <NavLink
+            to="/admin/profile"
             className={({ isActive }) => `sidebar-nav-item ${isActive ? 'active' : ''}`}
           >
             <div className="sidebar-item-left">
@@ -275,9 +275,9 @@ const AdminLayout = () => {
               <p className="user-name">{user?.name || 'Administrator'}</p>
               <p className="user-role">{user?.email || 'admin@sportsandmice.com'}</p>
             </div>
-            <button 
-              onClick={handleLogout} 
-              className="logout-btn-icon" 
+            <button
+              onClick={handleLogout}
+              className="logout-btn-icon"
               title="Log out"
             >
               <LogOut size={16} />
@@ -291,7 +291,7 @@ const AdminLayout = () => {
         {/* Top bar */}
         <header className="admin-topbar">
           <div className="topbar-left">
-            <button 
+            <button
               className="mobile-sidebar-toggle"
               onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
               aria-label="Toggle navigation menu"
@@ -307,8 +307,8 @@ const AdminLayout = () => {
               <ExternalLink size={14} />
             </a>
 
-            <NavLink 
-              to="/admin/profile" 
+            <NavLink
+              to="/admin/profile"
               className="topbar-user-pill"
               title="View & Edit Admin Profile"
               style={{

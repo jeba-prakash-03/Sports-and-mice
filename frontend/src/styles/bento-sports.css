@@ -7,7 +7,7 @@
   background-color: var(--light-bg);
   background-image:
     radial-gradient(circle at 10% 20%, rgba(16, 108, 194, 0.04) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(255, 0, 0, 0.03) 0%, transparent 40%);
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 40%);
   overflow: hidden;
 }
 
@@ -145,7 +145,7 @@
   height: 8px;
   border-radius: 50%;
   background: var(--primary-red);
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
   animation: pulseRed 1.4s ease-in-out infinite;
 }
 
@@ -231,7 +231,7 @@
 .bento-trophy-img {
   height: 130px;
   object-fit: contain;
-  filter: drop-shadow(0 12px 20px rgba(255, 0, 0, 0.15));
+  filter: drop-shadow(0 12px 20px rgba(139, 92, 246, 0.15));
   transition: transform 0.4s ease;
 }
 

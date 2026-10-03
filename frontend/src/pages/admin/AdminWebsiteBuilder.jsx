@@ -15,37 +15,37 @@ import AboutUs from '../AboutUs';
 import HotelsMore from '../HotelsMore';
 import Contact from '../Contact';
 
-import { 
-  ArrowLeft, 
+import {
+  ArrowLeft,
   ArrowRight,
-  Monitor, 
-  Tablet, 
-  Smartphone, 
-  Undo2, 
-  Redo2, 
-  Eye, 
-  Save, 
-  Send, 
-  Check, 
-  Loader2, 
-  AlertCircle, 
-  Plus, 
-  Trash2, 
-  Copy, 
-  EyeOff, 
-  MoveUp, 
+  Monitor,
+  Tablet,
+  Smartphone,
+  Undo2,
+  Redo2,
+  Eye,
+  Save,
+  Send,
+  Check,
+  Loader2,
+  AlertCircle,
+  Plus,
+  Trash2,
+  Copy,
+  EyeOff,
+  MoveUp,
   MoveDown,
   MoveLeft,
   MoveRight,
-  Video, 
-  Sliders, 
-  Sparkles, 
-  Palette, 
-  Layout, 
-  Type, 
-  Image as ImageIcon, 
-  X, 
-  Upload, 
+  Video,
+  Sliders,
+  Sparkles,
+  Palette,
+  Layout,
+  Type,
+  Image as ImageIcon,
+  X,
+  Upload,
   Search,
   CheckCircle2,
   RefreshCw,
@@ -84,11 +84,11 @@ import {
   Maximize2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  getResponsiveValue, 
-  setResponsiveValue, 
-  isExplicitlyOverridden, 
-  BREAKPOINTS 
+import {
+  getResponsiveValue,
+  setResponsiveValue,
+  isExplicitlyOverridden,
+  BREAKPOINTS
 } from '../../utils/responsiveStyles';
 import '../../styles/website-builder.css';
 import { ImagePickerField, EditorButton, EditorIconButton, QuickAddGrid } from '../../components/admin/EditorUI';
@@ -1005,8 +1005,8 @@ const AdminWebsiteBuilder = () => {
 
           <div className="builder-page-select-wrapper">
             <span className="builder-bar-label">Page:</span>
-            <select 
-              value={activePage} 
+            <select
+              value={activePage}
               onChange={(e) => handlePageChange(e.target.value)}
               className="builder-page-select"
             >
@@ -1019,8 +1019,8 @@ const AdminWebsiteBuilder = () => {
           </div>
 
           {/* Manage All Pages Modal Button */}
-          <button 
-            type="button" 
+          <button
+            type="button"
             onClick={() => setPagesListModalOpen(true)}
             className="builder-tool-btn"
             title="Manage all website pages & custom routes"
@@ -1030,8 +1030,8 @@ const AdminWebsiteBuilder = () => {
           </button>
 
           {/* New Page Wizard Quick Button */}
-          <button 
-            type="button" 
+          <button
+            type="button"
             onClick={() => setNewPageModalOpen(true)}
             className="builder-tool-btn btn-new-page-trigger"
             title="Create completely new page visually"
@@ -1067,7 +1067,7 @@ const AdminWebsiteBuilder = () => {
         <div className="builder-top-center">
           {/* Responsive Viewport Switcher */}
           <div className="builder-viewport-pills">
-            <button 
+            <button
               type="button"
               className={`builder-viewport-pill ${viewport === 'desktop' ? 'active' : ''}`}
               onClick={() => handleDeviceChange('desktop')}
@@ -1076,7 +1076,7 @@ const AdminWebsiteBuilder = () => {
               <Monitor size={14} />
               <span>Desktop</span>
             </button>
-            <button 
+            <button
               type="button"
               className={`builder-viewport-pill ${viewport === 'tablet' ? 'active' : ''}`}
               onClick={() => handleDeviceChange('tablet')}
@@ -1085,7 +1085,7 @@ const AdminWebsiteBuilder = () => {
               <Tablet size={14} />
               <span>Tablet</span>
             </button>
-            <button 
+            <button
               type="button"
               className={`builder-viewport-pill ${viewport === 'mobile' ? 'active' : ''}`}
               onClick={() => handleDeviceChange('mobile')}
@@ -1098,18 +1098,18 @@ const AdminWebsiteBuilder = () => {
 
           {/* Canvas Zoom Controls */}
           <div className="builder-zoom-controls">
-            <button 
-              type="button" 
-              className="zoom-btn" 
+            <button
+              type="button"
+              className="zoom-btn"
               onClick={() => setZoom(prev => Math.max(50, prev - 25))}
               title="Zoom out"
             >
               <ZoomOut size={13} />
             </button>
             <span className="zoom-value-label">{zoom}%</span>
-            <button 
-              type="button" 
-              className="zoom-btn" 
+            <button
+              type="button"
+              className="zoom-btn"
               onClick={() => setZoom(prev => Math.min(150, prev + 25))}
               title="Zoom in"
             >
@@ -1165,17 +1165,17 @@ const AdminWebsiteBuilder = () => {
         {/* Right: History Undo/Redo & Save/Publish */}
         <div className="builder-top-right">
           <div className="builder-history-group">
-            <button 
-              className="builder-icon-btn" 
-              onClick={handleUndo} 
+            <button
+              className="builder-icon-btn"
+              onClick={handleUndo}
               disabled={!canUndo}
               title="Undo last change (Ctrl+Z)"
             >
               <Undo2 size={15} />
             </button>
-            <button 
-              className="builder-icon-btn" 
-              onClick={handleRedo} 
+            <button
+              className="builder-icon-btn"
+              onClick={handleRedo}
               disabled={!canRedo}
               title="Redo (Ctrl+Y)"
             >
@@ -1223,7 +1223,7 @@ const AdminWebsiteBuilder = () => {
           </div>
 
           {/* Explicit Save Draft Button */}
-          <button 
+          <button
             type="button"
             className="builder-btn-secondary"
             onClick={saveDraft}
@@ -1235,7 +1235,7 @@ const AdminWebsiteBuilder = () => {
           </button>
 
           {/* Preview Draft Button */}
-          <button 
+          <button
             type="button"
             className="builder-btn-secondary"
             onClick={() => {
@@ -1250,7 +1250,7 @@ const AdminWebsiteBuilder = () => {
           </button>
 
           {/* Publish Changes Button */}
-          <button 
+          <button
             type="button"
             className="builder-btn-primary"
             onClick={() => setPublishModalOpen(true)}
@@ -1264,7 +1264,7 @@ const AdminWebsiteBuilder = () => {
       </header>
 
       {/* Mode Status Info Strip */}
-      <div 
+      <div
         style={{
           background: isPreviewMode ? '#064e3b' : '#0f2942',
           borderBottom: isPreviewMode ? '1px solid #059669' : '1px solid #1e3a8a',
@@ -1281,8 +1281,8 @@ const AdminWebsiteBuilder = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           {isPreviewMode ? <Eye size={15} color="#34d399" /> : <Edit2 size={15} color="#38bdf8" />}
           <span>
-            {isPreviewMode 
-              ? '👁 LIVE PREVIEW MODE ACTIVE — Buttons and links navigate normally. Form submissions work with draft database.' 
+            {isPreviewMode
+              ? '👁 LIVE PREVIEW MODE ACTIVE — Buttons and links navigate normally. Form submissions work with draft database.'
               : '🔧 EDIT MODE ACTIVE — Click any button, heading, text, image, or navbar item to customize properties. Public links are paused.'}
           </span>
         </div>
@@ -1292,8 +1292,8 @@ const AdminWebsiteBuilder = () => {
             <span style={{ background: '#0284c7', color: '#fff', padding: '2px 8px', borderRadius: '4px', textTransform: 'uppercase', fontWeight: 700 }}>
               {selectedElement.type || 'Element'} {selectedElement.fieldPrefix || selectedElement.blockId || selectedElement.navId || ''}
             </span>
-            <button 
-              onClick={() => setSelectedElement(null)} 
+            <button
+              onClick={() => setSelectedElement(null)}
               style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
               title="Clear selection"
             >
@@ -1306,7 +1306,7 @@ const AdminWebsiteBuilder = () => {
       {/* Success Banner Alert */}
       <AnimatePresence>
         {publishSuccessMsg && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -1340,24 +1340,24 @@ const AdminWebsiteBuilder = () => {
         <aside className="builder-sidebar-left">
           {leftSidebarCollapsed ? (
             <div className="sidebar-rail-collapsed">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="rail-action-btn"
                 onClick={() => setLeftSidebarCollapsed(false)}
                 title="Expand Add to Page Library"
               >
                 <ChevronRight size={16} />
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="rail-action-btn"
                 onClick={() => { setLeftSidebarCollapsed(false); setActiveLibraryTab('all'); }}
                 title="Components"
               >
                 <Plus size={16} />
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="rail-action-btn"
                 onClick={() => { setLeftSidebarCollapsed(false); setActiveLibraryTab('layers'); }}
                 title="Layers Structure"
@@ -1372,8 +1372,8 @@ const AdminWebsiteBuilder = () => {
                   <Plus size={16} color="#38bdf8" />
                   <span>Add to Page</span>
                 </div>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="sidebar-toggle-btn"
                   onClick={() => setLeftSidebarCollapsed(true)}
                   title="Collapse Sidebar"
@@ -1384,9 +1384,9 @@ const AdminWebsiteBuilder = () => {
 
               {activeLibraryTab !== 'layers' && (
                 <div className="library-search-box">
-                  <input 
-                    type="text" 
-                    placeholder="Search components (button, card, text...)" 
+                  <input
+                    type="text"
+                    placeholder="Search components (button, card, text...)"
                     value={librarySearch}
                     onChange={(e) => setLibrarySearch(e.target.value)}
                     className="library-search-input"
@@ -1396,43 +1396,43 @@ const AdminWebsiteBuilder = () => {
 
               {/* Category Chips Bar */}
               <div className="library-category-chips">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={`library-category-chip ${activeLibraryTab === 'all' ? 'active' : ''}`}
                   onClick={() => setActiveLibraryTab('all')}
                 >
                   All
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={`library-category-chip ${activeLibraryTab === 'basic' ? 'active' : ''}`}
                   onClick={() => setActiveLibraryTab('basic')}
                 >
                   Basic
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={`library-category-chip ${activeLibraryTab === 'layout' ? 'active' : ''}`}
                   onClick={() => setActiveLibraryTab('layout')}
                 >
                   Layout
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={`library-category-chip ${activeLibraryTab === 'content' ? 'active' : ''}`}
                   onClick={() => setActiveLibraryTab('content')}
                 >
                   Content
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={`library-category-chip ${activeLibraryTab === 'website' ? 'active' : ''}`}
                   onClick={() => setActiveLibraryTab('website')}
                 >
                   Website
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className={`library-category-chip ${activeLibraryTab === 'layers' ? 'active' : ''}`}
                   onClick={() => setActiveLibraryTab('layers')}
                 >
@@ -1445,8 +1445,8 @@ const AdminWebsiteBuilder = () => {
                 {activeLibraryTab !== 'layers' ? (
                   <div className="library-grid-cards">
                     <div style={{ fontSize: '0.74rem', color: '#64748b', padding: '0 4px 4px 4px' }}>
-                      {selectedElement?.colId 
-                        ? `Adding will insert into selected Column:` 
+                      {selectedElement?.colId
+                        ? `Adding will insert into selected Column:`
                         : `Drag any card to canvas or click [+ Add]:`}
                     </div>
                     {filteredLibraryItems.length === 0 ? (
@@ -1456,7 +1456,7 @@ const AdminWebsiteBuilder = () => {
                       </div>
                     ) : (
                       filteredLibraryItems.map((item) => (
-                        <div 
+                        <div
                           key={`${item.category}_${item.type}_${item.layout || ''}_${item.name}`}
                           className="visual-component-card"
                           draggable={true}
@@ -1488,9 +1488,9 @@ const AdminWebsiteBuilder = () => {
                                 <GripVertical size={13} />
                                 <span>Drag</span>
                               </div>
-                              <button 
-                                type="button" 
-                                className="card-add-btn" 
+                              <button
+                                type="button"
+                                className="card-add-btn"
                                 onClick={() => handleAddLibraryItem(item)}
                                 title="Click to add component"
                               >
@@ -1558,7 +1558,7 @@ const AdminWebsiteBuilder = () => {
 
                       return (
                         <div key={sec.id} style={{ display: 'flex', flexDirection: 'column', gap: '2px', borderLeft: isSecSelected ? '2px solid #38bdf8' : '2px solid #334155', paddingLeft: '8px' }}>
-                          <div 
+                          <div
                             style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', background: isSecSelected ? '#1e293b' : '#0f172a', borderRadius: '6px', cursor: 'pointer' }}
                             onClick={() => {
                               setSelectedSectionId(sec.id);
@@ -1802,7 +1802,7 @@ const AdminWebsiteBuilder = () => {
                             <div style={{ paddingLeft: '12px', display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '2px' }}>
                               {sec.columns.map((col, cIdx) => (
                                 <div key={col.id || cIdx}>
-                                  <div 
+                                  <div
                                     style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '4px 8px', background: selectedElement?.colId === col.id ? '#334155' : 'rgba(255,255,255,0.03)', borderRadius: '4px', cursor: 'pointer', fontSize: '0.78rem', color: '#94a3b8' }}
                                     onClick={(e) => {
                                       e.stopPropagation();
@@ -1817,7 +1817,7 @@ const AdminWebsiteBuilder = () => {
                                   {/* Blocks in Column */}
                                   <div style={{ paddingLeft: '12px', display: 'flex', flexDirection: 'column', gap: '2px', marginTop: '2px' }}>
                                     {(col.blocks || []).map((blk, bIdx) => (
-                                      <div 
+                                      <div
                                         key={blk.id || bIdx}
                                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '3px 6px', background: selectedElement?.blockId === blk.id ? '#38bdf8' : 'none', color: selectedElement?.blockId === blk.id ? '#0f172a' : '#cbd5e1', borderRadius: '4px', fontSize: '0.75rem', cursor: 'pointer' }}
                                         onClick={(e) => {
@@ -1827,9 +1827,9 @@ const AdminWebsiteBuilder = () => {
                                         }}
                                       >
                                         <span>• {blk.type}</span>
-                                        <button 
+                                        <button
                                           type="button"
-                                          onClick={(e) => { e.stopPropagation(); removeBlock(sec.id, col.id, blk.id); }} 
+                                          onClick={(e) => { e.stopPropagation(); removeBlock(sec.id, col.id, blk.id); }}
                                           style={{ background: 'none', border: 'none', color: 'inherit', opacity: 0.7, cursor: 'pointer' }}
                                         >
                                           <Trash2 size={11} />
@@ -1867,7 +1867,7 @@ const AdminWebsiteBuilder = () => {
         <main className="builder-canvas-container">
           {/* Breadcrumb Navigation Bar (Requirement 10 & 16) */}
           <div className="builder-breadcrumb-bar">
-            <button 
+            <button
               type="button"
               className="breadcrumb-item breadcrumb-clickable"
               onClick={() => { setSelectedSectionId(null); setSelectedElement(null); }}
@@ -1922,7 +1922,7 @@ const AdminWebsiteBuilder = () => {
             {selectedSection && !['navbar_item', 'header_brand', 'footer', 'footer_socials', 'footer_contact', 'footer_address', 'footer_legal'].includes(selectedElement?.type) && (
               <>
                 <ChevronRight size={12} className="breadcrumb-separator" />
-                <button 
+                <button
                   type="button"
                   className={`breadcrumb-item ${selectedElement ? 'breadcrumb-clickable' : 'breadcrumb-current'}`}
                   onClick={() => { setSelectedSectionId(selectedSection.id); setSelectedElement({ type: 'section', sectionId: selectedSection.id, section: selectedSection }); }}
@@ -1955,7 +1955,7 @@ const AdminWebsiteBuilder = () => {
                 {selectedElement.cardId && selectedElement.type?.startsWith('gallery') && (
                   <>
                     <ChevronRight size={12} className="breadcrumb-separator" />
-                    <button 
+                    <button
                       type="button"
                       className={`breadcrumb-item ${selectedElement.type !== 'gallery_card' ? 'breadcrumb-clickable' : 'breadcrumb-current'}`}
                       onClick={() => {
@@ -1973,7 +1973,7 @@ const AdminWebsiteBuilder = () => {
                 {selectedElement.cardIndex !== undefined && (
                   <>
                     <ChevronRight size={12} className="breadcrumb-separator" />
-                    <button 
+                    <button
                       type="button"
                       className={`breadcrumb-item ${selectedElement.type !== 'section_card' ? 'breadcrumb-clickable' : 'breadcrumb-current'}`}
                       onClick={() => {
@@ -1990,7 +1990,7 @@ const AdminWebsiteBuilder = () => {
                 {selectedElement.colId && (
                   <>
                     <ChevronRight size={12} className="breadcrumb-separator" />
-                    <button 
+                    <button
                       type="button"
                       className={`breadcrumb-item ${selectedElement.blockId ? 'breadcrumb-clickable' : 'breadcrumb-current'}`}
                       onClick={() => {
@@ -2016,7 +2016,7 @@ const AdminWebsiteBuilder = () => {
             )}
           </div>
 
-          <div 
+          <div
             className="builder-canvas-scaler"
             style={{
               transform: `scale(${zoom / 100})`,
@@ -2029,48 +2029,48 @@ const AdminWebsiteBuilder = () => {
 
               {/* Real Active Page Component */}
               <div className="real-page-editor-wrapper">
-              {['home', 'service', 'about', 'hotels', 'contact'].includes(activePage) ? (
-                <>
-                  {activePage === 'home' && <Home />}
-                  {activePage === 'service' && <Service />}
-                  {activePage === 'about' && <AboutUs />}
-                  {activePage === 'hotels' && <HotelsMore />}
-                  {activePage === 'contact' && <Contact />}
-                </>
-              ) : (
-                <div className="dynamic-page-content">
-                  {(cmsConfig?.sections?.[activePage] || []).length === 0 ? (
-                    <div className="builder-empty-page-state">
-                      <div className="empty-page-icon">
-                        <Layout size={38} color="#38bdf8" />
+                {['home', 'service', 'about', 'hotels', 'contact'].includes(activePage) ? (
+                  <>
+                    {activePage === 'home' && <Home />}
+                    {activePage === 'service' && <Service />}
+                    {activePage === 'about' && <AboutUs />}
+                    {activePage === 'hotels' && <HotelsMore />}
+                    {activePage === 'contact' && <Contact />}
+                  </>
+                ) : (
+                  <div className="dynamic-page-content">
+                    {(cmsConfig?.sections?.[activePage] || []).length === 0 ? (
+                      <div className="builder-empty-page-state">
+                        <div className="empty-page-icon">
+                          <Layout size={38} color="#38bdf8" />
+                        </div>
+                        <h3>This page is currently empty</h3>
+                        <p>Start building your page by dragging components from the left library or click below:</p>
+                        <div className="empty-page-actions">
+                          <button type="button" onClick={() => insertSectionAt(DEFAULT_NEW_SECTIONS.hero, 0)} className="btn-empty-add-sec">+ Add Hero Banner</button>
+                          <button type="button" onClick={() => addRowSection('50-50', 0)} className="btn-empty-add-sec">+ Add 2-Column Row</button>
+                          <button type="button" onClick={() => addRowSection('100', 0)} className="btn-empty-add-sec">+ Add 1-Column Row</button>
+                        </div>
                       </div>
-                      <h3>This page is currently empty</h3>
-                      <p>Start building your page by dragging components from the left library or click below:</p>
-                      <div className="empty-page-actions">
-                        <button type="button" onClick={() => insertSectionAt(DEFAULT_NEW_SECTIONS.hero, 0)} className="btn-empty-add-sec">+ Add Hero Banner</button>
-                        <button type="button" onClick={() => addRowSection('50-50', 0)} className="btn-empty-add-sec">+ Add 2-Column Row</button>
-                        <button type="button" onClick={() => addRowSection('100', 0)} className="btn-empty-add-sec">+ Add 1-Column Row</button>
-                      </div>
-                    </div>
-                  ) : (
-                    (cmsConfig?.sections?.[activePage] || []).map((section, idx) => (
-                      <DynamicSectionRenderer
-                        key={section.id || idx}
-                        section={section}
-                        pageKey={activePage}
-                        isBuilderMode={true}
-                      />
-                    ))
-                  )}
-                </div>
-              )}
-            </div>
+                    ) : (
+                      (cmsConfig?.sections?.[activePage] || []).map((section, idx) => (
+                        <DynamicSectionRenderer
+                          key={section.id || idx}
+                          section={section}
+                          pageKey={activePage}
+                          isBuilderMode={true}
+                        />
+                      ))
+                    )}
+                  </div>
+                )}
+              </div>
 
-            {/* Real Footer Component */}
-            <Footer />
+              {/* Real Footer Component */}
+              <Footer />
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
 
 
         {/* ================= RIGHT PANEL: CONTEXTUAL INSPECTOR ================= */}
@@ -2889,8 +2889,8 @@ const AdminWebsiteBuilder = () => {
                   <span className="properties-title">Button & Link Settings</span>
                   <span className="section-tag-label">{selectedElement.fieldPrefix || selectedElement.blockId || 'Button'}</span>
                 </div>
-                <button 
-                  onClick={() => setSelectedElement(null)} 
+                <button
+                  onClick={() => setSelectedElement(null)}
                   style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
                 >
                   <X size={16} />
@@ -2965,129 +2965,129 @@ const AdminWebsiteBuilder = () => {
 
                   <div className="property-group">
                     <label className="property-label">Link Destination Type</label>
-                <select 
-                  value={selectedElement.link_type || 'internal'}
-                  onChange={(e) => {
-                    const lType = e.target.value;
-                    let defaultDest = selectedElement.link || '/en/Contact/';
-                    if (lType === 'email' && !defaultDest.startsWith('mailto:')) defaultDest = 'mailto:contact@sportsandmice.com';
-                    if (lType === 'phone' && !defaultDest.startsWith('tel:')) defaultDest = 'tel:+492241343320';
-                    if (lType === 'external' && !defaultDest.startsWith('http')) defaultDest = 'https://';
+                    <select
+                      value={selectedElement.link_type || 'internal'}
+                      onChange={(e) => {
+                        const lType = e.target.value;
+                        let defaultDest = selectedElement.link || '/en/Contact/';
+                        if (lType === 'email' && !defaultDest.startsWith('mailto:')) defaultDest = 'mailto:contact@sportsandmice.com';
+                        if (lType === 'phone' && !defaultDest.startsWith('tel:')) defaultDest = 'tel:+492241343320';
+                        if (lType === 'external' && !defaultDest.startsWith('http')) defaultDest = 'https://';
 
-                    if (selectedElement.colId && selectedElement.blockId) {
-                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, { link_type: lType, link: defaultDest });
-                    } else {
-                      updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { link_type: lType, link: defaultDest });
-                    }
-                    setSelectedElement(prev => ({ ...prev, link_type: lType, link: defaultDest }));
-                  }}
-                  className="property-input"
-                >
-                  <option value="internal">Internal Website Page</option>
-                  <option value="external">External URL (https://...)</option>
-                  <option value="email">Email Address (mailto:...)</option>
-                  <option value="phone">Phone Number (tel:...)</option>
-                </select>
-              </div>
+                        if (selectedElement.colId && selectedElement.blockId) {
+                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, { link_type: lType, link: defaultDest });
+                        } else {
+                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { link_type: lType, link: defaultDest });
+                        }
+                        setSelectedElement(prev => ({ ...prev, link_type: lType, link: defaultDest }));
+                      }}
+                      className="property-input"
+                    >
+                      <option value="internal">Internal Website Page</option>
+                      <option value="external">External URL (https://...)</option>
+                      <option value="email">Email Address (mailto:...)</option>
+                      <option value="phone">Phone Number (tel:...)</option>
+                    </select>
+                  </div>
 
-              {/* Internal Page Picker dropdown */}
-              {(selectedElement.link_type === 'internal' || !selectedElement.link_type) && (
-                <div className="property-group">
-                  <label className="property-label">Select Internal Page</label>
-                  <select 
-                    value={selectedElement.link || '/en/Contact/'}
-                    onChange={(e) => {
-                      const dest = e.target.value;
-                      if (selectedElement.colId && selectedElement.blockId) {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'link', dest);
-                      } else {
-                        updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { link: dest });
-                      }
-                      setSelectedElement(prev => ({ ...prev, link: dest }));
-                    }}
-                    className="property-input"
-                  >
-                    <option value="/">Home ( / )</option>
-                    <option value="/en/Service/">Services ( /en/Service/ )</option>
-                    <option value="/en/About-us/">About Us ( /en/About-us/ )</option>
-                    <option value="/en/Hotels-more/">Hotels & More ( /en/Hotels-more/ )</option>
-                    <option value="/en/Contact/">Contact Form ( /en/Contact/ )</option>
-                    {/* Add all custom dynamic pages */}
-                    {Object.entries(cmsConfig?.pages || {}).filter(([k]) => !['home', 'service', 'about', 'hotels', 'contact'].includes(k)).map(([slug, pageObj]) => (
-                      <option key={slug} value={`/${slug}`}>
-                        {pageObj.title || slug} ( /{slug} )
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+                  {/* Internal Page Picker dropdown */}
+                  {(selectedElement.link_type === 'internal' || !selectedElement.link_type) && (
+                    <div className="property-group">
+                      <label className="property-label">Select Internal Page</label>
+                      <select
+                        value={selectedElement.link || '/en/Contact/'}
+                        onChange={(e) => {
+                          const dest = e.target.value;
+                          if (selectedElement.colId && selectedElement.blockId) {
+                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'link', dest);
+                          } else {
+                            updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { link: dest });
+                          }
+                          setSelectedElement(prev => ({ ...prev, link: dest }));
+                        }}
+                        className="property-input"
+                      >
+                        <option value="/">Home ( / )</option>
+                        <option value="/en/Service/">Services ( /en/Service/ )</option>
+                        <option value="/en/About-us/">About Us ( /en/About-us/ )</option>
+                        <option value="/en/Hotels-more/">Hotels & More ( /en/Hotels-more/ )</option>
+                        <option value="/en/Contact/">Contact Form ( /en/Contact/ )</option>
+                        {/* Add all custom dynamic pages */}
+                        {Object.entries(cmsConfig?.pages || {}).filter(([k]) => !['home', 'service', 'about', 'hotels', 'contact'].includes(k)).map(([slug, pageObj]) => (
+                          <option key={slug} value={`/${slug}`}>
+                            {pageObj.title || slug} ( /{slug} )
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
-              {/* Exact URL / Destination field */}
-              <div className="property-group">
-                <label className="property-label">Target URL / Path</label>
-                <input 
-                  type="text" 
-                  value={selectedElement.link || ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (selectedElement.colId && selectedElement.blockId) {
-                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'link', val);
-                    } else {
-                      updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { link: val });
-                    }
-                    setSelectedElement(prev => ({ ...prev, link: val }));
-                  }}
-                  className="property-input"
-                  placeholder="/en/Contact/"
-                />
-              </div>
+                  {/* Exact URL / Destination field */}
+                  <div className="property-group">
+                    <label className="property-label">Target URL / Path</label>
+                    <input
+                      type="text"
+                      value={selectedElement.link || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (selectedElement.colId && selectedElement.blockId) {
+                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'link', val);
+                        } else {
+                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { link: val });
+                        }
+                        setSelectedElement(prev => ({ ...prev, link: val }));
+                      }}
+                      className="property-input"
+                      placeholder="/en/Contact/"
+                    />
+                  </div>
 
-              {/* Target & Test Link Action */}
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                <div style={{ flex: 1 }}>
-                  <label className="property-label">Open In</label>
-                  <select 
-                    value={selectedElement.target || '_self'}
-                    onChange={(e) => {
-                      const tgt = e.target.value;
-                      if (selectedElement.colId && selectedElement.blockId) {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'target', tgt);
-                      } else {
-                        updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { target: tgt });
-                      }
-                      setSelectedElement(prev => ({ ...prev, target: tgt }));
-                    }}
-                    className="property-input"
-                  >
-                    <option value="_self">Same Tab</option>
-                    <option value="_blank">New Tab (_blank)</option>
-                  </select>
-                </div>
+                  {/* Target & Test Link Action */}
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <label className="property-label">Open In</label>
+                      <select
+                        value={selectedElement.target || '_self'}
+                        onChange={(e) => {
+                          const tgt = e.target.value;
+                          if (selectedElement.colId && selectedElement.blockId) {
+                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'target', tgt);
+                          } else {
+                            updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { target: tgt });
+                          }
+                          setSelectedElement(prev => ({ ...prev, target: tgt }));
+                        }}
+                        className="property-input"
+                      >
+                        <option value="_self">Same Tab</option>
+                        <option value="_blank">New Tab (_blank)</option>
+                      </select>
+                    </div>
 
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                  <label className="property-label">&nbsp;</label>
-                  <button 
-                    type="button"
-                    onClick={() => {
-                      const dest = selectedElement.link || '/en/Contact/';
-                      window.open(dest.startsWith('http') ? dest : `${window.location.origin}${dest.startsWith('/') ? dest : '/' + dest}`, '_blank');
-                    }}
-                    style={{ padding: '8px 12px', background: '#334155', color: '#fff', border: '1px solid #475569', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}
-                    title="Safely test the button destination in a separate browser tab"
-                  >
-                    <ExternalLink size={13} />
-                    <span>Test Link</span>
-                  </button>
-                </div>
-              </div>
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                      <label className="property-label">&nbsp;</label>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const dest = selectedElement.link || '/en/Contact/';
+                          window.open(dest.startsWith('http') ? dest : `${window.location.origin}${dest.startsWith('/') ? dest : '/' + dest}`, '_blank');
+                        }}
+                        style={{ padding: '8px 12px', background: '#334155', color: '#fff', border: '1px solid #475569', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', cursor: 'pointer' }}
+                        title="Safely test the button destination in a separate browser tab"
+                      >
+                        <ExternalLink size={13} />
+                        <span>Test Link</span>
+                      </button>
+                    </div>
+                  </div>
                 </>
               )}
 
               {/* Remove block button if it is a block */}
               {selectedElement.blockId && (
                 <div style={{ marginTop: '20px', paddingTop: '14px', borderTop: '1px solid #334155' }}>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => removeBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId)}
                     style={{ width: '100%', padding: '10px', background: '#fee2e2', color: '#dc2626', border: '1px solid #fca5a5', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                   >
@@ -3105,8 +3105,8 @@ const AdminWebsiteBuilder = () => {
                   <span className="properties-title">Navbar Link Settings</span>
                   <span className="section-tag-label">{selectedElement.navId || 'Navbar'}</span>
                 </div>
-                <button 
-                  onClick={() => setSelectedElement(null)} 
+                <button
+                  onClick={() => setSelectedElement(null)}
                   style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
                 >
                   <X size={16} />
@@ -3115,8 +3115,8 @@ const AdminWebsiteBuilder = () => {
 
               <div className="property-group">
                 <label className="property-label">Navigation Label (English)</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={selectedElement.item?.name_en || selectedElement.item?.name || ''}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -3129,8 +3129,8 @@ const AdminWebsiteBuilder = () => {
 
               <div className="property-group">
                 <label className="property-label">Navigation Label (German)</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={selectedElement.item?.name_de || selectedElement.item?.name || ''}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -3143,8 +3143,8 @@ const AdminWebsiteBuilder = () => {
 
               <div className="property-group">
                 <label className="property-label">Link Path / Page</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={selectedElement.item?.path || '/'}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -3186,7 +3186,7 @@ const AdminWebsiteBuilder = () => {
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
                       {targetPageId && (
-                        <button 
+                        <button
                           type="button"
                           onClick={() => {
                             handlePageChange(targetPageId);
@@ -3207,7 +3207,7 @@ const AdminWebsiteBuilder = () => {
                           <Navigation size={14} />
                           <span>Edit Navigation</span>
                         </button>
-                        <button 
+                        <button
                           type="button"
                           onClick={() => {
                             const p = selectedElement.item?.path || '/';
@@ -3218,7 +3218,7 @@ const AdminWebsiteBuilder = () => {
                           <ExternalLink size={14} />
                           <span>Test Link</span>
                         </button>
-                        <button 
+                        <button
                           type="button"
                           onClick={() => {
                             if (window.confirm('Delete this navigation item and its page route completely from the database?')) {
@@ -3247,9 +3247,9 @@ const AdminWebsiteBuilder = () => {
 
               <div className="property-group">
                 <label className="property-label">Brand Title</label>
-                <input 
-                  type="text" 
-                  value={cmsConfig?.header?.brand_title || 'Sports & MICE'}
+                <input
+                  type="text"
+                  value={cmsConfig?.header?.brand_title ?? ''}
                   onChange={(e) => {
                     const val = e.target.value;
                     const newConfig = { ...cmsConfig, header: { ...cmsConfig.header, brand_title: val } };
@@ -3261,7 +3261,7 @@ const AdminWebsiteBuilder = () => {
 
               <ImagePickerField
                 label="Header Brand Logo"
-                value={cmsConfig?.header?.logo_url || '/assets/images/logo.png'}
+                value={cmsConfig?.header?.logo_url || '/assets/images/logo.jpeg'}
                 onUrlChange={(url) => {
                   const newConfig = { ...cmsConfig, header: { ...cmsConfig.header, logo_url: url } };
                   pushState(newConfig);
@@ -3273,7 +3273,7 @@ const AdminWebsiteBuilder = () => {
                   });
                 }}
                 onRemove={() => {
-                  const newConfig = { ...cmsConfig, header: { ...cmsConfig.header, logo_url: '/assets/images/logo.png' } };
+                  const newConfig = { ...cmsConfig, header: { ...cmsConfig.header, logo_url: '/assets/images/logo.jpeg' } };
                   pushState(newConfig);
                 }}
                 previewHeight={110}
@@ -3293,8 +3293,8 @@ const AdminWebsiteBuilder = () => {
 
               <div className="property-group">
                 <label className="property-label">Form Title (English)</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={selectedElement.title_en || 'Contact Form'}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -3307,8 +3307,8 @@ const AdminWebsiteBuilder = () => {
 
               <div className="property-group">
                 <label className="property-label">Form Title (German)</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={selectedElement.title_de || 'Kontaktformular'}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -3321,8 +3321,8 @@ const AdminWebsiteBuilder = () => {
 
               <div className="property-group">
                 <label className="property-label">Notification Recipient Email</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   value={selectedElement.recipient_email || 'contact@sportsandmice.com'}
                   onChange={(e) => {
                     const val = e.target.value;
@@ -3346,8 +3346,8 @@ const AdminWebsiteBuilder = () => {
                   <span className="properties-title">Block Settings: {selectedElement.type?.toUpperCase()}</span>
                   <span className="section-tag-label">{selectedElement.blockId}</span>
                 </div>
-                <button 
-                  onClick={() => setSelectedElement(null)} 
+                <button
+                  onClick={() => setSelectedElement(null)}
                   style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
                 >
                   <X size={16} />
@@ -3494,114 +3494,114 @@ const AdminWebsiteBuilder = () => {
 
                   {selectedElement.block?.enabled !== false && (
                     <>
-                  <ImagePickerField
-                    label="Card Image"
-                    value={selectedElement.block?.image || ''}
-                    onUrlChange={(url) => {
-                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', url);
-                      setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: url } }));
-                    }}
-                    onOpenMediaLibrary={() => {
-                      triggerMediaPicker((url) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', url);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: url } }));
-                      });
-                    }}
-                    onRemove={() => {
-                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', '');
-                      setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: '' } }));
-                    }}
-                    previewHeight={120}
-                    showAltField={false}
-                  />
-
-                  <div className="property-group">
-                    <label className="property-label">
-                      Card Title (English)
-                      <WordCounter value={selectedElement.block?.title_en} max={MAX_WORDS} />
-                    </label>
-                    <input
-                      type="text"
-                      value={selectedElement.block?.title_en || ''}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, title_en: val } }));
-                        if (countWords(val) > MAX_WORDS) return;
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'title_en', val);
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Card Title (German)</label>
-                    <input
-                      type="text"
-                      value={selectedElement.block?.title_de || ''}
-                      onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'title_de', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, title_de: e.target.value } }));
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">
-                      Card Description (English)
-                      <WordCounter value={selectedElement.block?.desc_en} max={MAX_WORDS} />
-                    </label>
-                    <textarea
-                      rows="3"
-                      value={selectedElement.block?.desc_en || ''}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, desc_en: val } }));
-                        if (countWords(val) > MAX_WORDS) return;
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'desc_en', val);
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Card Description (German)</label>
-                    <textarea
-                      rows="3"
-                      value={selectedElement.block?.desc_de || ''}
-                      onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'desc_de', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, desc_de: e.target.value } }));
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Button Text & Link</label>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      <input 
-                        type="text" 
-                        placeholder="Button Text" 
-                        value={selectedElement.block?.button_text || ''} 
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'button_text', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, button_text: e.target.value } }));
+                      <ImagePickerField
+                        label="Card Image"
+                        value={selectedElement.block?.image || ''}
+                        onUrlChange={(url) => {
+                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', url);
+                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: url } }));
                         }}
-                        className="property-input"
-                      />
-                      <input 
-                        type="text" 
-                        placeholder="/en/Contact/" 
-                        value={selectedElement.block?.button_link || ''} 
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'button_link', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, button_link: e.target.value } }));
+                        onOpenMediaLibrary={() => {
+                          triggerMediaPicker((url) => {
+                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', url);
+                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: url } }));
+                          });
                         }}
-                        className="property-input"
+                        onRemove={() => {
+                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', '');
+                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: '' } }));
+                        }}
+                        previewHeight={120}
+                        showAltField={false}
                       />
-                    </div>
-                  </div>
+
+                      <div className="property-group">
+                        <label className="property-label">
+                          Card Title (English)
+                          <WordCounter value={selectedElement.block?.title_en} max={MAX_WORDS} />
+                        </label>
+                        <input
+                          type="text"
+                          value={selectedElement.block?.title_en || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, title_en: val } }));
+                            if (countWords(val) > MAX_WORDS) return;
+                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'title_en', val);
+                          }}
+                          className="property-input"
+                        />
+                      </div>
+
+                      <div className="property-group">
+                        <label className="property-label">Card Title (German)</label>
+                        <input
+                          type="text"
+                          value={selectedElement.block?.title_de || ''}
+                          onChange={(e) => {
+                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'title_de', e.target.value);
+                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, title_de: e.target.value } }));
+                          }}
+                          className="property-input"
+                        />
+                      </div>
+
+                      <div className="property-group">
+                        <label className="property-label">
+                          Card Description (English)
+                          <WordCounter value={selectedElement.block?.desc_en} max={MAX_WORDS} />
+                        </label>
+                        <textarea
+                          rows="3"
+                          value={selectedElement.block?.desc_en || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, desc_en: val } }));
+                            if (countWords(val) > MAX_WORDS) return;
+                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'desc_en', val);
+                          }}
+                          className="property-input"
+                        />
+                      </div>
+
+                      <div className="property-group">
+                        <label className="property-label">Card Description (German)</label>
+                        <textarea
+                          rows="3"
+                          value={selectedElement.block?.desc_de || ''}
+                          onChange={(e) => {
+                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'desc_de', e.target.value);
+                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, desc_de: e.target.value } }));
+                          }}
+                          className="property-input"
+                        />
+                      </div>
+
+                      <div className="property-group">
+                        <label className="property-label">Button Text & Link</label>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <input
+                            type="text"
+                            placeholder="Button Text"
+                            value={selectedElement.block?.button_text || ''}
+                            onChange={(e) => {
+                              updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'button_text', e.target.value);
+                              setSelectedElement(prev => ({ ...prev, block: { ...prev.block, button_text: e.target.value } }));
+                            }}
+                            className="property-input"
+                          />
+                          <input
+                            type="text"
+                            placeholder="/en/Contact/"
+                            value={selectedElement.block?.button_link || ''}
+                            onChange={(e) => {
+                              updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'button_link', e.target.value);
+                              setSelectedElement(prev => ({ ...prev, block: { ...prev.block, button_link: e.target.value } }));
+                            }}
+                            className="property-input"
+                          />
+                        </div>
+                      </div>
                     </>
                   )}
                 </>
@@ -3612,8 +3612,8 @@ const AdminWebsiteBuilder = () => {
                 <>
                   <div className="property-group">
                     <label className="property-label">Badge Text (English)</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={selectedElement.block?.text_en || ''}
                       onChange={(e) => {
                         updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_en', e.target.value);
@@ -3625,8 +3625,8 @@ const AdminWebsiteBuilder = () => {
 
                   <div className="property-group">
                     <label className="property-label">Badge Text (German)</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={selectedElement.block?.text_de || ''}
                       onChange={(e) => {
                         updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_de', e.target.value);
@@ -3644,7 +3644,7 @@ const AdminWebsiteBuilder = () => {
                 <>
                   <div className="property-group">
                     <label className="property-label">Quote Content</label>
-                    <textarea 
+                    <textarea
                       rows="3"
                       value={selectedElement.block?.quote_en || ''}
                       onChange={(e) => {
@@ -3658,9 +3658,9 @@ const AdminWebsiteBuilder = () => {
                   <div className="property-group">
                     <label className="property-label">Author Name & Title</label>
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      <input 
-                        type="text" 
-                        placeholder="Author" 
+                      <input
+                        type="text"
+                        placeholder="Author"
                         value={selectedElement.block?.author || ''}
                         onChange={(e) => {
                           updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'author', e.target.value);
@@ -3668,9 +3668,9 @@ const AdminWebsiteBuilder = () => {
                         }}
                         className="property-input"
                       />
-                      <input 
-                        type="text" 
-                        placeholder="Role / Org" 
+                      <input
+                        type="text"
+                        placeholder="Role / Org"
                         value={selectedElement.block?.role || ''}
                         onChange={(e) => {
                           updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'role', e.target.value);
@@ -3685,8 +3685,8 @@ const AdminWebsiteBuilder = () => {
 
               {/* Block Actions: Duplicate & Delete */}
               <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid #334155', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => duplicateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId)}
                   style={{ width: '100%', padding: '10px', background: '#1e293b', color: '#38bdf8', border: '1px solid #38bdf8', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                 >
@@ -3694,8 +3694,8 @@ const AdminWebsiteBuilder = () => {
                   <span>Duplicate This Block</span>
                 </button>
 
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => removeBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId)}
                   style={{ width: '100%', padding: '10px', background: '#fee2e2', color: '#dc2626', border: '1px solid #fca5a5', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
                 >
@@ -3712,8 +3712,8 @@ const AdminWebsiteBuilder = () => {
                   <span className="properties-title">Column Settings</span>
                   <span className="section-tag-label">{selectedElement.colId}</span>
                 </div>
-                <button 
-                  onClick={() => setSelectedElement(null)} 
+                <button
+                  onClick={() => setSelectedElement(null)}
                   style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
                 >
                   <X size={16} />
@@ -3741,11 +3741,11 @@ const AdminWebsiteBuilder = () => {
 
               <div className="property-group">
                 <label className="property-label">Quick Add Block to this Column</label>
-                <QuickAddGrid 
+                <QuickAddGrid
                   onSelectElement={(type) => {
                     const item = ALL_LIBRARY_ITEMS.find(i => i.type === type);
                     addBlockToColumn(selectedElement.sectionId, selectedElement.colId, type, item?.defaultProps || {});
-                  }} 
+                  }}
                 />
               </div>
             </div>
@@ -3780,9 +3780,9 @@ const AdminWebsiteBuilder = () => {
                   <>
                     <div className="property-group">
                       <label className="property-label">Section Name</label>
-                      <input 
-                        type="text" 
-                        value={selectedSection.name || ''} 
+                      <input
+                        type="text"
+                        value={selectedSection.name || ''}
                         onChange={(e) => updateSectionField(selectedSection.id, 'name', e.target.value)}
                         className="property-input"
                       />
@@ -3793,9 +3793,9 @@ const AdminWebsiteBuilder = () => {
                       <>
                         <div className="property-group">
                           <label className="property-label">Main Heading (English)</label>
-                          <input 
-                            type="text" 
-                            value={selectedSection.title_en || selectedSection.heading_prefix_en || ''} 
+                          <input
+                            type="text"
+                            value={selectedSection.title_en || selectedSection.heading_prefix_en || ''}
                             onChange={(e) => {
                               if (selectedSection.heading_prefix_en !== undefined) {
                                 updateSectionField(selectedSection.id, 'heading_prefix_en', e.target.value);
@@ -3809,9 +3809,9 @@ const AdminWebsiteBuilder = () => {
 
                         <div className="property-group">
                           <label className="property-label">Main Heading (German)</label>
-                          <input 
-                            type="text" 
-                            value={selectedSection.title_de || selectedSection.heading_prefix_de || ''} 
+                          <input
+                            type="text"
+                            value={selectedSection.title_de || selectedSection.heading_prefix_de || ''}
                             onChange={(e) => {
                               if (selectedSection.heading_prefix_de !== undefined) {
                                 updateSectionField(selectedSection.id, 'heading_prefix_de', e.target.value);
@@ -3829,9 +3829,9 @@ const AdminWebsiteBuilder = () => {
                     {selectedSection.subtitle_en !== undefined && (
                       <div className="property-group">
                         <label className="property-label">Subtitle (English)</label>
-                        <textarea 
+                        <textarea
                           rows="3"
-                          value={selectedSection.subtitle_en || ''} 
+                          value={selectedSection.subtitle_en || ''}
                           onChange={(e) => updateSectionField(selectedSection.id, 'subtitle_en', e.target.value)}
                           className="property-input"
                         />
@@ -3851,6 +3851,78 @@ const AdminWebsiteBuilder = () => {
                         previewHeight={120}
                         showAltField={false}
                       />
+                    )}
+
+                    {/* Hero Section Specific Controls (Image, Badge, Trusted Pill, CTA) */}
+                    {(selectedSection.id === 'home_hero' || selectedSection.type === 'hero' || selectedSection.type === 'hero_cinematic' || selectedSection.type === 'hero_3d') && (
+                      <>
+                        <ImagePickerField
+                          label="🖼 Hero Athletes Cutout Image"
+                          value={selectedSection.hero_image || selectedSection.image_url || '/assets/images/sports_athletes_hero.png'}
+                          onUrlChange={(url) => updateSectionField(selectedSection.id, 'hero_image', url)}
+                          onOpenMediaLibrary={() => {
+                            triggerMediaPicker((url) => updateSectionField(selectedSection.id, 'hero_image', url));
+                          }}
+                          onRemove={() => updateSectionField(selectedSection.id, 'hero_image', '/assets/images/sports_athletes_hero.png')}
+                          previewHeight={140}
+                          showAltField={false}
+                        />
+
+                        <div className="property-group">
+                          <label className="property-label">🏆 Top Badge Tag (English / German)</label>
+                          <input
+                            type="text"
+                            value={selectedSection.badge_text_en || selectedSection.badge_text || ''}
+                            onChange={(e) => updateSectionField(selectedSection.id, 'badge_text_en', e.target.value)}
+                            className="property-input"
+                            placeholder="Sports & MICE"
+                          />
+                        </div>
+
+                        <div className="property-group">
+                          <label className="property-label">≈ Trusted Pill Subtext (English / German)</label>
+                          <input
+                            type="text"
+                            value={selectedSection.trusted_text_en || selectedSection.trusted_text || ''}
+                            onChange={(e) => updateSectionField(selectedSection.id, 'trusted_text_en', e.target.value)}
+                            className="property-input"
+                            placeholder="We're trusted by teams worldwide"
+                          />
+                        </div>
+
+                        <div className="property-group">
+                          <label className="property-label">📷 Image Caption Subtext</label>
+                          <input
+                            type="text"
+                            value={selectedSection.caption_text_en || selectedSection.caption_text || ''}
+                            onChange={(e) => updateSectionField(selectedSection.id, 'caption_text_en', e.target.value)}
+                            className="property-input"
+                            placeholder="Soccer • Team Training • Events"
+                          />
+                        </div>
+
+                        <div className="property-group">
+                          <label className="property-label">🔘 CTA Button Text (English)</label>
+                          <input
+                            type="text"
+                            value={selectedSection.cta_button_text_en || selectedSection.cta_button_text || ''}
+                            onChange={(e) => updateSectionField(selectedSection.id, 'cta_button_text_en', e.target.value)}
+                            className="property-input"
+                            placeholder="Get in Touch"
+                          />
+                        </div>
+
+                        <div className="property-group">
+                          <label className="property-label">🔗 CTA Button Link</label>
+                          <input
+                            type="text"
+                            value={selectedSection.cta_button_link || ''}
+                            onChange={(e) => updateSectionField(selectedSection.id, 'cta_button_link', e.target.value)}
+                            className="property-input"
+                            placeholder="/en/Contact/"
+                          />
+                        </div>
+                      </>
                     )}
 
                     {/* Video — shown when section has a video_url field (e.g. service_hero_video) */}
@@ -3894,8 +3966,8 @@ const AdminWebsiteBuilder = () => {
                 {/* 5. VISIBILITY & MANAGEMENT TAB */}
                 {activeTab === 'visibility' && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => toggleSectionVisibility(selectedSection.id)}
                       className={`btn-action-wide ${selectedSection.enabled !== false ? 'btn-enabled' : 'btn-disabled'}`}
                       style={{ padding: '12px', borderRadius: '8px', border: '1px solid #334155', background: selectedSection.enabled !== false ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)', color: selectedSection.enabled !== false ? '#10b981' : '#ef4444', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', cursor: 'pointer' }}
@@ -3904,8 +3976,8 @@ const AdminWebsiteBuilder = () => {
                       <span>{selectedSection.enabled !== false ? 'Section is Visible on Public Site' : 'Section is Hidden'}</span>
                     </button>
 
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => duplicateSection(selectedSection.id)}
                       style={{ padding: '12px', borderRadius: '8px', border: '1px solid #334155', background: '#1e293b', color: '#fff', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', cursor: 'pointer' }}
                     >
@@ -3913,8 +3985,8 @@ const AdminWebsiteBuilder = () => {
                       <span>Duplicate Section</span>
                     </button>
 
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => deleteSection(selectedSection.id)}
                       style={{ padding: '12px', borderRadius: '8px', border: '1px solid #ef4444', background: 'rgba(239, 68, 68, 0.15)', color: '#ef4444', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', cursor: 'pointer' }}
                     >
@@ -3935,8 +4007,8 @@ const AdminWebsiteBuilder = () => {
 
       {/* ================= 8. MOBILE FLOATING DOCK ================= */}
       <nav className="builder-mobile-bottom-bar">
-        <button 
-          type="button" 
+        <button
+          type="button"
           className={`mobile-dock-btn ${mobileDrawer === 'library' ? 'active' : ''}`}
           onClick={() => {
             setActiveLibraryTab('all');
@@ -3946,8 +4018,8 @@ const AdminWebsiteBuilder = () => {
           <Plus size={18} />
           <span>Components</span>
         </button>
-        <button 
-          type="button" 
+        <button
+          type="button"
           className={`mobile-dock-btn ${mobileDrawer === 'layers' ? 'active' : ''}`}
           onClick={() => {
             setActiveLibraryTab('layers');
@@ -3957,16 +4029,16 @@ const AdminWebsiteBuilder = () => {
           <Layers size={18} />
           <span>Layers</span>
         </button>
-        <button 
-          type="button" 
+        <button
+          type="button"
           className={`mobile-dock-btn ${mobileDrawer === 'properties' ? 'active' : ''}`}
           onClick={() => setMobileDrawer(mobileDrawer === 'properties' ? null : 'properties')}
         >
           <Sliders size={18} />
           <span>Properties</span>
         </button>
-        <button 
-          type="button" 
+        <button
+          type="button"
           className={`mobile-dock-btn ${isPreviewMode ? 'active' : ''}`}
           onClick={() => setIsPreviewMode(!isPreviewMode)}
         >
@@ -3978,7 +4050,7 @@ const AdminWebsiteBuilder = () => {
       {/* Mobile Drawer Backdrops & Modals */}
       <AnimatePresence>
         {mobileDrawer && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -3986,7 +4058,7 @@ const AdminWebsiteBuilder = () => {
             onClick={() => setMobileDrawer(null)}
           >
             {mobileDrawer === 'library' && (
-              <motion.div 
+              <motion.div
                 initial={{ x: '-100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
@@ -4004,9 +4076,9 @@ const AdminWebsiteBuilder = () => {
                   </button>
                 </div>
                 <div className="library-search-box" style={{ padding: '8px 12px' }}>
-                  <input 
-                    type="text" 
-                    placeholder="Search components..." 
+                  <input
+                    type="text"
+                    placeholder="Search components..."
                     value={librarySearch}
                     onChange={(e) => setLibrarySearch(e.target.value)}
                     className="library-search-input"
@@ -4015,9 +4087,9 @@ const AdminWebsiteBuilder = () => {
 
                 <div className="library-category-chips">
                   {['all', 'basic', 'layout', 'content', 'website'].map((cat) => (
-                    <button 
+                    <button
                       key={cat}
-                      type="button" 
+                      type="button"
                       className={`library-category-chip ${activeLibraryTab === cat ? 'active' : ''}`}
                       onClick={() => setActiveLibraryTab(cat)}
                     >
@@ -4035,7 +4107,7 @@ const AdminWebsiteBuilder = () => {
                       </div>
                     ) : (
                       filteredLibraryItems.map((item) => (
-                        <div 
+                        <div
                           key={`m_${item.category}_${item.type}`}
                           className="visual-component-card"
                           onClick={() => {
@@ -4057,7 +4129,7 @@ const AdminWebsiteBuilder = () => {
             )}
 
             {mobileDrawer === 'properties' && (
-              <motion.div 
+              <motion.div
                 initial={{ y: '100%' }}
                 animate={{ y: 0 }}
                 exit={{ y: '100%' }}
@@ -4089,7 +4161,7 @@ const AdminWebsiteBuilder = () => {
       <AnimatePresence>
         {newPageModalOpen && (
           <div className="builder-modal-overlay">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -4103,7 +4175,7 @@ const AdminWebsiteBuilder = () => {
                     Visually generate a new route and dynamic page with custom starting layout.
                   </p>
                 </div>
-                <button 
+                <button
                   onClick={() => setNewPageModalOpen(false)}
                   style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
                 >
@@ -4117,9 +4189,9 @@ const AdminWebsiteBuilder = () => {
                   <label style={{ display: 'block', color: '#f8fafc', fontWeight: 600, marginBottom: '8px', fontSize: '0.95rem' }}>
                     1. Page Name *
                   </label>
-                  <input 
-                    type="text" 
-                    placeholder="e.g. Doctors, Training Camps, MICE Packages" 
+                  <input
+                    type="text"
+                    placeholder="e.g. Doctors, Training Camps, MICE Packages"
                     value={newPageForm.name}
                     onChange={(e) => handleNewPageNameChange(e.target.value)}
                     required
@@ -4134,9 +4206,9 @@ const AdminWebsiteBuilder = () => {
                   </label>
                   <div style={{ display: 'flex', alignItems: 'center', background: '#0f172a', border: '1px solid #334155', borderRadius: '8px', padding: '0 12px' }}>
                     <span style={{ color: '#94a3b8', fontWeight: 600 }}>/</span>
-                    <input 
-                      type="text" 
-                      placeholder="doctors" 
+                    <input
+                      type="text"
+                      placeholder="doctors"
                       value={newPageForm.slug}
                       onChange={(e) => setNewPageForm(prev => ({ ...prev, slug: e.target.value }))}
                       required
@@ -4161,7 +4233,7 @@ const AdminWebsiteBuilder = () => {
                       { id: 'faq_contact', label: 'FAQ + Contact Form', desc: 'Accordion questions and form' },
                       { id: 'blank', label: 'Blank Page', desc: 'Clean starting canvas with hero' }
                     ].map(tpl => (
-                      <div 
+                      <div
                         key={tpl.id}
                         onClick={() => setNewPageForm(prev => ({ ...prev, layout: tpl.id }))}
                         style={{
@@ -4185,10 +4257,10 @@ const AdminWebsiteBuilder = () => {
                 {/* Step 4: Navigation Bar & Publishing Options */}
                 <div style={{ background: '#0f172a', padding: '16px', borderRadius: '8px', border: '1px solid #334155', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#fff', fontSize: '0.9rem', cursor: 'pointer' }}>
-                    <input 
-                      type="checkbox" 
-                      checked={newPageForm.addToNav} 
-                      onChange={(e) => setNewPageForm(prev => ({ ...prev, addToNav: e.target.checked }))} 
+                    <input
+                      type="checkbox"
+                      checked={newPageForm.addToNav}
+                      onChange={(e) => setNewPageForm(prev => ({ ...prev, addToNav: e.target.checked }))}
                       style={{ width: '18px', height: '18px', accentColor: '#ff0000' }}
                     />
                     <span>Automatically add this page to Header Navbar</span>
@@ -4197,9 +4269,9 @@ const AdminWebsiteBuilder = () => {
                   {newPageForm.addToNav && (
                     <div style={{ paddingLeft: '28px' }}>
                       <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.8rem', marginBottom: '4px' }}>Navbar Link Label:</label>
-                      <input 
-                        type="text" 
-                        value={newPageForm.navLabel} 
+                      <input
+                        type="text"
+                        value={newPageForm.navLabel}
                         onChange={(e) => setNewPageForm(prev => ({ ...prev, navLabel: e.target.value }))}
                         placeholder={newPageForm.name || 'Navbar Label'}
                         style={{ width: '100%', padding: '8px 12px', background: '#1e293b', border: '1px solid #334155', borderRadius: '6px', color: '#fff', fontSize: '0.9rem' }}
@@ -4208,10 +4280,10 @@ const AdminWebsiteBuilder = () => {
                   )}
 
                   <label style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#fff', fontSize: '0.9rem', cursor: 'pointer' }}>
-                    <input 
-                      type="checkbox" 
-                      checked={newPageForm.isPublished} 
-                      onChange={(e) => setNewPageForm(prev => ({ ...prev, isPublished: e.target.checked }))} 
+                    <input
+                      type="checkbox"
+                      checked={newPageForm.isPublished}
+                      onChange={(e) => setNewPageForm(prev => ({ ...prev, isPublished: e.target.checked }))}
                       style={{ width: '18px', height: '18px', accentColor: '#10b981' }}
                     />
                     <span>Publish immediately (Make accessible to public visitors)</span>
@@ -4220,15 +4292,15 @@ const AdminWebsiteBuilder = () => {
 
                 {/* Footer Buttons */}
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '10px' }}>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => setNewPageModalOpen(false)}
                     style={{ padding: '10px 20px', background: '#1e293b', border: '1px solid #334155', borderRadius: '8px', color: '#fff', cursor: 'pointer' }}
                   >
                     Cancel
                   </button>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="btn-publish-confirm"
                     style={{ padding: '10px 24px', background: '#ff0000', color: '#fff', fontWeight: 700, borderRadius: '8px', border: 'none', cursor: 'pointer' }}
                   >
@@ -4245,7 +4317,7 @@ const AdminWebsiteBuilder = () => {
       <AnimatePresence>
         {pagesListModalOpen && (
           <div className="builder-modal-overlay">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -4272,7 +4344,7 @@ const AdminWebsiteBuilder = () => {
                   });
 
                   return (
-                    <div 
+                    <div
                       key={p.id}
                       style={{
                         display: 'flex',
@@ -4398,7 +4470,7 @@ const AdminWebsiteBuilder = () => {
       <AnimatePresence>
         {pageSettingsModalOpen && (
           <div className="builder-modal-overlay">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -4418,9 +4490,9 @@ const AdminWebsiteBuilder = () => {
               <form onSubmit={handleSavePageSettings} style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div>
                   <label style={{ display: 'block', color: '#fff', fontWeight: 600, marginBottom: '6px' }}>Page Title</label>
-                  <input 
-                    type="text" 
-                    value={pageSettingsForm.title} 
+                  <input
+                    type="text"
+                    value={pageSettingsForm.title}
                     onChange={(e) => setPageSettingsForm(prev => ({ ...prev, title: e.target.value }))}
                     className="property-input"
                   />
@@ -4428,9 +4500,9 @@ const AdminWebsiteBuilder = () => {
 
                 <div>
                   <label style={{ display: 'block', color: '#fff', fontWeight: 600, marginBottom: '6px' }}>SEO Browser Title</label>
-                  <input 
-                    type="text" 
-                    value={pageSettingsForm.seo_title} 
+                  <input
+                    type="text"
+                    value={pageSettingsForm.seo_title}
                     onChange={(e) => setPageSettingsForm(prev => ({ ...prev, seo_title: e.target.value }))}
                     className="property-input"
                     placeholder="Title appearing on Google and browser tab"
@@ -4439,9 +4511,9 @@ const AdminWebsiteBuilder = () => {
 
                 <div>
                   <label style={{ display: 'block', color: '#fff', fontWeight: 600, marginBottom: '6px' }}>SEO Meta Description</label>
-                  <textarea 
+                  <textarea
                     rows="3"
-                    value={pageSettingsForm.seo_description} 
+                    value={pageSettingsForm.seo_description}
                     onChange={(e) => setPageSettingsForm(prev => ({ ...prev, seo_description: e.target.value }))}
                     className="property-input"
                     placeholder="Short summary for search results"
@@ -4449,9 +4521,9 @@ const AdminWebsiteBuilder = () => {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#0f172a', padding: '12px', borderRadius: '8px' }}>
-                  <input 
-                    type="checkbox" 
-                    checked={pageSettingsForm.enabled} 
+                  <input
+                    type="checkbox"
+                    checked={pageSettingsForm.enabled}
                     onChange={(e) => setPageSettingsForm(prev => ({ ...prev, enabled: e.target.checked }))}
                     style={{ width: '18px', height: '18px', accentColor: '#10b981' }}
                   />
@@ -4460,8 +4532,8 @@ const AdminWebsiteBuilder = () => {
 
                 {/* Page Duplication & Delete Actions */}
                 <div style={{ display: 'flex', gap: '12px', paddingTop: '12px', borderTop: '1px solid #334155' }}>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => {
                       duplicatePage(activePage);
                       setPageSettingsModalOpen(false);
@@ -4473,8 +4545,8 @@ const AdminWebsiteBuilder = () => {
                   </button>
 
                   {!['home', 'service', 'about', 'hotels', 'contact', 'imprint'].includes(activePage) && (
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => {
                         deletePage(activePage);
                         setPageSettingsModalOpen(false);
@@ -4501,7 +4573,7 @@ const AdminWebsiteBuilder = () => {
       <AnimatePresence>
         {navModalOpen && (
           <div className="builder-modal-overlay">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -4525,9 +4597,9 @@ const AdminWebsiteBuilder = () => {
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                     <div>
                       <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.78rem', marginBottom: '4px' }}>Label (English) *</label>
-                      <input 
-                        type="text" 
-                        placeholder="e.g. Doctors" 
+                      <input
+                        type="text"
+                        placeholder="e.g. Doctors"
                         value={newNavItemForm.name_en}
                         onChange={(e) => setNewNavItemForm(prev => ({ ...prev, name_en: e.target.value }))}
                         required
@@ -4536,9 +4608,9 @@ const AdminWebsiteBuilder = () => {
                     </div>
                     <div>
                       <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.78rem', marginBottom: '4px' }}>Path / URL *</label>
-                      <input 
-                        type="text" 
-                        placeholder="/doctors" 
+                      <input
+                        type="text"
+                        placeholder="/doctors"
                         value={newNavItemForm.path}
                         onChange={(e) => setNewNavItemForm(prev => ({ ...prev, path: e.target.value }))}
                         required
@@ -4549,7 +4621,7 @@ const AdminWebsiteBuilder = () => {
 
                   <div>
                     <label style={{ display: 'block', color: '#94a3b8', fontSize: '0.78rem', marginBottom: '4px' }}>Parent Dropdown (Optional)</label>
-                    <select 
+                    <select
                       value={newNavItemForm.parent_id}
                       onChange={(e) => setNewNavItemForm(prev => ({ ...prev, parent_id: e.target.value }))}
                       className="property-input"
@@ -4563,8 +4635,8 @@ const AdminWebsiteBuilder = () => {
                     </select>
                   </div>
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     style={{ padding: '8px 16px', alignSelf: 'flex-start', background: '#ff0000', color: '#fff', fontWeight: 700, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
                   >
                     Add to Navbar
@@ -4582,8 +4654,8 @@ const AdminWebsiteBuilder = () => {
                             <span style={{ fontWeight: 700, color: '#fff' }}>{item.name_en}</span>
                             <span style={{ color: '#38bdf8', fontSize: '0.85rem' }}>({item.path})</span>
                           </div>
-                          <button 
-                            type="button" 
+                          <button
+                            type="button"
                             onClick={() => deleteNavItem(item.id)}
                             style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}
                             title="Delete Item"
@@ -4598,8 +4670,8 @@ const AdminWebsiteBuilder = () => {
                             {(item.children || item.sub_items).map(child => (
                               <div key={child.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#94a3b8', fontSize: '0.85rem' }}>
                                 <span>↳ {child.name_en} ({child.path})</span>
-                                <button 
-                                  type="button" 
+                                <button
+                                  type="button"
                                   onClick={() => deleteNavItem(child.id)}
                                   style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}
                                 >
@@ -4615,8 +4687,8 @@ const AdminWebsiteBuilder = () => {
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => setNavModalOpen(false)}
                     style={{ padding: '10px 24px', background: '#38bdf8', color: '#0f172a', fontWeight: 700, borderRadius: '6px', border: 'none', cursor: 'pointer' }}
                   >
@@ -4633,7 +4705,7 @@ const AdminWebsiteBuilder = () => {
       <AnimatePresence>
         {publishModalOpen && (
           <div className="builder-modal-overlay">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -4641,7 +4713,7 @@ const AdminWebsiteBuilder = () => {
             >
               <div className="builder-modal-header">
                 <h3 className="builder-modal-title">Publish Changes?</h3>
-                <button 
+                <button
                   className="builder-modal-close"
                   onClick={() => setPublishModalOpen(false)}
                 >
@@ -4670,7 +4742,7 @@ const AdminWebsiteBuilder = () => {
               </div>
 
               <div className="builder-modal-footer">
-                <button 
+                <button
                   className="builder-modal-btn btn-cancel"
                   onClick={() => setPublishModalOpen(false)}
                 >
@@ -4742,7 +4814,7 @@ const AdminWebsiteBuilder = () => {
       <AnimatePresence>
         {mediaPickerOpen && (
           <div className="builder-modal-overlay">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -4754,7 +4826,7 @@ const AdminWebsiteBuilder = () => {
                   <h3 className="builder-modal-title">Select Image</h3>
                   <span className="builder-modal-subtitle">Choose an existing media asset or upload a new picture</span>
                 </div>
-                <button 
+                <button
                   className="builder-modal-close"
                   onClick={() => {
                     setMediaPickerOpen(false);
@@ -4779,15 +4851,15 @@ const AdminWebsiteBuilder = () => {
                   <ImageIcon size={16} color="#64748b" style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)' }} />
                 </div>
                 <div>
-                  <input 
-                    type="file" 
-                    id="media-file-input" 
-                    accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif" 
+                  <input
+                    type="file"
+                    id="media-file-input"
+                    accept="image/jpeg,image/png,image/webp,image/svg+xml,image/gif"
                     onChange={handleImageUpload}
                     style={{ display: 'none' }}
                   />
-                  <label 
-                    htmlFor="media-file-input" 
+                  <label
+                    htmlFor="media-file-input"
                     className="editor-btn editor-btn-success editor-btn-sm"
                     style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', cursor: 'pointer', margin: 0 }}
                   >
@@ -4806,8 +4878,8 @@ const AdminWebsiteBuilder = () => {
                 )}
 
                 {(() => {
-                  const filtered = mediaList.filter(m => 
-                    !mediaSearchQuery || 
+                  const filtered = mediaList.filter(m =>
+                    !mediaSearchQuery ||
                     (m.title && m.title.toLowerCase().includes(mediaSearchQuery.toLowerCase())) ||
                     (m.url && m.url.toLowerCase().includes(mediaSearchQuery.toLowerCase()))
                   );
@@ -4827,13 +4899,13 @@ const AdminWebsiteBuilder = () => {
                       {filtered.map((m) => {
                         const isChosen = selectedMediaUrl === m.url;
                         return (
-                          <div 
-                            key={m.id || m.url} 
+                          <div
+                            key={m.id || m.url}
                             className={`media-gallery-card ${isChosen ? 'selected' : ''}`}
-                            style={{ 
-                              position: 'relative', 
-                              borderRadius: '8px', 
-                              overflow: 'hidden', 
+                            style={{
+                              position: 'relative',
+                              borderRadius: '8px',
+                              overflow: 'hidden',
                               border: isChosen ? '2px solid #38bdf8' : '1px solid #334155',
                               boxShadow: isChosen ? '0 0 12px rgba(56, 189, 248, 0.4)' : 'none',
                               cursor: 'pointer',
@@ -4847,9 +4919,9 @@ const AdminWebsiteBuilder = () => {
                             }}
                             title={m.title || m.url}
                           >
-                            <img 
-                              src={m.url} 
-                              alt={m.title || 'Media Asset'} 
+                            <img
+                              src={m.url}
+                              alt={m.title || 'Media Asset'}
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                             {isChosen && (

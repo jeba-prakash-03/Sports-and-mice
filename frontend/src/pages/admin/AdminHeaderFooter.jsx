@@ -34,8 +34,8 @@ const AdminHeaderFooter = () => {
   const { addNavItem, updateNavItem, deleteNavItem, reorderNavItem } = useEditor();
 
   const [logoBrand, setLogoBrand] = useState({
-    logo_url: '/assets/images/logo.png',
-    brand_title: 'Sports & MICE'
+    logo_url: '/assets/images/logo.jpeg',
+    brand_title: ''
   });
   const [footerConfig, setFooterConfig] = useState({
     company_name: 'K-Consulting Sports & MICE',
@@ -78,8 +78,8 @@ const AdminHeaderFooter = () => {
   useEffect(() => {
     if (cmsConfig?.header) {
       setLogoBrand({
-        logo_url: cmsConfig.header.logo_url || '/assets/images/logo.png',
-        brand_title: cmsConfig.header.brand_title || 'Sports & MICE'
+        logo_url: cmsConfig.header.logo_url || '/assets/images/logo.jpeg',
+        brand_title: cmsConfig.header.brand_title ?? ''
       });
     }
     if (cmsConfig?.footer) {
@@ -145,8 +145,7 @@ const AdminHeaderFooter = () => {
 
   const validateFooterForm = () => {
     const next = {};
-    next.brand_title = validateRequired(logoBrand.brand_title, 'Brand title') ||
-      validateMaxLength(logoBrand.brand_title, 60, 'Brand title');
+    next.brand_title = validateMaxWords(logoBrand.brand_title, MAX_WORDS, 'Brand title');
     next.phone = validatePhone(footerConfig.phone, 'Phone number');
     next.whatsapp = validatePhone(footerConfig.whatsapp, 'WhatsApp number');
     next.email = validateRequired(footerConfig.email, 'Inquiry e-mail') ||

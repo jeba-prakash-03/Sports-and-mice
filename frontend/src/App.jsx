@@ -92,7 +92,6 @@ const PublicLayout = ({ children }) => {
   return (
     <div className="site-wrapper">
       <ScrollProgressBar />
-      <VerticalSectionIndicator />
       <ScrollToTop />
       <Header />
       <main className="main-content">

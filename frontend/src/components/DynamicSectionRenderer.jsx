@@ -13,6 +13,7 @@ import BentoSportsSection from './BentoSportsSection';
 import TrophySection from './TrophySection';
 import ParallelSportsShowcase from './ParallelSportsShowcase';
 import SportsMarqueeTicker from './SportsMarqueeTicker';
+import SportsVideoShowcase from './SportsVideoShowcase';
 import {
   Trophy,
   Globe2,
@@ -22,6 +23,8 @@ import {
   Clock,
   Users,
   MapPin,
+  Calendar,
+  Handshake,
   CheckCircle2,
   Search,
   Building2,
@@ -50,6 +53,7 @@ import {
   Upload,
   Zap,
   Award,
+  Target,
   Plus,
   Sliders,
   Play,
@@ -73,7 +77,7 @@ export const DEFAULT_NEW_SECTIONS = {
   hero: {
     type: 'hero',
     name: 'Hero Banner Section',
-    heading_prefix_en: 'Sports associations &',
+  
     heading_prefix_de: 'Sportverbände &',
     tag1_en: 'Meetings ♢ Incentives',
     tag1_de: 'Besprechungen ♢ Teambildung',
@@ -388,7 +392,7 @@ export const SectionDropZone = ({ pageKey = 'home', targetIndex = 0, label = 'Dr
               <Trophy size={15} color="#ef4444" /> <span>Stats Counter</span>
             </button>
             <button type="button" className="popover-item" onClick={() => { editorCtx.insertSectionAt(DEFAULT_NEW_SECTIONS.cta, targetIndex); setShowPicker(false); }}>
-              <Zap size={15} color="#ec4899" /> <span>CTA Callout</span>
+              <Zap size={15} color="#a855f7" /> <span>CTA Callout</span>
             </button>
             <button type="button" className="popover-item" onClick={() => { editorCtx.insertSectionAt(DEFAULT_NEW_SECTIONS.faq, targetIndex); setShowPicker(false); }}>
               <HelpCircle size={15} color="#8b5cf6" /> <span>FAQ Accordion</span>
@@ -857,6 +861,216 @@ export const PillarCardsMobileDeck = ({
   );
 };
 
+/* -------------------------------------------------------------------------- */
+/* HOME INTRO ULTRA-PREMIUM INTERACTIVE CARD DECK SECTION                     */
+/* -------------------------------------------------------------------------- */
+export const HomeIntroCardDeck = ({
+  section,
+  isBuilderMode,
+  isEditorActive,
+  editorCtx,
+  lang,
+  renderInlineText,
+  customStyle,
+  anim
+}) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const title = lang === 'de' ? (section.title_de || section.title_en) : (section.title_en || section.title_de);
+  const p1 = lang === 'de' ? (section.p1_de || section.p1_en) : (section.p1_en || section.p1_de) || 'Be it at competitions or team building of the national teams or at conferences, events or meetings of sports associations, the focus must always be on sport and its further development.';
+  const p2 = lang === 'de' ? (section.p2_de || section.p2_en) : (section.p2_en || section.p2_de) || 'It is particularly important that the infrastructure suits the needs to the attendees. Hotels need to be able to deal with the needs of sports teams, team building activities have to meet the special demands of athletes and conference rooms should suit active athletic participants.';
+  const p3 = lang === 'de' ? (section.p3_de || section.p3_en) : (section.p3_en || section.p3_de) || 'For events to be successful, the environment must also be suit the sporting characteristics of the customer.';
+
+  const cardsData = [
+    {
+      id: 1,
+      badge: 'PILLAR 01 • CHAMPIONSHIP LOGISTICS',
+      title: 'Global Competition Focus',
+      icon: Globe2,
+      text: p1,
+      accentColor: '#38bdf8',
+    },
+    {
+      id: 2,
+      badge: 'PILLAR 02 • ATHLETE INFRASTRUCTURE',
+      title: 'Tailored Venue & Hotel Logistics',
+      icon: ShieldCheck,
+      text: p2,
+      accentColor: '#e60000',
+    },
+    {
+      id: 3,
+      badge: 'PILLAR 03 • PERFORMANCE ENVIRONMENT',
+      title: 'Optimal Success Environment',
+      icon: Trophy,
+      text: p3,
+      accentColor: '#2563eb',
+    },
+  ];
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % cardsData.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused, cardsData.length]);
+
+  return (
+    <section
+      className={`home-intro-section ${isBuilderMode ? 'builder-section-preview' : ''}`}
+      style={customStyle}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onClick={() => {
+        if (isEditorActive && !editorCtx.isPreviewMode) {
+          editorCtx.setSelectedSectionId(section.id);
+          editorCtx.setSelectedElement({ type: 'section', sectionId: section.id, section });
+        }
+      }}
+    >
+      {/* Soft lavender glowing ambient glass orbs */}
+      <div className="spatial-bg-glow glow-purple"></div>
+      <div className="spatial-bg-glow glow-cyan"></div>
+
+      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+        {/* Section Main Title with Motion Scroll Reveal */}
+        <motion.h2 
+          className="section-main-title home-intro-title" 
+          style={{ color: section.heading_color || undefined }}
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {renderInlineText(
+            lang === 'de' ? 'title_de' : 'title_en',
+            title,
+            'Sport needs professional structures when traveling to competitions, team building and conferences around the world',
+            'span'
+          )}
+        </motion.h2>
+
+        {/* Interactive Card Deck / Book Slide Deck */}
+        <div className="intro-card-deck-wrapper">
+          
+          {/* Auto-Slide Progress Tabs with Staggered Scroll Reveal */}
+          <div className="deck-progress-tabs">
+            {cardsData.map((card, idx) => (
+              <motion.button
+                key={card.id}
+                type="button"
+                className={`deck-tab-btn ${activeIndex === idx ? 'active-tab' : ''}`}
+                onClick={() => setActiveIndex(idx)}
+                initial={{ opacity: 0, y: -25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="tab-number">0{card.id}</span>
+                <span className="tab-label">{card.title}</span>
+                <div className="tab-progress-bar">
+                  <div 
+                    className="tab-progress-fill"
+                    style={{ 
+                      width: activeIndex === idx ? '100%' : '0%',
+                      transition: activeIndex === idx && !isPaused ? 'width 4.5s linear' : 'none'
+                    }} 
+                  />
+                </div>
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Interactive Cards Display with Asymmetrical Split Entrance Animation */}
+          <div className="deck-cards-grid">
+            {cardsData.map((card, idx) => {
+              const IconComp = card.icon;
+              const isActive = activeIndex === idx;
+
+              // Asymmetrical entry directions for the 3 cards in this section:
+              // Card 1: Enters from LEFT (x: -65px)
+              // Card 2: Enters from BOTTOM (y: 65px)
+              // Card 3: Enters from RIGHT (x: 65px)
+              const cardInitial = idx === 0 
+                ? { opacity: 0, x: -65, y: 0 } 
+                : idx === 1 
+                ? { opacity: 0, x: 0, y: 65 } 
+                : { opacity: 0, x: 65, y: 0 };
+
+              return (
+                <motion.div
+                  key={card.id}
+                  className={`intro-deck-card ${isActive ? 'active-deck-card' : 'inactive-deck-card'}`}
+                  onClick={() => setActiveIndex(idx)}
+                  initial={cardInitial}
+                  whileInView={{
+                    opacity: isActive ? 1 : 0.85,
+                    x: 0,
+                    y: isActive ? -6 : 0,
+                    scale: isActive ? 1.03 : 0.96,
+                  }}
+                  viewport={{ once: false, amount: 0.15 }}
+                  transition={{ duration: 0.7, delay: idx * 0.14, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{
+                    y: -8,
+                    transition: { duration: 0.25, ease: "easeOut" }
+                  }}
+                  style={{
+                    borderTop: `3px solid ${card.accentColor}`,
+                  }}
+                >
+                  <div className="card-top-row">
+                    <span className="intro-card-badge" style={{ color: card.accentColor, borderColor: `${card.accentColor}40` }}>
+                      {card.badge}
+                    </span>
+                    <div className="card-icon-bubble" style={{ background: `${card.accentColor}18`, color: card.accentColor }}>
+                      <IconComp size={22} />
+                    </div>
+                  </div>
+
+                  <motion.h3 
+                    className="intro-card-title"
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 0.5, delay: 0.2 + idx * 0.1 }}
+                  >
+                    {card.title}
+                  </motion.h3>
+
+                  <motion.p 
+                    className="intro-card-desc"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 0.6, delay: 0.3 + idx * 0.1 }}
+                  >
+                    {idx === 0
+                      ? renderInlineText(lang === 'de' ? 'p1_de' : 'p1_en', p1, card.text, 'span')
+                      : idx === 1
+                      ? renderInlineText(lang === 'de' ? 'p2_de' : 'p2_en', p2, card.text, 'span')
+                      : renderInlineText(lang === 'de' ? 'p3_de' : 'p3_en', p3, card.text, 'span')}
+                  </motion.p>
+
+                  <div className="card-bottom-footer">
+                    <span className="card-counter">PILLAR 0{card.id} / 03</span>
+                    <div className={`pulse-active-dot ${isActive ? 'active-dot' : ''}`} style={{ backgroundColor: card.accentColor }} />
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
 export const DynamicSectionRenderer = ({
   section,
   pageKey = 'home',
@@ -871,6 +1085,7 @@ export const DynamicSectionRenderer = ({
   const editorCtx = useEditor();
   const [openFaqId, setOpenFaqId] = useState(null);
   const [testingVideoMap, setTestingVideoMap] = useState({});
+  const [hoveredServiceCardId, setHoveredServiceCardId] = useState(null);
 
   const isEditorActive = isBuilderMode !== null ? isBuilderMode : editorCtx.editorMode;
   const isSectionSelected = isSelected !== null ? isSelected : (editorCtx.selectedSectionId === section?.id);
@@ -1095,101 +1310,113 @@ export const DynamicSectionRenderer = ({
 
   const icons = [Globe2, Trophy, Users, ShieldCheck];
 
+  const AboutStoryCarousel = ({ defaultPhoto, isEditing, editorCtx, sectionId }) => {
+    const slides = [
+      {
+        src: defaultPhoto || '/assets/images/about_hockey_referee.jpeg',
+        caption: lang === 'de' ? 'Marc Knuelle – Internationaler Schiedsrichter' : 'Marc Knuelle – International Referee'
+      },
+      {
+        src: '/assets/images/service_hero_bg.jpg',
+        caption: lang === 'de' ? 'Marc Knuelle – Spitzensport Logistik' : 'Marc Knuelle – High Performance Sports Logistics'
+      },
+      {
+        src: '/assets/images/service_teambuilding.png',
+        caption: lang === 'de' ? 'K-Consulting – Globale Delegationsbetreuung' : 'K-Consulting – Global Delegation & MICE Events'
+      }
+    ];
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % slides.length);
+      }, 3500);
+      return () => clearInterval(timer);
+    }, [slides.length]);
+
+    return (
+      <div className="story-carousel-outer-wrapper">
+        <div 
+          className="story-photo-card liquid-glass-carousel-frame" 
+          onClick={(e) => {
+            if (isEditing) {
+              e.stopPropagation();
+              editorCtx.setSelectedSectionId(sectionId);
+              editorCtx.setSelectedElement({ type: 'image', sectionId, fieldKey: 'photo', src: slides[currentIndex].src });
+            }
+          }}
+        >
+          {/* Specular gloss top curved shine */}
+          <div className="liquid-glass-gloss-shine" />
+
+          <div className="story-carousel-viewport">
+            {slides.map((slide, idx) => (
+              <img
+                key={idx}
+                src={slide.src}
+                alt={slide.caption}
+                className="story-founder-img"
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  opacity: idx === currentIndex ? 1 : 0,
+                  transform: idx === currentIndex ? 'scale(1)' : 'scale(1.06)',
+                  transition: 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                  display: 'block'
+                }}
+              />
+            ))}
+          </div>
+
+          {/* FLOATING LIQUID GLASS CAPTION & DOTS PILL BAR */}
+          <div className="story-caption-glass-pill">
+            <div className="caption-left">
+              <Award size={18} className="caption-award-icon" />
+              <span className="caption-text">{slides[currentIndex].caption}</span>
+            </div>
+            
+            {/* Carousel Navigation Dots */}
+            <div className="caption-dots">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  aria-label={`Go to slide ${idx + 1}`}
+                  onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
+                  className={`caption-dot-btn ${idx === currentIndex ? 'active' : ''}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // SECTION RENDERERS EVALUATION
   const renderSectionInner = () => {
     // 1. HOME HERO (Only on Home page)
     if (section.id === 'home_hero' || (pageKey === 'home' && (section.type === 'hero' || section.type === 'hero_banner'))) {
-      // Same condition in builder mode and on the public site — the builder
-      // canvas must show what's actually live, never a different hero
-      // treatment than what visitors see. Cinematic3DHero (below) only
-      // renders as a fallback when hero_slides is completely empty, which
-      // shouldn't normally happen since CmsConfig always seeds one slide.
-      const activeSlides = (cmsConfig?.hero_slides || []).filter(s => s.active !== false);
-      if (activeSlides.length > 0) {
-        const renderSlideButton = (slide, slideLang) => {
-          const text = slideLang === 'de'
-            ? (slide.cta_button_text_de || slide.cta_button_text_en)
-            : slide.cta_button_text_en;
-          if (!text) return null;
-          return (
-            <div style={{ marginTop: '28px' }}>
-              <NavLink to={slide.cta_button_link || '/en/Contact/'} className="btn-red-pill btn-magnetic" onMouseMove={handleMagnetMove} onMouseLeave={handleMagnetLeave}>
-                <span>{text}</span>
-                <ArrowRight size={16} />
-              </NavLink>
-            </div>
-          );
-        };
-
-        return (
-          <section className="home-hero" style={customStyle}>
-            <HeroCarousel slides={activeSlides} lang={lang} renderButton={renderSlideButton} settings={cmsConfig?.hero_carousel_settings} />
-          </section>
-        );
-      }
-
       return <Cinematic3DHero section={section} pageKey={pageKey} />;
     }
 
-    // 2. HOME INTRO EXPLANATION SECTION
+    // 2. HOME INTRO EXPLANATION SECTION (Interactive Card Deck)
     if (section.id === 'home_intro' || section.type === 'home_intro') {
-      const title = lang === 'de' ? (section.title_de || section.title_en) : (section.title_en || section.title_de);
-      const p1 = lang === 'de' ? (section.p1_de || section.p1_en) : (section.p1_en || section.p1_de);
-      const p2 = lang === 'de' ? (section.p2_de || section.p2_en) : (section.p2_en || section.p2_de);
-      const p3 = lang === 'de' ? (section.p3_de || section.p3_en) : (section.p3_en || section.p3_de);
-
       return (
-        <section
-          className={`home-intro-section ${isBuilderMode ? 'builder-section-preview' : ''}`}
-          style={customStyle}
-          onClick={() => {
-            if (isEditorActive && !editorCtx.isPreviewMode) {
-              editorCtx.setSelectedSectionId(section.id);
-              editorCtx.setSelectedElement({ type: 'section', sectionId: section.id, section });
-            }
-          }}
-        >
-          <div className="container">
-            <AnimatedSection direction={anim.type} distance={20}>
-              <h2 className="section-main-title home-intro-title" style={{ color: section.heading_color || undefined }}>
-                {renderInlineText(
-                  lang === 'de' ? 'title_de' : 'title_en',
-                  title,
-                  'Sport needs professional structures when traveling to competitions, team building and conferences around the world',
-                  'span'
-                )}
-              </h2>
-              <div className="home-intro-text-wrapper">
-                <p className="home-intro-para">
-                  {renderInlineText(
-                    lang === 'de' ? 'p1_de' : 'p1_en',
-                    p1,
-                    'Be it at competitions or team building of the national teams or at conferences, events or meetings of sports associations, the focus must always be on sport and its further development.',
-                    'span'
-                  )}
-                </p>
-                <p className="home-intro-para">
-                  {renderInlineText(
-                    lang === 'de' ? 'p2_de' : 'p2_en',
-                    p2,
-                    'It is particularly important that the infrastructure suits the needs to the attendees. Hotels need to be able to deal with the needs of sports teams, team building activities have to meet the special demands of athletes and conference rooms should suit active athletic participants.',
-                    'span'
-                  )}
-                </p>
-                {p3 && (
-                  <p className="home-intro-para">
-                    {renderInlineText(
-                      lang === 'de' ? 'p3_de' : 'p3_en',
-                      p3,
-                      'For events to be successful, the environment must also be suit the sporting characteristics of the customer.',
-                      'span'
-                    )}
-                  </p>
-                )}
-              </div>
-            </AnimatedSection>
-          </div>
-        </section>
+        <HomeIntroCardDeck
+          section={section}
+          isBuilderMode={isBuilderMode}
+          isEditorActive={isEditorActive}
+          editorCtx={editorCtx}
+          lang={lang}
+          renderInlineText={renderInlineText}
+          customStyle={customStyle}
+          anim={anim}
+        />
       );
     }
 
@@ -1277,34 +1504,44 @@ export const DynamicSectionRenderer = ({
       );
     }
 
-    // 3. 3 PILLARS / FEATURE CARDS
-    if (section.id === 'home_cards' || section.type === 'cards' || section.type === 'features') {
-      const secTitle = lang === 'de' ? (section.title_de || section.title_en) : (section.title_en || section.title_de);
-      const cards = section.cards || [
-        {
-          num: '01',
-          title_en: 'HOTELS',
-          title_de: 'HOTELS',
-          desc_en: 'We find the right hotels around the globe for the needs of your sports team. The security and facilities of hotels play a major role, as well as good connections to the competition site and an environment suitable for athletes.',
-          desc_de: 'Wir finden für die Bedürfnisse Ihrer Sportmannschaft die richtigen Hotels rund um den Globus. Dabei spielen die Sicherheit und die Ausstattung der Hotels eine große Rolle, sowie gute Verbindungen zum Wettkampfort und ein für Sportler:innen passendes Umfeld.'
-        },
-        {
-          num: '02',
-          title_en: 'CONFERENCES',
-          title_de: 'KONFERENZEN',
-          desc_en: 'For meetings, conferences, seminars and events, we will find the right venue for you that suits your athletic participants. This also includes an environment with attractive offers and events.',
-          desc_de: 'Für die Besprechungen, Konferenzen, Seminare und Veranstaltungen finden wir für Sie den passenden Veranstaltungsort, der zu Ihren sportlichen Teilnehmenden passt. Dazu gehört auch ein Umfeld mit attraktiven Angeboten und Events.'
-        },
-        {
-          num: '03',
-          title_en: 'INCENTIVES',
-          title_de: 'TEAMBILDUNG',
-          desc_en: 'Whether the national team or the board of directors of the sports association, we will find a suitable motivating and extraordinary activity for you, which will weld you together even more so that you can celebrate successes together.',
-          desc_de: 'Ob die Nationalmannschaft oder der Vorstand des Sportverbandes, wir finden für Sie eine passende motivierende und außergewöhnliche Aktivität, die Sie noch enger zusammenschweißt, um gemeinsam Erfolge zu feiern. Langeweile ist uns fremd!'
-        }
-      ];
-
+    // 3. 3 PILLARS / FEATURE CARDS (the home page's own pillars section keeps its
+    // existing bento-dashboard visual treatment; any other cards/features section
+    // renders its actual `cards` collection, in a carousel once it has more than
+    // MAX_CARDS_PER_ROW items or the admin explicitly chose "Create Carousel")
+    if (section.id === 'home_cards') {
       return <BentoSportsSection section={section} />;
+    }
+    if (section.type === 'cards' || section.type === 'features') {
+      const cards = (section.cards || []).filter(c => c.enabled !== false);
+      // 4 cards per row is the admin's own "normal content" limit (AdminWebsiteBuilder's
+      // MAX_CARDS_PER_ROW) — past that, or once the admin opts in via "Create Carousel",
+      // the row becomes a horizontally scrollable carousel instead of growing sideways.
+      const useCarousel = section.display_mode === 'carousel' || cards.length > 4;
+
+      const cardEls = cards.map((card, idx) => (
+        <div key={card.id || idx} className="generic-feature-card">
+          {card.image && <img src={card.image} alt={card.title_en || ''} className="generic-feature-card-img" loading="lazy" />}
+          {card.num && <span className="generic-feature-card-num">{card.num}</span>}
+          <h3 className="generic-feature-card-title">
+            {lang === 'de' ? (card.title_de || card.title_en) : (card.title_en || card.title_de)}
+          </h3>
+          <p className="generic-feature-card-desc">
+            {lang === 'de' ? (card.desc_de || card.desc_en) : (card.desc_en || card.desc_de)}
+          </p>
+        </div>
+      ));
+
+      return (
+        <section className={`generic-feature-section ${isBuilderMode ? 'builder-section-preview' : ''}`} style={customStyle}>
+          <div className="container">
+            {useCarousel ? (
+              <div className="generic-feature-carousel">{cardEls}</div>
+            ) : (
+              <div className="generic-feature-grid">{cardEls}</div>
+            )}
+          </div>
+        </section>
+      );
     }
 
     // 4. HOME EXPERTISE SECTION (Use our expertise for your sporting success!)
@@ -1326,17 +1563,30 @@ export const DynamicSectionRenderer = ({
             }
           }}
         >
-          <div className="container">
-            <AnimatedSection direction={anim.type} distance={20}>
-              <h2 className="section-main-title expertise-main-title" style={{ color: section.heading_color || undefined }}>
-                {renderInlineText(
-                  lang === 'de' ? 'title_de' : 'title_en',
-                  title,
-                  'Use our expertise for your sporting success!',
-                  'span'
-                )}
-              </h2>
-              <div className="expertise-paragraphs-grid">
+          {/* Soft lavender glowing ambient glass orbs */}
+          <div className="spatial-bg-glow glow-purple"></div>
+          <div className="spatial-bg-glow glow-cyan"></div>
+
+          <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+            <motion.h2 
+              className="section-main-title expertise-main-title" 
+              style={{ color: section.heading_color || undefined }}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {renderInlineText(
+                lang === 'de' ? 'title_de' : 'title_en',
+                title,
+                'Use our expertise for your sporting success!',
+                'span'
+              )}
+            </motion.h2>
+
+            <div className="expertise-paragraphs-grid">
+              {/* Card 1: Top-Left (Parallel Slide from Left) */}
+              <AnimatedCard index={0} direction="right" distance={65}>
                 <div className="expertise-text-card">
                   <p className="expertise-text-para">
                     {renderInlineText(
@@ -1347,6 +1597,10 @@ export const DynamicSectionRenderer = ({
                     )}
                   </p>
                 </div>
+              </AnimatedCard>
+
+              {/* Card 2: Top-Right (Parallel Slide from Right) */}
+              <AnimatedCard index={1} direction="left" distance={65}>
                 <div className="expertise-text-card">
                   <p className="expertise-text-para">
                     {renderInlineText(
@@ -1357,6 +1611,10 @@ export const DynamicSectionRenderer = ({
                     )}
                   </p>
                 </div>
+              </AnimatedCard>
+
+              {/* Card 3: Bottom-Left (Parallel Slide from Left) */}
+              <AnimatedCard index={2} direction="right" distance={65}>
                 <div className="expertise-text-card">
                   <p className="expertise-text-para">
                     {renderInlineText(
@@ -1367,7 +1625,11 @@ export const DynamicSectionRenderer = ({
                     )}
                   </p>
                 </div>
-                {p4 && (
+              </AnimatedCard>
+
+              {/* Card 4: Bottom-Right (Parallel Slide from Right - Highlight Card) */}
+              {p4 && (
+                <AnimatedCard index={3} direction="left" distance={65}>
                   <div className="expertise-text-card highlight-card">
                     <p className="expertise-text-para">
                       {renderInlineText(
@@ -1378,9 +1640,9 @@ export const DynamicSectionRenderer = ({
                       )}
                     </p>
                   </div>
-                )}
-              </div>
-            </AnimatedSection>
+                </AnimatedCard>
+              )}
+            </div>
           </div>
         </section>
       );
@@ -1423,20 +1685,9 @@ export const DynamicSectionRenderer = ({
 
     // 5. VIDEO & HIGH PERFORMANCE
     if (section.id === 'home_video' || section.type === 'video_showcase' || section.type === 'video') {
-      const title = lang === 'de' ? (section.title_de || section.title_en) : (section.title_en || section.title_de);
-      const p1 = lang === 'de' ? (section.p1_de || section.p1_en) : (section.p1_en || section.p1_de);
-      const p2 = lang === 'de' ? (section.p2_de || section.p2_en) : (section.p2_en || section.p2_de);
-      const p3 = lang === 'de' ? (section.p3_de || section.p3_en) : (section.p3_en || section.p3_de);
-      const videoUrl = section.video_url || 'https://www.youtube.com/embed/dD_FThvzO9I?start=76&controls=1';
-      const aboutLinkText = lang === 'de' 
-        ? (section.about_link_text_de || section.about_link_text_en || 'Erfahren Sie mehr in unserem Bereich Über uns.') 
-        : (section.about_link_text_en || section.about_link_text_de || 'See further details in our About Us section.');
-      const aboutLinkUrl = section.about_link_url || '/en/About-us/';
-
       return (
-        <section
-          className={`home-expertise-section ${isBuilderMode ? 'builder-section-preview' : ''}`}
-          style={customStyle}
+        <div 
+          key={section.id} 
           onClick={() => {
             if (isEditorActive && !editorCtx.isPreviewMode) {
               editorCtx.setSelectedSectionId(section.id);
@@ -1444,147 +1695,13 @@ export const DynamicSectionRenderer = ({
             }
           }}
         >
-          <div className="container">
-            <AnimatedSection direction="up" distance={25}>
-              <h2 className="section-main-title" style={{ color: section.heading_color || undefined }}>
-                {renderInlineText(
-                  lang === 'de' ? 'title_de' : 'title_en',
-                  title,
-                  'Our own experiences in international high-performance sport make us experts!',
-                  'span'
-                )}
-              </h2>
-            </AnimatedSection>
-
-            <div className="expertise-content-grid">
-              <AnimatedSection direction="left" distance={30} className="expertise-video-wrap">
-                <div
-                  className={`responsive-video-container ${isEditorActive && !editorCtx.isPreviewMode ? 'video-edit-container element-selectable' : ''} ${isEditorActive && !editorCtx.isPreviewMode && editorCtx.selectedElement?.type === 'video' && editorCtx.selectedElement?.sectionId === section.id ? 'element-selected-active' : ''}`}
-                  onClick={(e) => {
-                    if (isEditorActive && !editorCtx.isPreviewMode && !testingVideoMap[section.id]) {
-                      e.stopPropagation();
-                      editorCtx.setSelectedSectionId(section.id);
-                      editorCtx.setSelectedElement({
-                        type: 'video',
-                        sectionId: section.id,
-                        video_url: videoUrl,
-                        video_type: 'youtube'
-                      });
-                    }
-                  }}
-                  style={{ position: 'relative' }}
-                >
-                  {isEditorActive && !editorCtx.isPreviewMode && (
-                    <div className="video-builder-overlay">
-                      <span className="element-badge-tag">YOUTUBE VIDEO</span>
-                      <div className="video-overlay-actions">
-                        <button
-                          type="button"
-                          className="btn-video-tool"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            editorCtx.setSelectedSectionId(section.id);
-                            editorCtx.setSelectedElement({
-                              type: 'video',
-                              sectionId: section.id,
-                              video_url: videoUrl,
-                              video_type: 'youtube'
-                            });
-                          }}
-                        >
-                          <Settings size={13} />
-                          <span>Video Settings</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="btn-video-tool btn-video-play"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setTestingVideoMap(prev => ({ ...prev, [section.id]: !prev[section.id] }));
-                          }}
-                        >
-                          <Play size={13} />
-                          <span>{testingVideoMap[section.id] ? 'Stop Playing' : 'Test / Play Video'}</span>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  <iframe
-                    src={videoUrl}
-                    title="Sports & MICE Video"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    loading="lazy"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'block',
-                      border: 'none',
-                      pointerEvents: (isEditorActive && !editorCtx.isPreviewMode && !testingVideoMap[section.id]) ? 'none' : 'auto'
-                    }}
-                  />
-                </div>
-              </AnimatedSection>
-
-              <AnimatedSection direction="right" distance={30} className="expertise-text-wrap">
-                <p className="expertise-para">
-                  {renderInlineText(
-                    lang === 'de' ? 'p1_de' : 'p1_en',
-                    p1,
-                    'In order to understand the needs of customers from top-class sport, a MICE co-ordinator needs to have had their own experiences at that level.',
-                    'span'
-                  )}
-                </p>
-                <p className="expertise-para">
-                  {renderInlineText(
-                    lang === 'de' ? 'p2_de' : 'p2_en',
-                    p2,
-                    'How do you know what it means when a sports team competes and travels abroad? What is important to sports officials at conferences? What are their special requirements?',
-                    'span'
-                  )}
-                </p>
-                <div className="highlight-para">
-                  <strong>
-                    {renderInlineText(
-                      lang === 'de' ? 'p3_de' : 'p3_en',
-                      p3,
-                      'We know the answers because we have seen it ourselves!',
-                      'span'
-                    )}
-                  </strong>
-                </div>
-                <div className="about-us-link-wrap" style={{ marginTop: '16px' }}>
-                  <NavLink
-                    to={aboutLinkUrl}
-                    className="about-ref-link"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      color: '#106cc2',
-                      fontWeight: 600,
-                      fontSize: '15px',
-                      textDecoration: 'underline'
-                    }}
-                  >
-                    <span>
-                      {renderInlineText(
-                        lang === 'de' ? 'about_link_text_de' : 'about_link_text_en',
-                        aboutLinkText,
-                        'See further details in our About Us section.',
-                        'span'
-                      )}
-                    </span>
-                    <ArrowRight size={15} />
-                  </NavLink>
-                </div>
-              </AnimatedSection>
-            </div>
-          </div>
-          <ParallelSportsShowcase />
-        </section>
+          <SportsVideoShowcase
+            section={section}
+            isEditorActive={isEditorActive}
+            editorCtx={editorCtx}
+            renderInlineText={renderInlineText}
+          />
+        </div>
       );
     }
 
@@ -1614,7 +1731,7 @@ export const DynamicSectionRenderer = ({
               {/* LEFT SIDE: Category, Heading, Description, Dual CTAs */}
               <AnimatedSection direction="up" distance={20} className="service-hero-text-col">
                 <div className="hero-category-pill animate-float">
-                  <Sparkles size={14} color="#ff3333" />
+                  <Sparkles size={14} color="#a855f7" />
                   <span>{lang === 'de' ? 'SPORTS & MICE EXZELLENZ' : 'SPORTS & MICE EXCELLENCE'}</span>
                 </div>
 
@@ -1654,6 +1771,7 @@ export const DynamicSectionRenderer = ({
               </AnimatedSection>
 
               {/* RIGHT SIDE: Video Card with VideoFacade */}
+              {(section.video_enabled !== false || isEditorActive) && (
               <AnimatedSection direction="up" distance={20} delay={0.15} className="service-hero-video-col">
                 <div className="service-hero-video-card-glow">
                   <div className="service-hero-video-card">
@@ -1666,37 +1784,70 @@ export const DynamicSectionRenderer = ({
                   </div>
                 </div>
               </AnimatedSection>
+              )}
             </div>
           </div>
         </section>
       );
     }
 
-    // 7. SERVICE INTRO TEXT
+    // 7. SERVICE INTRO TEXT WITH CIRCULAR IMAGE & PARALLEL SCROLL REVEAL
     if (section.id === 'service_intro' || section.type === 'text_block' || section.type === 'content') {
       const title = lang === 'de' ? (section.title_de || section.title_en) : (section.title_en || section.title_de);
       const p1 = lang === 'de' ? (section.p1_de || section.p1_en) : (section.p1_en || section.p1_de);
       const p2 = lang === 'de' ? (section.p2_de || section.p2_en) : (section.p2_en || section.p2_de);
       const p3 = lang === 'de' ? (section.p3_de || section.p3_en) : (section.p3_en || section.p3_de);
+      const circleImg = section.image || section.photo || '/assets/images/service_teamtrips.jpeg';
 
       return (
         <section className={`service-intro-section ${isBuilderMode ? 'builder-section-preview' : ''}`} style={customStyle}>
           <div className="container">
-            <AnimatedSection direction="up" distance={25}>
-              <h2 className="service-main-heading" style={{ color: section.heading_color || undefined }}>
-                {renderInlineText(
-                  lang === 'de' ? 'title_de' : 'title_en',
-                  title,
-                  'With our commitment we support your sporting success!',
-                  'span'
-                )}
-              </h2>
-              <div className="service-intro-text">
-                <p>{renderInlineText(lang === 'de' ? 'p1_de' : 'p1_en', p1, 'Our team ensures the right selection of venues and hotels for your MICE activities.', 'span')}</p>
-                <p>{renderInlineText(lang === 'de' ? 'p2_de' : 'p2_en', p2, 'When selecting hotels, we ensure that they are suitable for sports teams and familiar with team logistics.', 'span')}</p>
-                {p3 && <p>{renderInlineText(lang === 'de' ? 'p3_de' : 'p3_en', p3, 'We make sure you are in a good location and distance from competition sites.', 'span')}</p>}
-              </div>
-            </AnimatedSection>
+            <div className="service-intro-grid">
+              
+              {/* LEFT SIDE: Heading & Staggered Paragraph Text */}
+              <AnimatedSection direction="right" distance={50} duration={0.7} className="service-intro-text-col">
+                <h2 className="service-main-heading" style={{ color: section.heading_color || undefined }}>
+                  {renderInlineText(
+                    lang === 'de' ? 'title_de' : 'title_en',
+                    title,
+                    'With our commitment we support your sporting success!',
+                    'span'
+                  )}
+                </h2>
+                <div className="service-intro-text">
+                  <AnimatedSection direction="up" distance={20} delay={0.1}>
+                    <p>{renderInlineText(lang === 'de' ? 'p1_de' : 'p1_en', p1, 'Our team ensures the right selection of venues and hotels for your MICE activities. Sports teams and sports officials have special requirements, which guide us in our recommendations for you.', 'span')}</p>
+                  </AnimatedSection>
+                  <AnimatedSection direction="up" distance={20} delay={0.25}>
+                    <p>{renderInlineText(lang === 'de' ? 'p2_de' : 'p2_en', p2, 'When selecting hotels, we ensure that they are suitable for sports teams and that they have staff who are familiar with dealing with sports teams. Our targeted advice to the selected hotel ensures high-quality services for you. The facilities need to be right; the fitness center shouldn\'t be the smallest room in the hotel. We also value attractive running routes near the hotel.', 'span')}</p>
+                  </AnimatedSection>
+                  <AnimatedSection direction="up" distance={20} delay={0.4}>
+                    <p>{renderInlineText(lang === 'de' ? 'p3_de' : 'p3_en', p3, 'We make sure that you are in a good location and distance from the competition site and can ensure that transport is looked after. We check the conference facilities for meetings, seminars and assemblies that your teams or your sports officials need to meet your needs. It is our strength that we have made a picture for ourselves on site.', 'span')}</p>
+                  </AnimatedSection>
+                </div>
+              </AnimatedSection>
+
+              {/* RIGHT SIDE: Circular Image Frame with Ambient Glow Ring & Motion Entrance */}
+              <AnimatedSection direction="left" distance={60} duration={0.75} className="service-intro-circle-col">
+                <div className="service-intro-circle-container">
+                  {/* Rotating Ambient Glowing Ring */}
+                  <div className="circle-glowing-ring" />
+
+                  {/* Motion Floating Circle Image */}
+                  <motion.div 
+                    className="circle-image-frame"
+                    animate={{ y: [-8, 8, -8] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <img 
+                      src={circleImg} 
+                      alt="Sports & MICE Service Commitment" 
+                    />
+                  </motion.div>
+                </div>
+              </AnimatedSection>
+
+            </div>
           </div>
         </section>
       );
@@ -1705,17 +1856,60 @@ export const DynamicSectionRenderer = ({
     // 8. SERVICE CARDS GRID
     if (section.id === 'service_cards' || section.type === 'services') {
       const secHeading = lang === 'de' ? (section.title_de || section.title_en) : (section.title_en || section.title_de);
+      const secSub = lang === 'de'
+        ? (section.subtitle_de || 'Maßgeschneiderte MICE-Lösungen für Ihr Team, Ihre Events und Ihre Ziele – entdecken Sie unsere Spezialdienste')
+        : (section.subtitle_en || 'Tailored MICE solutions designed for your team, events, and ambitions — explore our specialized services');
+
       const servicesList = cmsConfig?.services?.filter(s => s.active !== false) || [
-        { id: 'svc_1', title_en: 'Meetings and Conferences', image: '/assets/images/service_meeting.jpg' },
-        { id: 'svc_2', title_en: 'Team building & Incentives', image: '/assets/images/service_teambuilding.png' },
-        { id: 'svc_3', title_en: 'Team trips and events', image: '/assets/images/service_teamtrips.jpeg' },
-        { id: 'svc_4', title_en: 'International sports congresses', image: '/assets/images/congress_icon.png' }
+        { 
+          id: 'svc_1', 
+          title_en: 'Meetings and Conferences', 
+          title_de: 'Meetings und Konferenzen', 
+          image: '/assets/images/service_meeting.jpg', 
+          icon: 'calendar',
+          tags_en: 'Executive conference rooms • State-of-the-art AV tech • Quiet meeting environment • 24/7 coordinator',
+          tags_de: 'Executive Tagungsräume • Moderne Medientechnik • Ruhige Arbeitsatmosphäre • 24/7 Service'
+        },
+        { 
+          id: 'svc_2', 
+          title_en: 'Team building & Incentives', 
+          title_de: 'Team building & Incentives', 
+          image: '/assets/images/service_teambuilding.png', 
+          icon: 'handshake',
+          tags_en: 'Custom team events • Outdoor sports challenges • Motivation & team bonding • Exclusive venues',
+          tags_de: 'Maßgeschneiderte Teamevents • Outdoor-Challenges • Motivation & Teamgeist • Exklusive Locations'
+        },
+        { 
+          id: 'svc_3', 
+          title_en: 'Team trips and events', 
+          title_de: 'Teamreisen und Events', 
+          image: '/assets/images/service_teamtrips.jpeg', 
+          featured: true,
+          tags_en: 'Custom itineraries • Wellness retreats • Group travel coordination • 50+ destinations worldwide',
+          tags_de: 'Maßgeschneiderte Routen • Wellness-Retreats • Gruppenreise-Koordination • 50+ Ziele weltweit'
+        },
+        { 
+          id: 'svc_4', 
+          title_en: 'International sports congresses', 
+          title_de: 'Internationale Sportkongresse', 
+          image: '/assets/images/congress_icon.png', 
+          icon: 'trophy',
+          tags_en: 'International logistics • VIP delegate management • Congress infrastructure & simultaneous translation',
+          tags_de: 'Internationale Logistik • VIP-Betreuung • Kongressinfrastruktur & Simultandolmetscher'
+        }
       ];
+
+      const renderCardIcon = (svc, idx) => {
+        if (svc.id === 'svc_1' || idx === 0) return <Calendar size={20} />;
+        if (svc.id === 'svc_2' || idx === 1) return <Handshake size={20} />;
+        if (svc.id === 'svc_4' || idx === 3) return <Trophy size={20} />;
+        return <Building2 size={20} />;
+      };
 
       return (
         <section className={`service-cards-section ${isBuilderMode ? 'builder-section-preview' : ''}`} style={customStyle}>
           <div className="container">
-            <AnimatedSection direction="up" distance={20}>
+            <AnimatedSection direction="up" distance={20} className="service-header-wrapper">
               <h2 className="service-sub-heading" style={{ color: section.heading_color || undefined }}>
                 {renderInlineText(
                   lang === 'de' ? 'title_de' : 'title_en',
@@ -1724,23 +1918,48 @@ export const DynamicSectionRenderer = ({
                   'span'
                 )}
               </h2>
+              <p className="service-sub-desc">
+                {renderInlineText(
+                  lang === 'de' ? 'subtitle_de' : 'subtitle_en',
+                  secSub,
+                  'Tailored MICE solutions designed for your team, events, and ambitions — explore our specialized services',
+                  'span'
+                )}
+              </p>
             </AnimatedSection>
 
-            <div className="service-cards-grid">
+            <div className="service-cards-grid" onMouseLeave={() => setHoveredServiceCardId(null)}>
               {servicesList.map((svc, idx) => {
                 const title = lang === 'de' ? (svc.title_de || svc.title_en) : (svc.title_en || svc.title_de);
                 const isCongressIcon = svc.image?.includes('congress_icon');
+                
+                // Only when card is hovered or selected, it becomes the vibrant glowing purple card
+                const isFeatured = hoveredServiceCardId !== null 
+                  ? (hoveredServiceCardId === svc.id) 
+                  : (svc.id === 'svc_3' || idx === 2);
+
                 const isCardSelected = isEditorActive && !editorCtx.isPreviewMode && (editorCtx.selectedElement?.serviceId === svc.id || editorCtx.selectedElement?.cardId === svc.id);
                 const isImgSelected = isEditorActive && !editorCtx.isPreviewMode && editorCtx.selectedElement?.type === 'service_card_image' && (editorCtx.selectedElement?.serviceId === svc.id || editorCtx.selectedElement?.cardId === svc.id);
                 const isTitleSelected = isEditorActive && !editorCtx.isPreviewMode && editorCtx.selectedElement?.type === 'service_card_title' && (editorCtx.selectedElement?.serviceId === svc.id || editorCtx.selectedElement?.cardId === svc.id);
 
+                const cardTags = lang === 'de' 
+                  ? (svc.tags_de || 'Maßgeschneiderte Routen • Wellness-Retreats • Gruppenreise-Koordination • 50+ Ziele weltweit')
+                  : (svc.tags_en || 'Custom itineraries • Wellness retreats • Group travel coordination • 50+ destinations worldwide');
+
                 return (
-                  <AnimatedCard key={svc.id || idx} index={idx}>
+                  <AnimatedCard 
+                    key={svc.id || idx} 
+                    index={idx}
+                    direction="asymmetrical"
+                    totalCards={servicesList.length}
+                  >
                     <div
-                      className={`service-img-card ${isCardSelected ? 'builder-element-selected' : ''}`}
+                      className={`service-img-card ${isFeatured ? 'featured-service-card' : ''} ${isCardSelected ? 'builder-element-selected' : ''}`}
+                      onMouseEnter={() => setHoveredServiceCardId(svc.id)}
                       onMouseMove={handleTiltMove}
                       onMouseLeave={handleTiltLeave}
                       onClick={(e) => {
+                        setHoveredServiceCardId(svc.id);
                         if (isEditorActive && !editorCtx.isPreviewMode) {
                           e.stopPropagation();
                           editorCtx.setSelectedSectionId(section.id);
@@ -1777,30 +1996,71 @@ export const DynamicSectionRenderer = ({
                       >
                         <img src={svc.image} alt={title} className={isCongressIcon ? 'congress-icon-img' : ''} loading="lazy" decoding="async" />
                       </div>
-                      <h3
-                        className={`img-card-title ${isTitleSelected ? 'builder-element-selected' : ''}`}
-                        onClick={(e) => {
-                          if (isEditorActive && !editorCtx.isPreviewMode) {
-                            e.stopPropagation();
-                            editorCtx.setSelectedSectionId(section.id);
-                            editorCtx.setSelectedElement({
-                              type: 'service_card_title',
-                              serviceId: svc.id,
-                              cardId: svc.id,
-                              sectionId: section.id,
-                              service: svc,
-                              text_en: svc.title_en,
-                              text_de: svc.title_de
-                            });
-                          }
-                        }}
-                      >
-                        {title}
-                      </h3>
+
+                      {isFeatured ? (
+                        <div className="featured-card-content">
+                          <h3
+                            className={`featured-card-title ${isTitleSelected ? 'builder-element-selected' : ''}`}
+                            onClick={(e) => {
+                              if (isEditorActive && !editorCtx.isPreviewMode) {
+                                e.stopPropagation();
+                                editorCtx.setSelectedSectionId(section.id);
+                                editorCtx.setSelectedElement({
+                                  type: 'service_card_title',
+                                  serviceId: svc.id,
+                                  cardId: svc.id,
+                                  sectionId: section.id,
+                                  service: svc,
+                                  text_en: svc.title_en,
+                                  text_de: svc.title_de
+                                });
+                              }
+                            }}
+                          >
+                            {title}
+                          </h3>
+                          <p className="featured-card-tags">
+                            {cardTags}
+                          </p>
+                          <NavLink to={svc.link || '/en/Contact/'} className="featured-explore-btn">
+                            {lang === 'de' ? 'Entdecken' : 'Explore'} <ArrowRight size={16} />
+                          </NavLink>
+                        </div>
+                      ) : (
+                        <div className="card-bottom-tile">
+                          <div className="card-icon-box">
+                            {renderCardIcon(svc, idx)}
+                          </div>
+                          <h3
+                            className={`img-card-title ${isTitleSelected ? 'builder-element-selected' : ''}`}
+                            onClick={(e) => {
+                              if (isEditorActive && !editorCtx.isPreviewMode) {
+                                e.stopPropagation();
+                                editorCtx.setSelectedSectionId(section.id);
+                                editorCtx.setSelectedElement({
+                                  type: 'service_card_title',
+                                  serviceId: svc.id,
+                                  cardId: svc.id,
+                                  sectionId: section.id,
+                                  service: svc,
+                                  text_en: svc.title_en,
+                                  text_de: svc.title_de
+                                });
+                              }
+                            }}
+                          >
+                            {title}
+                          </h3>
+                        </div>
+                      )}
                     </div>
                   </AnimatedCard>
                 );
               })}
+            </div>
+
+            <div className="service-bottom-tagline">
+              Sports & MICE &bull; Tailored experiences &bull; Global reach &bull; 24/7 support
             </div>
           </div>
         </section>
@@ -1861,29 +2121,40 @@ export const DynamicSectionRenderer = ({
       const ctaTitle = lang === 'de' ? (section.title_de || section.title_en) : (section.title_en || section.title_de);
       const btnText = lang === 'de' ? (section.button_text_de || 'Kontaktformular') : (section.button_text_en || 'Contact Form');
       const btnLink = section.button_link || '/en/Contact/';
-      const bgImage = section.bg_image !== undefined ? section.bg_image : '/assets/images/service_cta_bg.jpg';
 
       return (
         <section
-          className={`service-cta-banner ${isBuilderMode ? 'builder-section-preview' : ''}`}
-          style={{ ...customStyle, backgroundImage: bgImage ? `url('${bgImage}')` : undefined }}
+          className={`service-cta-banner service-cta-banner-spatial ${isBuilderMode ? 'builder-section-preview' : ''}`}
+          style={customStyle}
+          onClick={() => {
+            if (isEditorActive && !editorCtx.isPreviewMode) {
+              editorCtx.setSelectedSectionId(section.id);
+              editorCtx.setSelectedElement({ type: 'section', sectionId: section.id, section });
+            }
+          }}
         >
-          <div className="container cta-container">
+          {/* Glowing purple ambient orbs */}
+          <div className="spatial-bg-glow glow-purple"></div>
+          <div className="spatial-bg-glow glow-cyan"></div>
+
+          <div className="container">
             <AnimatedSection direction="up" distance={20}>
-              <h3 className="cta-text" style={{ color: section.heading_color || undefined }}>
-                {renderInlineText(
-                  lang === 'de' ? 'title_de' : 'title_en',
-                  ctaTitle,
-                  'Write to us with your request!',
-                  'span'
-                )}
-              </h3>
-              {renderEditableButton({
-                fieldPrefix: 'button',
-                fallbackText: 'Contact Form',
-                defaultLink: '/en/Contact/',
-                className: 'btn-red-pill cta-btn'
-              })}
+              <div className="cta-glass-card">
+                <h3 className="cta-text-spatial">
+                  {renderInlineText(
+                    lang === 'de' ? 'title_de' : 'title_en',
+                    ctaTitle,
+                    'Write to us with your request!',
+                    'span'
+                  )}
+                </h3>
+                {renderEditableButton({
+                  fieldPrefix: 'button',
+                  fallbackText: 'Contact Form',
+                  defaultLink: '/en/Contact/',
+                  className: 'btn-liquid-purple-pill cta-btn'
+                })}
+              </div>
             </AnimatedSection>
           </div>
         </section>
@@ -1940,12 +2211,33 @@ export const DynamicSectionRenderer = ({
       const photo = section.photo || '/assets/images/about_hockey_referee.jpeg';
       const p1 = lang === 'de' ? (section.p1_de || section.p1_en) : (section.p1_en || section.p1_de);
       const p2 = lang === 'de' ? (section.p2_de || section.p2_en) : (section.p2_en || section.p2_de);
-      const p3 = lang === 'de' ? (section.p3_de || section.p3_en) : (section.p3_en || section.p3_de);
+
+      const defaultFounderTitle = lang === 'de' 
+        ? 'Marc Knuelle — Internationaler Schiedsrichter seit 2000' 
+        : 'Marc Knuelle — International Referee since 2000';
+      const founderTitle = lang === 'de' ? (section.founder_title_de || defaultFounderTitle) : (section.founder_title_en || defaultFounderTitle);
+
+      const defaultP1 = lang === 'de'
+        ? 'Marc Knuelle ist der Gründer von Sports & MICE K-Consulting und bringt über 25 Jahre Erfahrung als internationaler Feldhockeyschiedsrichter mit. Seit dem Jahr 2000 hat Marc auf höchstem Niveau des Sports gepfiffen, darunter Weltmeisterschaften, Olympia-Qualifikationen und die FIH Pro League, wodurch er tiefgreifende Expertise in der Betreuung von Spitzenwettbewerben und Fairplay erworben hat.'
+        : 'Marc Knuelle is the founder of Sports & MICE K-Consulting, bringing over 25 years of experience as an international field hockey referee. Since the year 2000, Marc has officiated at the highest level of the sport, including World Championships, Olympic qualifiers, and the FIH Pro League, building deep expertise in elite competition management and fair play.';
+
+      const defaultP2 = lang === 'de'
+        ? 'Heute wendet Marc dieselbe Präzision und leistungsorientierte Herangehensweise auf die Sport- und MICE-Beratung an. Wir unterstützen Verbände, Eventorganisatoren und Unternehmenskunden mit professionellem Management für Tagungen, Incentives, Konferenzen und Events – und kombinieren Branchenwissen mit strategischer Planung, um nahtlose, erstklassige Erlebnisse auf globaler Ebene zu liefern.'
+        : 'Today, Marc applies that same precision and performance-driven approach to sports and MICE consulting. We support federations, event organizers, and corporate clients with professional management for meetings, incentives, conferences, and events—combining sport-industry knowledge with strategic planning to deliver seamless, high-quality experiences on a global scale.';
 
       return (
-        <section className={`about-story-section ${isBuilderMode ? 'builder-section-preview' : ''}`} style={customStyle}>
-          <div className="container">
-            <AnimatedSection direction="up" distance={20}>
+        <section className={`about-story-liquid-section ${isBuilderMode ? 'builder-section-preview' : ''}`} style={customStyle}>
+          {/* Soft Ambient Purple Background Glow Orbs */}
+          <div className="about-story-ambient-glow orb-left" />
+          <div className="about-story-ambient-glow orb-right" />
+
+          <div className="container relative z-10">
+            {/* TOP HEADER: Badge & Main Title */}
+            <AnimatedSection direction="up" distance={20} className="about-story-header-col">
+              <span className="about-pill-badge">
+                <Sparkles size={13} className="badge-sparkle" />
+                {lang === 'de' ? 'ÜBER UNS' : 'ABOUT US'}
+              </span>
               <h2 className="story-main-heading" style={{ color: section.heading_color || undefined }}>
                 {renderInlineText(
                   lang === 'de' ? 'title_de' : 'title_en',
@@ -1956,18 +2248,90 @@ export const DynamicSectionRenderer = ({
               </h2>
             </AnimatedSection>
 
-            <div className="about-story-grid">
-              <AnimatedSection direction="left" distance={30} className="story-photo-col">
-                <div className="story-photo-card">
-                  <img src={photo} alt="Marc Knuelle" className="story-founder-img" loading="lazy" decoding="async" />
-                  <div className="story-caption">Marc Knuelle – International Referee</div>
-                </div>
+            {/* MAIN 2-COLUMN GRID */}
+            <div className="about-story-liquid-grid">
+              {/* LEFT COLUMN: Carousel inside 3D Liquid Glass Frame */}
+              <AnimatedSection direction="right" distance={40} duration={0.7} className="story-photo-col">
+                <AboutStoryCarousel
+                  defaultPhoto={photo}
+                  isEditing={isEditorActive && !editorCtx.isPreviewMode}
+                  editorCtx={editorCtx}
+                  sectionId={section.id}
+                />
               </AnimatedSection>
 
-              <AnimatedSection direction="right" distance={30} className="story-text-col">
-                <p className="story-para">{renderInlineText(lang === 'de' ? 'p1_de' : 'p1_en', p1, 'Our founder, Marc Knuelle, has been an international referee in field hockey since 2000.', 'span')}</p>
-                <p className="story-para">{renderInlineText(lang === 'de' ? 'p2_de' : 'p2_en', p2, 'As a referee, you learn early on to make decisions and take responsibility.', 'span')}</p>
-                <p className="story-para highlight">{renderInlineText(lang === 'de' ? 'p3_de' : 'p3_en', p3, 'In 2015, Marc founded K-Consulting Sports & MICE to support sports associations.', 'span')}</p>
+              {/* RIGHT COLUMN: 3D Translucent Liquid Glass Card Container */}
+              <AnimatedSection direction="left" distance={40} duration={0.7} className="story-card-col">
+                <div className="founder-liquid-glass-card">
+                  <div className="founder-card-header">
+                    <span className="founder-subhead">{lang === 'de' ? 'DER GRÜNDER' : 'MEET THE FOUNDER'}</span>
+                    <h3 className="founder-title">
+                      {renderInlineText(
+                        lang === 'de' ? 'founder_title_de' : 'founder_title_en',
+                        founderTitle,
+                        defaultFounderTitle,
+                        'span'
+                      )}
+                    </h3>
+                  </div>
+
+                  <div className="founder-card-body">
+                    <p className="story-para">
+                      {renderInlineText(
+                        lang === 'de' ? 'p1_de' : 'p1_en',
+                        p1,
+                        defaultP1,
+                        'span'
+                      )}
+                    </p>
+                    <p className="story-para">
+                      {renderInlineText(
+                        lang === 'de' ? 'p2_de' : 'p2_en',
+                        p2,
+                        defaultP2,
+                        'span'
+                      )}
+                    </p>
+                  </div>
+
+                  {/* 3 STATS SUB-CARDS */}
+                  <div className="founder-stats-grid">
+                    <div className="founder-stat-box">
+                      <div className="stat-icon-wrapper">
+                        <Calendar size={20} />
+                      </div>
+                      <div className="stat-title">{lang === 'de' ? '25+ JAHRE' : '25+ YEARS'}</div>
+                      <div className="stat-subtitle">{lang === 'de' ? 'Internationales Schiedsrichterwesen' : 'International Refereeing'}</div>
+                    </div>
+
+                    <div className="founder-stat-box">
+                      <div className="stat-icon-wrapper">
+                        <Globe2 size={20} />
+                      </div>
+                      <div className="stat-title">{lang === 'de' ? '50+ EVENTS' : '50+ EVENTS'}</div>
+                      <div className="stat-subtitle">{lang === 'de' ? 'MICE & Sportprojekte' : 'MICE & Sports Projects'}</div>
+                    </div>
+
+                    <div className="founder-stat-box">
+                      <div className="stat-icon-wrapper">
+                        <Target size={20} />
+                      </div>
+                      <div className="stat-title">{lang === 'de' ? 'GLOBALE REICHWEITE' : 'GLOBAL REACH'}</div>
+                      <div className="stat-subtitle">{lang === 'de' ? 'Europa · Asien · Amerika' : 'Europe · Asia · Americas'}</div>
+                    </div>
+                  </div>
+
+                  {/* BOTTOM BUTTON */}
+                  <div className="founder-card-action">
+                    <NavLink
+                      to={section.button_link || '/en/Services/'}
+                      className="btn-founder-liquid-glass"
+                    >
+                      <span>{lang === 'de' ? 'Unsere Leistungen entdecken' : 'Explore Our Services'}</span>
+                      <ArrowRight size={16} />
+                    </NavLink>
+                  </div>
+                </div>
               </AnimatedSection>
             </div>
           </div>
@@ -2008,6 +2372,34 @@ export const DynamicSectionRenderer = ({
           active: true
         },
         {
+          id: 'tour_kenya',
+          title: 'Tour - Kenya - Nairobi',
+          title_de: 'Tour - Kenia - Nairobi',
+          hotel_name: 'Fairmont The Norfolk Nairobi',
+          location: 'Nairobi, Kenya',
+          image: '/assets/images/service_hero_bg.jpg',
+          external_url: 'https://www.fairmont.com/norfolk-hotel-nairobi/',
+          button_text_en: 'Fairmont The Norfolk Nairobi',
+          button_text_de: 'Fairmont The Norfolk Nairobi',
+          desc_en: 'High-altitude training facilities and world-class luxury hotels make Kenya an exceptional destination for athletic delegations and international MICE events.',
+          desc_de: 'Höhentrainingslager und erstklassige Luxushotels machen Kenia zu einem außergewöhnlichen Ziel für Sportdelegationen und internationale MICE-Events.',
+          active: true
+        },
+        {
+          id: 'tour_japan',
+          title: 'Tour - Japan - Tokyo',
+          title_de: 'Tour - Japan - Tokio',
+          hotel_name: 'The Grand Hyatt Tokyo',
+          location: 'Tokyo, Japan',
+          image: '/assets/images/service_teambuilding.png',
+          external_url: 'https://www.hyatt.com/en-US/hotel/japan/grand-hyatt-tokyo/tokgh',
+          button_text_en: 'The Grand Hyatt Tokyo',
+          button_text_de: 'The Grand Hyatt Tokyo',
+          desc_en: 'State-of-the-art Olympic sports facilities combined with ultra-modern MICE conference venues. Perfect for elite team preparations and global congresses.',
+          desc_de: 'Hochmoderne olympische Sportstätten kombiniert mit hochmodernen MICE-Konferenzzentren. Perfekt für die Vorbereitung von Spitzenteams und globale Kongresse.',
+          active: true
+        },
+        {
           id: 'travel_havana',
           title: 'Havana - Cuba',
           title_de: 'Havana - Kuba',
@@ -2036,6 +2428,16 @@ export const DynamicSectionRenderer = ({
           desc_en: 'Ideal for sport thanks to its good hotels, good sports event infrastructure and great team building activities.',
           desc_de: 'Ideal für den Sport dank guter Hotels, guter Sport-Event-Infrastruktur und toller Teambuilding-Aktivitäten.',
           active: true
+        },
+        {
+          id: 'travel_rio',
+          title: 'Rio de Janeiro - Brazil',
+          title_de: 'Rio de Janeiro - Brasilien',
+          location: 'Rio de Janeiro, Brazil',
+          image: '/assets/images/about_rio.jpg',
+          desc_en: 'Vibrant beach sports culture, World Cup venue infrastructure, and coastal conference facilities.',
+          desc_de: 'Lebendige Strandsportkultur, WM-Stadioninfrastruktur und erstklassige Tagungsmöglichkeiten an der Küste.',
+          active: true
         }
       ];
 
@@ -2052,7 +2454,7 @@ export const DynamicSectionRenderer = ({
 
       return (
         <section
-          className={`hotels-tours-section ${isBuilderMode ? 'builder-section-preview' : ''}`}
+          className={`hotels-tours-section hotels-tours-spatial-section ${isBuilderMode ? 'builder-section-preview' : ''}`}
           style={customStyle}
           onClick={() => {
             if (isEditorActive && !editorCtx.isPreviewMode) {
@@ -2061,19 +2463,54 @@ export const DynamicSectionRenderer = ({
             }
           }}
         >
+          {/* Spatial Glow Orbs */}
+          <div className="spatial-bg-glow glow-purple"></div>
+          <div className="spatial-bg-glow glow-cyan"></div>
+          <div className="spatial-bg-glow glow-blue"></div>
+
           <div className="container hotels-tours-container">
+            {/* Header Row */}
             <AnimatedSection direction="up" distance={20}>
-              <h2 className="section-main-title hotels-sec-heading" style={{ color: section.heading_color || undefined }}>
-                {renderInlineText(
-                  lang === 'de' ? 'title_de' : 'title_en',
-                  title,
-                  'Hotels sights inspection tours',
-                  'span'
-                )}
-              </h2>
+              <div className="hotels-tours-header-flex">
+                <div className="hotels-header-left">
+                  <div className="hotels-badge-pill">
+                    <Sparkles size={14} color="#38bdf8" />
+                    <span>Q4 2026 • Live Inspections Active</span>
+                  </div>
+                  <h2 className="section-main-title hotels-sec-heading-spatial">
+                    Hotels & Sights <span className="text-gradient-cyan-purple">Inspection Tours</span>
+                  </h2>
+                  <p className="hotels-header-sub">
+                    Curated on-site inspections for MICE planners — vetted hotels, landmark sights, compliant venues for meetings, incentives, conferences, exhibitions.
+                  </p>
+                </div>
+
+                <div className="hotels-top-pill-bar">
+                  <div className="top-feature-pill">
+                    <Compass size={16} color="#38bdf8" />
+                    <span>18 Venues Vetted</span>
+                  </div>
+                  <div className="top-feature-pill">
+                    <Calendar size={16} color="#c084fc" />
+                    <span>Custom Itineraries</span>
+                  </div>
+                  <div className="top-feature-pill">
+                    <ShieldCheck size={16} color="#60a5fa" />
+                    <span>Compliance & Sustainability</span>
+                  </div>
+                </div>
+              </div>
             </AnimatedSection>
 
-            <div className="tours-grid">
+            {/* Tours Grid */}
+            <div 
+              className="tours-grid tours-spatial-grid"
+              style={{
+                gridTemplateColumns: galleryItems.length > 0 && galleryItems.length <= 4 
+                  ? `repeat(${galleryItems.length}, minmax(0, 1fr))` 
+                  : undefined
+              }}
+            >
               {galleryItems.map((item, idx) => {
                 const isCardSelected = isEditorActive && !editorCtx.isPreviewMode && editorCtx.selectedElement?.cardId === item.id && editorCtx.selectedElement?.type === 'gallery_card';
                 const isImgSelected = isEditorActive && !editorCtx.isPreviewMode && editorCtx.selectedElement?.cardId === item.id && editorCtx.selectedElement?.type === 'card_image';
@@ -2084,145 +2521,95 @@ export const DynamicSectionRenderer = ({
 
                 const cardTitle = lang === 'de' ? (item.title_de || item.title) : (item.title || item.title_de);
                 const resolvedDesc = lang === 'de' ? (item.desc_de || item.desc_en) : (item.desc_en || item.desc_de);
-                const btnText = lang === 'de' ? (item.button_text_de || item.button_text_en || 'Reiseziel entdecken') : (item.button_text_en || 'Explore Destination');
+                const btnText = lang === 'de' ? (item.button_text_de || item.button_text_en || 'View Full Tour Plan') : (item.button_text_en || 'View Full Tour Plan');
                 const btnLink = item.button_link || item.external_url || '/en/Contact/';
                 const btnTarget = item.button_target || (item.external_url ? '_blank' : '_self');
-                const btnBg = item.button_bg_color || '#ff0000';
-                const btnColor = item.button_text_color || '#ffffff';
-                const btnRadius = item.button_border_radius || '50px';
-                const btnPadding = item.button_padding || '10px 24px';
-                const btnFontSize = item.button_font_size || '0.9rem';
 
                 return (
-                  <AnimatedCard key={item.id || idx} index={idx}>
+                  <AnimatedCard 
+                    key={item.id || idx} 
+                    index={idx}
+                    direction="asymmetrical"
+                    totalCards={galleryItems.length}
+                  >
                     <div
                       data-card-id={item.id}
-                      className={`tour-card ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isCardSelected ? 'element-selected-active' : ''} ${item.active === false ? 'card-hidden-draft' : ''}`}
-                      style={{
-                        background: item.card_bg || '#fff',
-                        borderRadius: item.card_border_radius || '14px',
-                        overflow: 'hidden',
-                        boxShadow: item.card_shadow || '0 8px 24px rgba(0,0,0,0.06)',
-                        position: 'relative',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      padding: 0,
-                      alignItems: 'stretch'
-                    }}
-                    onMouseMove={handleTiltMove}
-                    onMouseLeave={handleTiltLeave}
-                    onClick={(e) => {
-                      if (isEditorActive && !editorCtx.isPreviewMode) {
-                        e.stopPropagation();
-                        editorCtx.setSelectedSectionId(section.id);
-                        editorCtx.setSelectedElement({
-                          type: 'gallery_card',
-                          cardId: item.id,
-                          card: item,
-                          sectionId: section.id
-                        });
-                      }
-                    }}
-                  >
-                    {/* Floating Card Toolbar in Edit Mode */}
-                    {isEditorActive && !editorCtx.isPreviewMode && (
-                      <div className="floating-card-toolbar" onClick={(e) => e.stopPropagation()}>
-                        <span className="card-toolbar-label">CARD {idx + 1}</span>
-                        <button
-                          type="button"
-                          className="card-tool-btn"
-                          onClick={() => editorCtx.reorderGalleryCard(item.id, 'left')}
-                          disabled={idx === 0}
-                          title="Move Card Left"
-                        >
-                          <MoveLeft size={12} />
-                        </button>
-                        <button
-                          type="button"
-                          className="card-tool-btn"
-                          onClick={() => editorCtx.reorderGalleryCard(item.id, 'right')}
-                          disabled={idx === galleryItems.length - 1}
-                          title="Move Card Right"
-                        >
-                          <MoveRight size={12} />
-                        </button>
-                        <button
-                          type="button"
-                          className="card-tool-btn"
-                          onClick={() => editorCtx.duplicateGalleryCard(item.id)}
-                          title="Duplicate Card"
-                        >
-                          <Copy size={12} /> <span>Duplicate</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="card-tool-btn"
-                          onClick={() => editorCtx.toggleGalleryCardVisibility(item.id)}
-                          title={item.active === false ? "Show Card on Website" : "Hide Card from Website"}
-                        >
-                          {item.active === false ? <EyeOff size={12} /> : <Eye size={12} />} <span>{item.active === false ? 'Hidden' : 'Hide'}</span>
-                        </button>
-                        <button
-                          type="button"
-                          className="card-tool-btn delete-tool-btn"
-                          onClick={() => editorCtx.deleteGalleryCard(item.id)}
-                          title="Delete Card"
-                        >
-                          <Trash2 size={12} />
-                        </button>
-                      </div>
-                    )}
-
-                    {/* 1. CARD IMAGE */}
-                    <div
-                      className={`tour-card-image-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isImgSelected ? 'element-selected-active' : ''}`}
+                      className={`tour-card tour-glass-blob-card ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isCardSelected ? 'element-selected-active' : ''} ${item.active === false ? 'card-hidden-draft' : ''}`}
+                      onMouseMove={handleTiltMove}
+                      onMouseLeave={handleTiltLeave}
                       onClick={(e) => {
                         if (isEditorActive && !editorCtx.isPreviewMode) {
                           e.stopPropagation();
                           editorCtx.setSelectedSectionId(section.id);
                           editorCtx.setSelectedElement({
-                            type: 'card_image',
+                            type: 'gallery_card',
                             cardId: item.id,
                             card: item,
-                            sectionId: section.id,
-                            src: item.image,
-                            alt: item.title,
-                            height: item.image_height || '220px',
-                            object_fit: item.image_object_fit || 'cover',
-                            border_radius: item.image_border_radius || '0px'
+                            sectionId: section.id
                           });
                         }
                       }}
-                      style={{
-                        position: 'relative',
-                        overflow: 'hidden',
-                        width: '100%',
-                        aspectRatio: '16 / 10',
-                        minHeight: item.image_height || '220px',
-                        maxHeight: '340px',
-                        backgroundColor: '#f1f5f9'
-                      }}
                     >
+                      {/* Floating Location Tag Pill */}
+                      <div className="tour-floating-header-tag">
+                        <MapPin size={13} color="#a5f3fc" />
+                        <span>Tour • {item.location || cardTitle}</span>
+                      </div>
+
+                      {/* Floating Card Toolbar in Edit Mode */}
                       {isEditorActive && !editorCtx.isPreviewMode && (
-                        <span className="element-badge-tag">IMAGE</span>
+                        <div className="floating-card-toolbar" onClick={(e) => e.stopPropagation()}>
+                          <span className="card-toolbar-label">CARD {idx + 1}</span>
+                          <button
+                            type="button"
+                            className="card-tool-btn"
+                            onClick={() => editorCtx.reorderGalleryCard(item.id, 'left')}
+                            disabled={idx === 0}
+                            title="Move Card Left"
+                          >
+                            <MoveLeft size={12} />
+                          </button>
+                          <button
+                            type="button"
+                            className="card-tool-btn"
+                            onClick={() => editorCtx.reorderGalleryCard(item.id, 'right')}
+                            disabled={idx === galleryItems.length - 1}
+                            title="Move Card Right"
+                          >
+                            <MoveRight size={12} />
+                          </button>
+                          <button
+                            type="button"
+                            className="card-tool-btn"
+                            onClick={() => editorCtx.duplicateGalleryCard(item.id)}
+                            title="Duplicate Card"
+                          >
+                            <Copy size={12} /> <span>Duplicate</span>
+                          </button>
+                          <button
+                            type="button"
+                            className="card-tool-btn"
+                            onClick={() => editorCtx.toggleGalleryCardVisibility(item.id)}
+                            title={item.active === false ? "Show Card on Website" : "Hide Card from Website"}
+                          >
+                            {item.active === false ? <EyeOff size={12} /> : <Eye size={12} />} <span>{item.active === false ? 'Hidden' : 'Hide'}</span>
+                          </button>
+                          <button
+                            type="button"
+                            className="card-tool-btn delete-tool-btn"
+                            onClick={() => editorCtx.deleteGalleryCard(item.id)}
+                            title="Delete Card"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
                       )}
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          minHeight: item.image_height || '220px',
-                          objectFit: item.image_object_fit || 'cover',
-                          display: 'block',
-                          transition: 'transform 0.4s ease'
-                        }}
-                      />
-                      {isEditorActive && !editorCtx.isPreviewMode && (
-                        <button
-                          type="button"
-                          className="btn-card-quick-replace-img"
-                          onClick={(e) => {
+
+                      {/* 1. CARD IMAGE FRAME */}
+                      <div
+                        className={`tour-card-image-box spatial-img-frame ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isImgSelected ? 'element-selected-active' : ''}`}
+                        onClick={(e) => {
+                          if (isEditorActive && !editorCtx.isPreviewMode) {
                             e.stopPropagation();
                             editorCtx.setSelectedSectionId(section.id);
                             editorCtx.setSelectedElement({
@@ -2231,256 +2618,248 @@ export const DynamicSectionRenderer = ({
                               card: item,
                               sectionId: section.id,
                               src: item.image,
-                              alt: item.title
-                            });
-                            editorCtx.triggerMediaPicker((newUrl) => {
-                              editorCtx.updateGalleryCard(item.id, { image: newUrl });
-                            });
-                          }}
-                          title="Replace Card Image"
-                        >
-                          <Upload size={12} />
-                          <span>Replace Image</span>
-                        </button>
-                      )}
-                    </div>
-
-                    {/* Card Content Area */}
-                    <div style={{ padding: '22px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                      {/* 2. CARD TITLE */}
-                      <div
-                        className={`tour-card-title-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isTitleSelected ? 'element-selected-active' : ''}`}
-                        onClick={(e) => {
-                          if (isEditorActive && !editorCtx.isPreviewMode) {
-                            e.stopPropagation();
-                            editorCtx.setSelectedSectionId(section.id);
-                            editorCtx.setSelectedElement({
-                              type: 'card_title',
-                              cardId: item.id,
-                              card: item,
-                              sectionId: section.id,
-                              text_en: item.title,
-                              text_de: item.title_de || item.title,
-                              color: item.title_color,
-                              font_size: item.title_size
+                              alt: item.title,
+                              height: item.image_height || '240px',
+                              object_fit: item.image_object_fit || 'cover'
                             });
                           }
                         }}
-                        style={{ position: 'relative' }}
                       >
                         {isEditorActive && !editorCtx.isPreviewMode && (
-                          <span className="element-badge-tag">TITLE</span>
+                          <span className="element-badge-tag">IMAGE</span>
                         )}
-                        <h3
-                          style={{
-                            fontSize: item.title_size || '1.25rem',
-                            fontWeight: item.title_weight || 700,
-                            marginBottom: '6px',
-                            color: item.title_color || '#1f242d',
-                            lineHeight: 1.3
-                          }}
-                        >
-                          {isEditorActive && !editorCtx.isPreviewMode ? (
-                            <span
-                              contentEditable
-                              suppressContentEditableWarning
-                              className="builder-inline-editable"
-                              onBlur={(e) => {
-                                const val = e.currentTarget.innerText;
-                                editorCtx.updateGalleryCard(item.id, { title: val });
-                              }}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                  e.preventDefault();
-                                  e.currentTarget.blur();
-                                }
-                              }}
-                            >
-                              {cardTitle}
-                            </span>
-                          ) : (
-                            cardTitle
-                          )}
-                        </h3>
-                      </div>
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                        />
 
-                      {/* 3. CARD LOCATION */}
-                      <div
-                        className={`tour-card-loc-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isLocationSelected ? 'element-selected-active' : ''}`}
-                        onClick={(e) => {
-                          if (isEditorActive && !editorCtx.isPreviewMode) {
-                            e.stopPropagation();
-                            editorCtx.setSelectedSectionId(section.id);
-                            editorCtx.setSelectedElement({
-                              type: 'card_location',
-                              cardId: item.id,
-                              card: item,
-                              sectionId: section.id,
-                              location: item.location,
-                              icon_color: item.location_icon_color,
-                              text_color: item.location_color
-                            });
-                          }
-                        }}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          color: item.location_color || '#666',
-                          fontSize: item.location_size || '0.9rem',
-                          marginBottom: '12px',
-                          position: 'relative'
-                        }}
-                      >
+                        {/* Floating Detail Badges */}
+                        <div className="tour-side-badges-stack">
+                          <div className="glass-badge-pill">
+                            <Building2 size={13} color="#38bdf8" />
+                            <span>{idx === 0 ? '4 Hotels • 6 Sights' : idx === 1 ? '5 Hotels • 5 Landmarks' : '3 Hotels • 4 Sights'}</span>
+                          </div>
+                          <div className="glass-badge-pill">
+                            <Calendar size={13} color="#c084fc" />
+                            <span>{idx === 0 ? '3-Day Inspection • Q4 2026' : idx === 1 ? '4-Day Inspection • Nov 2026' : '5-Day Inspection • 2026'}</span>
+                          </div>
+                          <div className="glass-badge-pill">
+                            <Award size={13} color="#60a5fa" />
+                            <span>Site Audit Complete</span>
+                          </div>
+                        </div>
+
                         {isEditorActive && !editorCtx.isPreviewMode && (
-                          <span className="element-badge-tag">LOCATION</span>
-                        )}
-                        <MapPin size={15} color={item.location_icon_color || '#ff0000'} />
-                        {isEditorActive && !editorCtx.isPreviewMode ? (
-                          <span
-                            contentEditable
-                            suppressContentEditableWarning
-                            className="builder-inline-editable"
-                            onBlur={(e) => {
-                              const val = e.currentTarget.innerText;
-                              editorCtx.updateGalleryCard(item.id, { location: val });
+                          <button
+                            type="button"
+                            className="btn-card-quick-replace-img"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              editorCtx.setSelectedSectionId(section.id);
+                              editorCtx.setSelectedElement({
+                                type: 'card_image',
+                                cardId: item.id,
+                                card: item,
+                                sectionId: section.id,
+                                src: item.image,
+                                alt: item.title
+                              });
+                              editorCtx.triggerMediaPicker((newUrl) => {
+                                editorCtx.updateGalleryCard(item.id, { image: newUrl });
+                              });
                             }}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') {
-                                e.preventDefault();
-                                e.currentTarget.blur();
-                              }
-                            }}
+                            title="Replace Card Image"
                           >
-                            {item.location}
-                          </span>
-                        ) : (
-                          <span>{item.location}</span>
+                            <Upload size={12} />
+                            <span>Replace Image</span>
+                          </button>
                         )}
                       </div>
 
-                      {/* 4. CARD DESCRIPTION */}
-                      <div
-                        className={`tour-card-desc-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isDescSelected ? 'element-selected-active' : ''}`}
-                        onClick={(e) => {
-                          if (isEditorActive && !editorCtx.isPreviewMode) {
-                            e.stopPropagation();
-                            editorCtx.setSelectedSectionId(section.id);
-                            editorCtx.setSelectedElement({
-                              type: 'card_desc',
-                              cardId: item.id,
-                              card: item,
-                              sectionId: section.id,
-                              desc_en: item.desc_en,
-                              desc_de: item.desc_de,
-                              color: item.desc_color,
-                              font_size: item.desc_size
-                            });
-                          }
-                        }}
-                        style={{ position: 'relative', marginBottom: '18px', flexGrow: 1 }}
-                      >
-                        {isEditorActive && !editorCtx.isPreviewMode && (
-                          <span className="element-badge-tag">DESCRIPTION</span>
-                        )}
-                        <p
-                          style={{
-                            fontSize: item.desc_size || '0.92rem',
-                            color: item.desc_color || '#555',
-                            lineHeight: '1.55',
-                            margin: 0
-                          }}
-                        >
-                          {isEditorActive && !editorCtx.isPreviewMode ? (
-                            <span
-                              contentEditable
-                              suppressContentEditableWarning
-                              className="builder-inline-editable"
-                              onBlur={(e) => {
-                                const val = e.currentTarget.innerText;
-                                editorCtx.updateGalleryCard(item.id, { [lang === 'de' ? 'desc_de' : 'desc_en']: val });
-                              }}
-                              onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                  e.preventDefault();
-                                  e.currentTarget.blur();
-                                }
-                              }}
-                            >
-                              {resolvedDesc}
-                            </span>
-                          ) : (
-                            resolvedDesc
-                          )}
-                        </p>
-                      </div>
-
-                      {/* 5. CARD BUTTON */}
-                      <div
-                        className={`tour-card-btn-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isBtnSelected ? 'element-selected-active' : ''}`}
-                        onClick={(e) => {
-                          if (isEditorActive && !editorCtx.isPreviewMode) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            editorCtx.setSelectedSectionId(section.id);
-                            editorCtx.setSelectedElement({
-                              type: 'card_button',
-                              cardId: item.id,
-                              card: item,
-                              sectionId: section.id,
-                              text_en: item.button_text_en || 'Explore Destination',
-                              text_de: item.button_text_de || 'Reiseziel entdecken',
-                              link: btnLink,
-                              link_type: item.button_link_type || (btnLink.startsWith('http') ? 'external' : 'internal'),
-                              target: btnTarget,
-                              bg_color: btnBg,
-                              text_color: btnColor,
-                              hover_bg_color: item.button_hover_bg || '#cc0000',
-                              hover_text_color: item.button_hover_text || '#ffffff',
-                              border_radius: btnRadius,
-                              padding: btnPadding,
-                              font_size: btnFontSize,
-                              font_weight: item.button_font_weight || 700
-                            });
-                          }
-                        }}
-                        style={{ position: 'relative', marginTop: 'auto' }}
-                      >
-                        {isEditorActive && !editorCtx.isPreviewMode && (
-                          <span className="element-badge-tag">BUTTON</span>
-                        )}
-                        <NavLink
-                          to={isEditorActive && !editorCtx.isPreviewMode ? '#' : btnLink}
-                          target={isEditorActive && !editorCtx.isPreviewMode ? undefined : btnTarget}
-                          className="btn-red-pill tour-card-btn"
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            backgroundColor: btnBg,
-                            color: btnColor,
-                            borderRadius: btnRadius.includes('px') ? btnRadius : `${btnRadius}px`,
-                            padding: btnPadding,
-                            fontSize: btnFontSize.includes('px') || btnFontSize.includes('rem') ? btnFontSize : `${btnFontSize}px`,
-                            fontWeight: item.button_font_weight || 700,
-                            textDecoration: 'none',
-                            boxShadow: `0 4px 12px ${btnBg}33`
-                          }}
+                      {/* Card Spatial Content Area */}
+                      <div className="tour-card-spatial-content">
+                        {/* Title */}
+                        <div
+                          className={`tour-card-title-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isTitleSelected ? 'element-selected-active' : ''}`}
                           onClick={(e) => {
                             if (isEditorActive && !editorCtx.isPreviewMode) {
-                              e.preventDefault();
+                              e.stopPropagation();
+                              editorCtx.setSelectedSectionId(section.id);
+                              editorCtx.setSelectedElement({
+                                type: 'card_title',
+                                cardId: item.id,
+                                card: item,
+                                sectionId: section.id,
+                                text_en: item.title,
+                                text_de: item.title_de || item.title
+                              });
                             }
                           }}
                         >
-                          <span>{btnText}</span>
-                          <ArrowRight size={14} />
-                        </NavLink>
+                          {isEditorActive && !editorCtx.isPreviewMode && (
+                            <span className="element-badge-tag">TITLE</span>
+                          )}
+                          <h3 className="tour-spatial-title">
+                            {isEditorActive && !editorCtx.isPreviewMode ? (
+                              <span
+                                contentEditable
+                                suppressContentEditableWarning
+                                className="builder-inline-editable"
+                                onBlur={(e) => {
+                                  const val = e.currentTarget.innerText;
+                                  editorCtx.updateGalleryCard(item.id, { title: val });
+                                }}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    e.currentTarget.blur();
+                                  }
+                                }}
+                              >
+                                {cardTitle}
+                              </span>
+                            ) : (
+                              cardTitle
+                            )}
+                          </h3>
+                        </div>
+
+                        {/* Location */}
+                        <div
+                          className={`tour-card-loc-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isLocationSelected ? 'element-selected-active' : ''}`}
+                          onClick={(e) => {
+                            if (isEditorActive && !editorCtx.isPreviewMode) {
+                              e.stopPropagation();
+                              editorCtx.setSelectedSectionId(section.id);
+                              editorCtx.setSelectedElement({
+                                type: 'card_location',
+                                cardId: item.id,
+                                card: item,
+                                sectionId: section.id,
+                                location: item.location
+                              });
+                            }
+                          }}
+                        >
+                          {isEditorActive && !editorCtx.isPreviewMode && (
+                            <span className="element-badge-tag">LOCATION</span>
+                          )}
+                          <div className="tour-loc-badge-inner">
+                            <MapPin size={13} color="#38bdf8" />
+                            {isEditorActive && !editorCtx.isPreviewMode ? (
+                              <span
+                                contentEditable
+                                suppressContentEditableWarning
+                                className="builder-inline-editable"
+                                onBlur={(e) => {
+                                  const val = e.currentTarget.innerText;
+                                  editorCtx.updateGalleryCard(item.id, { location: val });
+                                }}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    e.currentTarget.blur();
+                                  }
+                                }}
+                              >
+                                {item.location || 'Featured Destination'}
+                              </span>
+                            ) : (
+                              <span>{item.location || 'Featured Destination'}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Description / Highlights */}
+                        <div
+                          className={`tour-card-desc-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isDescSelected ? 'element-selected-active' : ''}`}
+                          onClick={(e) => {
+                            if (isEditorActive && !editorCtx.isPreviewMode) {
+                              e.stopPropagation();
+                              editorCtx.setSelectedSectionId(section.id);
+                              editorCtx.setSelectedElement({
+                                type: 'card_desc',
+                                cardId: item.id,
+                                card: item,
+                                sectionId: section.id,
+                                desc_en: item.desc_en,
+                                desc_de: item.desc_de
+                              });
+                            }
+                          }}
+                        >
+                          {isEditorActive && !editorCtx.isPreviewMode && (
+                            <span className="element-badge-tag">DESCRIPTION</span>
+                          )}
+                          <p className="tour-spatial-desc">
+                            <span className="highlight-tag">Highlights:</span>{' '}
+                            {isEditorActive && !editorCtx.isPreviewMode ? (
+                              <span
+                                contentEditable
+                                suppressContentEditableWarning
+                                className="builder-inline-editable"
+                                onBlur={(e) => {
+                                  const val = e.currentTarget.innerText;
+                                  editorCtx.updateGalleryCard(item.id, { [lang === 'de' ? 'desc_de' : 'desc_en']: val });
+                                }}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    e.currentTarget.blur();
+                                  }
+                                }}
+                              >
+                                {resolvedDesc}
+                              </span>
+                            ) : (
+                              resolvedDesc
+                            )}
+                          </p>
+                        </div>
+
+                        {/* Action Button */}
+                        <div
+                          className={`tour-card-btn-box ${isEditorActive && !editorCtx.isPreviewMode ? 'element-selectable' : ''} ${isBtnSelected ? 'element-selected-active' : ''}`}
+                          onClick={(e) => {
+                            if (isEditorActive && !editorCtx.isPreviewMode) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              editorCtx.setSelectedSectionId(section.id);
+                              editorCtx.setSelectedElement({
+                                type: 'card_button',
+                                cardId: item.id,
+                                card: item,
+                                sectionId: section.id,
+                                text_en: item.button_text_en || 'View Full Tour Plan',
+                                text_de: item.button_text_de || 'Reiseziel entdecken',
+                                link: btnLink,
+                                target: btnTarget
+                              });
+                            }
+                          }}
+                        >
+                          {isEditorActive && !editorCtx.isPreviewMode && (
+                            <span className="element-badge-tag">BUTTON</span>
+                          )}
+                          <NavLink
+                            to={isEditorActive && !editorCtx.isPreviewMode ? '#' : btnLink}
+                            target={isEditorActive && !editorCtx.isPreviewMode ? undefined : btnTarget}
+                            className="btn-liquid-tour-plan"
+                            onClick={(e) => {
+                              if (isEditorActive && !editorCtx.isPreviewMode) {
+                                e.preventDefault();
+                              }
+                            }}
+                          >
+                            <span>{btnText === 'Explore Destination' ? 'View Full Tour Plan' : btnText}</span>
+                            <ArrowRight size={15} />
+                          </NavLink>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </AnimatedCard>
-              );
-            })}
+                  </AnimatedCard>
+                );
+              })}
 
               {/* [ + Add Card ] slot at the end of gallery in Edit Mode */}
               {isEditorActive && !editorCtx.isPreviewMode && (
@@ -2493,21 +2872,36 @@ export const DynamicSectionRenderer = ({
                   title="Add a new card to this gallery section"
                 >
                   <div className="add-card-circle">
-                    <Plus size={26} color="#0284c7" />
+                    <Plus size={26} color="#38bdf8" />
                   </div>
                   <span className="add-card-title">+ Add Card</span>
                   <span className="add-card-sub">Create new destination showcase</span>
                 </div>
               )}
             </div>
+
+            {/* Bottom MICE Specialization Glass Capsule Bar */}
+            <div className="mice-spec-glass-bar">
+              <div className="mice-spec-label">
+                <span className="pulsing-dot"></span>
+                <span>MICE Specialization</span>
+              </div>
+              <div className="mice-spec-items">
+                <span className="spec-item">• RFP & Procurement Support</span>
+                <span className="spec-item">• On-Site Photolog & Report Delivered</span>
+                <span className="spec-item">• Sustainability Scoring Included</span>
+              </div>
+            </div>
           </div>
         </section>
       );
     }
 
-    // 13b. UPCOMING DESTINATIONS BANNER
+    // 13b. UPCOMING DESTINATIONS BANNER (SPATIAL LIQUID GLASS CAPSULE TICKER)
     if (section.id === 'hotels_upcoming' || section.type === 'upcoming') {
       const title = lang === 'de' ? (section.title_de || section.title_en) : (section.title_en || section.title_de);
+      const badgeText = lang === 'de' ? 'KOMMENDE TOUREN' : 'UPCOMING TOURS';
+      const upcomingText = title || 'Next: Kenya - Mexico - USA - Brazil - Japan';
 
       return (
         <section
@@ -2520,23 +2914,9 @@ export const DynamicSectionRenderer = ({
             }
           }}
         >
-          <SportsMarqueeTicker />
-          <div className="container" style={{ marginTop: '30px' }}>
+          <div className="container">
             <AnimatedSection direction={anim.type} distance={20}>
-              <div className="upcoming-banner-box">
-                <div className="upcoming-icon-pill">
-                  <Compass size={18} />
-                  <span>{lang === 'de' ? 'Kommende Touren' : 'Upcoming Tours'}</span>
-                </div>
-                <h3 className="upcoming-banner-title">
-                  {renderInlineText(
-                    lang === 'de' ? 'title_de' : 'title_en',
-                    title,
-                    'Next: Kenya - Mexico - USA - Brazil - Japan',
-                    'span'
-                  )}
-                </h3>
-              </div>
+              <SportsMarqueeTicker badgeText={badgeText} upcomingText={upcomingText} />
             </AnimatedSection>
           </div>
         </section>
@@ -2631,8 +3011,10 @@ export const DynamicSectionRenderer = ({
 
     // 16. CONTACT FORM SECTION
     if (section.id === 'contact_form_section' || section.type === 'contact') {
-      const title = lang === 'de' ? (section.title_de || 'Kontaktformular') : (section.title_en || 'Contact Form');
-      const subtitle = lang === 'de' ? (section.subtitle_de || 'Schreiben Sie uns Ihr Anliegen') : (section.subtitle_en || 'Write us your request, we will get in touch with you');
+      const title = lang === 'de' ? (section.title_de || 'contact form') : (section.title_en || 'contact form');
+      const subtitle = lang === 'de' 
+        ? (section.subtitle_de || 'Haben Sie Fragen zu unseren Sports & MICE Beratungsleistungen? Kontaktieren Sie unser Team und wir antworten innerhalb von 24 Stunden.') 
+        : (section.subtitle_en || 'Have questions about our sports & MICE consulting services? Get in touch with our team and we\'ll respond within 24 hours.');
 
       const isFormSelected = isEditorActive && !editorCtx.isPreviewMode &&
         editorCtx.selectedElement?.type === 'form' && editorCtx.selectedElement?.sectionId === section.id;
@@ -2645,99 +3027,187 @@ export const DynamicSectionRenderer = ({
           editorCtx.setSelectedElement({
             type: 'form',
             sectionId: section.id,
-            title_en: section.title_en || 'Contact Form',
-            title_de: section.title_de || 'Kontaktformular',
-            subtitle_en: section.subtitle_en || 'Write us your request, we will get in touch with you',
-            subtitle_de: section.subtitle_de || 'Schreiben Sie uns Ihr Anliegen',
-            recipient_email: section.recipient_email || 'contact@sportsandmice.com',
-            success_msg_en: section.success_msg_en || 'Thank you! Your inquiry has been sent.',
-            success_msg_de: section.success_msg_de || 'Vielen Dank! Ihre Anfrage wurde gesendet.'
+            title_en: section.title_en || 'contact form',
+            title_de: section.title_de || 'kontaktformular',
+            subtitle_en: section.subtitle_en || 'Have questions about our sports & MICE consulting services?',
+            subtitle_de: section.subtitle_de || 'Haben Sie Fragen zu unseren Sports & MICE Beratungsleistungen?'
           });
         }
       };
 
       return (
-        <section className={`contact-form-section ${isBuilderMode ? 'builder-section-preview' : ''}`} style={customStyle}>
-          <div className="container contact-grid">
-            <AnimatedSection direction="left" distance={25} className="contact-form-col">
-              <div
-                className={`contact-form-wrapper ${isFormSelected ? 'builder-element-selected' : ''}`}
-                style={{ background: '#fff', padding: '35px', borderRadius: '12px', border: '1px solid #e5e7eb', cursor: isEditorActive && !editorCtx.isPreviewMode ? 'pointer' : 'default' }}
-                onClick={handleFormClick}
-              >
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '6px', color: section.heading_color || '#1f242d' }}>
-                  {renderInlineText(lang === 'de' ? 'title_de' : 'title_en', title, 'Contact Form', 'span')}
-                </h2>
-                <p style={{ color: '#666', marginBottom: '24px' }}>
-                  {renderInlineText(lang === 'de' ? 'subtitle_de' : 'subtitle_en', subtitle, 'Write us your request, we will get in touch with you', 'span')}
-                </p>
+        <section className={`contact-page ${isBuilderMode ? 'builder-section-preview' : ''}`} style={customStyle}>
+          {/* Floating 3D Liquid Orbs Background */}
+          <div className="contact-liquid-orbs">
+            <div className="contact-orb contact-orb-1" />
+            <div className="contact-orb contact-orb-2" />
+            <div className="contact-orb contact-orb-3" />
+            <div className="contact-orb contact-orb-4" />
+          </div>
 
-                <form
-                  onSubmit={(e) => {
-                    if (isEditorActive && !editorCtx.isPreviewMode) {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }
-                  }}
-                  style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-                >
-                  <input
-                    type="text"
-                    placeholder={lang === 'de' ? 'Ihr Name *' : 'Your Name *'}
-                    className="builder-dummy-input"
-                    readOnly={isEditorActive && !editorCtx.isPreviewMode}
-                    style={{ width: '100%', padding: '12px', border: '1px solid #ddd', borderRadius: '6px' }}
-                  />
-                  <input
-                    type="email"
-                    placeholder={lang === 'de' ? 'Ihre E-Mail *' : 'Your Email *'}
-                    className="builder-dummy-input"
-                    readOnly={isEditorActive && !editorCtx.isPreviewMode}
-                    style={{ width: '100%', padding: '12px', border: '1px solid #ddd', borderRadius: '6px' }}
-                  />
-                  <textarea
-                    placeholder={lang === 'de' ? 'Ihre Nachricht...' : 'Your Message...'}
-                    rows="4"
-                    className="builder-dummy-input"
-                    readOnly={isEditorActive && !editorCtx.isPreviewMode}
-                    style={{ width: '100%', padding: '12px', border: '1px solid #ddd', borderRadius: '6px' }}
-                  ></textarea>
-                  <button
-                    type={isEditorActive && !editorCtx.isPreviewMode ? 'button' : 'submit'}
-                    className="btn-red-pill"
-                    style={{ alignSelf: 'flex-start', cursor: isEditorActive && !editorCtx.isPreviewMode ? 'pointer' : 'pointer' }}
-                    onClick={(e) => {
-                      if (isEditorActive && !editorCtx.isPreviewMode) {
-                        handleFormClick(e);
-                      }
-                    }}
-                  >
-                    <span>{lang === 'de' ? 'Nachricht senden' : 'Send Message'}</span>
-                    <ArrowRight size={16} />
-                  </button>
-                </form>
-              </div>
-            </AnimatedSection>
+          <div className="contact-glass-container">
+            <div className="contact-glass-grid">
 
-            <AnimatedSection direction="right" distance={25} className="contact-info-col">
-              <div className="contact-info-wrapper" style={{ background: '#1f242d', color: '#fff', padding: '35px', borderRadius: '12px' }}>
-                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#fff', marginBottom: '20px' }}>K-Consulting Sports & MICE</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', color: '#ccc' }}>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <MapPin size={18} color="#ff0000" />
-                    <span>Fritz-Pullig-Strasse 9, 53757 Sankt Augustin</span>
+              {/* LEFT MASTER GLASS CARD: Consultation Info Panel */}
+              <AnimatedSection direction="left" distance={30} className="contact-glass-card">
+                <div>
+                 
+                  <h2 className="contact-master-title" style={{ color: section.heading_color || undefined }}>
+                    {renderInlineText(lang === 'de' ? 'title_de' : 'title_en', title, 'contact form', 'span')}
+                  </h2>
+                  <p className="contact-master-subtitle">
+                    {renderInlineText(lang === 'de' ? 'subtitle_de' : 'subtitle_en', subtitle, 'Have questions about our sports & MICE consulting services? Get in touch with our team and we\'ll respond within 24 hours.', 'span')}
+                  </p>
+                </div>
+
+                {/* Inset Liquid Glass Contact Detail Pills */}
+                <div className="contact-inset-pills-list">
+                  <div className="contact-inset-pill">
+                    <div className="contact-spherical-icon">
+                      <Phone size={20} />
+                    </div>
+                    <div className="contact-pill-content">
+                      <span className="contact-pill-label">Phone</span>
+                      <a href="tel:+492241343320" className="contact-pill-value">+49 2241 343320</a>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <Phone size={18} color="#ff0000" />
-                    <span>+49 2241 343320</span>
+
+                  <div className="contact-inset-pill">
+                    <div className="contact-spherical-icon">
+                      <Printer size={20} />
+                    </div>
+                    <div className="contact-pill-content">
+                      <span className="contact-pill-label">Fax</span>
+                      <span className="contact-pill-value">+49 2241 344316</span>
+                    </div>
                   </div>
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <Mail size={18} color="#ff0000" />
-                    <span>contact@sportsandmice.com</span>
+
+                  <div className="contact-inset-pill">
+                    <div className="contact-spherical-icon">
+                      <Mail size={20} />
+                    </div>
+                    <div className="contact-pill-content">
+                      <span className="contact-pill-label">Email</span>
+                      <a href="mailto:contact@sportsandmice.com" className="contact-pill-value">contact@sportsandmice.com</a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </AnimatedSection>
+              </AnimatedSection>
+
+              {/* RIGHT MASTER GLASS CARD: Interactive Liquid Form Panel */}
+              <AnimatedSection direction="right" distance={30} className="contact-glass-card">
+                <div
+                  className={isFormSelected ? 'builder-element-selected' : ''}
+                  onClick={handleFormClick}
+                  style={{ cursor: isEditorActive && !editorCtx.isPreviewMode ? 'pointer' : 'default' }}
+                >
+                  <h3 className="contact-form-heading">
+                    {lang === 'de' ? 'Nachricht senden' : 'Send us a message'}
+                  </h3>
+                  <p className="contact-form-subtext">
+                    {lang === 'de'
+                      ? 'Füllen Sie das Formular aus und unser Berater wird Sie in Kürze kontaktieren.'
+                      : 'Fill out the form and our consultant will contact you shortly.'
+                    }
+                  </p>
+
+                  <form
+                    onSubmit={(e) => {
+                      if (isEditorActive && !editorCtx.isPreviewMode) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }
+                    }}
+                    className="glass-form-layout"
+                  >
+                    {/* Row 1: Surname & e-mail */}
+                    <div className="glass-form-row-2col">
+                      <div className="glass-form-group">
+                        <label className="glass-form-label">Surname</label>
+                        <input 
+                          type="text" 
+                          placeholder="e.g. Marc" 
+                          className="glass-form-input"
+                          readOnly={isEditorActive && !editorCtx.isPreviewMode}
+                        />
+                      </div>
+
+                      <div className="glass-form-group">
+                        <label className="glass-form-label">e-mail</label>
+                        <input 
+                          type="email" 
+                          placeholder="you@email.com" 
+                          className="glass-form-input"
+                          readOnly={isEditorActive && !editorCtx.isPreviewMode}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Row 2: Country & City */}
+                    <div className="glass-form-row-2col">
+                      <div className="glass-form-group">
+                        <label className="glass-form-label">Country</label>
+                        <input 
+                          type="text" 
+                          placeholder="Germany" 
+                          className="glass-form-input"
+                          readOnly={isEditorActive && !editorCtx.isPreviewMode}
+                        />
+                      </div>
+
+                      <div className="glass-form-group">
+                        <label className="glass-form-label">City</label>
+                        <input 
+                          type="text" 
+                          placeholder="Sankt Augustin" 
+                          className="glass-form-input"
+                          readOnly={isEditorActive && !editorCtx.isPreviewMode}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Row 3: Address */}
+                    <div className="glass-form-group">
+                      <label className="glass-form-label">Address</label>
+                      <input 
+                        type="text" 
+                        placeholder="Fritz-Pullig-Strasse 9, 53757 Sankt Augustin" 
+                        className="glass-form-input"
+                        readOnly={isEditorActive && !editorCtx.isPreviewMode}
+                      />
+                    </div>
+
+                    {/* Row 4: Message */}
+                    <div className="glass-form-group">
+                      <label className="glass-form-label">Message</label>
+                      <textarea 
+                        rows="3"
+                        placeholder="Tell us about your project, event, or consultation needs..." 
+                        className="glass-form-textarea"
+                        readOnly={isEditorActive && !editorCtx.isPreviewMode}
+                      />
+                    </div>
+
+                    {/* Row 5: Action Submit Button */}
+                    <div className="glass-form-action-bar">
+                      <button 
+                        type={isEditorActive && !editorCtx.isPreviewMode ? 'button' : 'submit'}
+                        className="btn-glass-purple-submit"
+                        onClick={(e) => {
+                          if (isEditorActive && !editorCtx.isPreviewMode) {
+                            handleFormClick(e);
+                          }
+                        }}
+                      >
+                        <span>Send Message</span>
+                        <Send size={16} />
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </AnimatedSection>
+
+            </div>
           </div>
         </section>
       );
@@ -2982,6 +3452,7 @@ export const DynamicSectionRenderer = ({
 
         // 4. Button Block
         if (bType === 'button' || bType === 'cta') {
+          if (block.enabled === false && !isEditorActive) return null;
           const btnTextEn = block.text_en || block.text || 'Click Here';
           const btnTextDe = block.text_de || block.text || 'Hier klicken';
           const resolvedBtnText = lang === 'de' ? (btnTextDe || btnTextEn) : btnTextEn;
@@ -3038,17 +3509,7 @@ export const DynamicSectionRenderer = ({
                 link: btnLink,
                 link_type: btnLinkType,
                 target: btnTarget,
-                bg_color: block.bg_color || (isPrimary ? '#ff0000' : '#ffffff'),
-                text_color: block.text_color || (isPrimary ? '#ffffff' : '#1f242d'),
-                hover_bg_color: block.hover_bg_color || '#cc0000',
-                hover_text_color: block.hover_text_color || '#ffffff',
-                border_color: block.border_color || '',
-                border_radius: btnRadius,
-                padding: btnPadding,
-                font_size: btnFontSize,
-                font_weight: block.font_weight || 700,
-                hover_animation: block.hover_animation || 'scale',
-                responsiveStyles: block.responsiveStyles || {}
+                enabled: block.enabled !== false
               });
             }
           };
@@ -3093,6 +3554,7 @@ export const DynamicSectionRenderer = ({
 
         // 5. Card Block
         if (bType === 'card') {
+          if (block.enabled === false && !isEditorActive) return null;
           const cardTitle = lang === 'de' ? (block.title_de || block.title_en || block.title) : (block.title_en || block.title_de || block.title);
           const cardDesc = lang === 'de' ? (block.desc_de || block.desc_en || block.desc) : (block.desc_en || block.desc_de || block.desc);
           const IconC = block.icon ? (ICON_LOOKUP[block.icon] || Star) : null;
@@ -3401,6 +3863,7 @@ export const DynamicSectionRenderer = ({
 
         // 10. Video & Dedicated YouTube Block
         if (bType === 'video' || bType === 'youtube') {
+          if (block.video_enabled === false && !isEditorActive) return null;
           const vUrl = block.video_url || block.url || 'https://www.youtube.com/embed/dD_FThvzO9I?controls=1';
           const isTestingThisVideo = !!testingVideoMap[block.id];
 
@@ -3489,58 +3952,6 @@ export const DynamicSectionRenderer = ({
             );
           }
           return <div key={block.id || bIdx}>{videoBox}</div>;
-        }
-
-        // 11. Divider Block
-        if (bType === 'divider') {
-          const divBox = (
-            <hr
-              style={{
-                border: 'none',
-                borderTop: `${block.thickness || 1}px ${block.style || 'solid'} ${block.color || '#e2e8f0'}`,
-                margin: `${block.margin || 24}px 0`
-              }}
-            />
-          );
-          if (isEditorActive) {
-            return (
-              <div
-                key={block.id || bIdx}
-                className={`builder-block-item ${isBlockSelected ? 'builder-element-selected' : ''}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  editorCtx.setSelectedSectionId(section.id);
-                  editorCtx.setSelectedElement({ sectionId: section.id, colId, blockId: block.id, block, type: 'divider' });
-                }}
-              >
-                {renderBlockToolbar(block, colId, bIdx, totalBlocks)}
-                {divBox}
-              </div>
-            );
-          }
-          return <div key={block.id || bIdx}>{divBox}</div>;
-        }
-
-        // 12. Spacer Block
-        if (bType === 'spacer') {
-          const spaceBox = <div style={{ height: `${block.height || 30}px`, background: isEditorActive ? 'rgba(56, 189, 248, 0.05)' : 'transparent', border: isEditorActive ? '1px dashed #cbd5e1' : 'none', borderRadius: '4px' }} />;
-          if (isEditorActive) {
-            return (
-              <div
-                key={block.id || bIdx}
-                className={`builder-block-item ${isBlockSelected ? 'builder-element-selected' : ''}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  editorCtx.setSelectedSectionId(section.id);
-                  editorCtx.setSelectedElement({ sectionId: section.id, colId, blockId: block.id, block, type: 'spacer' });
-                }}
-              >
-                {renderBlockToolbar(block, colId, bIdx, totalBlocks)}
-                {spaceBox}
-              </div>
-            );
-          }
-          return <div key={block.id || bIdx}>{spaceBox}</div>;
         }
 
         // 13. Embedded existing component inside column

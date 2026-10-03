@@ -28,8 +28,8 @@ class MediaManager {
         return [
             [
                 'id' => 'media_logo',
-                'name' => 'logo.png',
-                'url' => '/assets/images/logo.png',
+                'name' => 'logo.jpeg',
+                'url' => '/assets/images/logo.jpeg',
                 'alt_text' => 'Sports & MICE K-Consulting Logo',
                 'category' => 'Branding',
                 'size_kb' => 45,

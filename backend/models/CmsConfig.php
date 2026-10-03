@@ -78,8 +78,8 @@ class CmsConfig {
 
             // Header & Navigation Configuration
             'header' => [
-                'logo_url' => '/assets/images/logo.png',
-                'brand_title' => 'Sports & MICE',
+                'logo_url' => '/assets/images/logo.jpeg',
+                'brand_title' => '',
                 'sticky' => true,
                 'show_language_selector' => true,
                 'nav_items' => [
@@ -663,6 +663,42 @@ class CmsConfig {
                     'desc_en' => 'Ideal for sport thanks to its good hotels, good sports event infrastructure and great team building activities.',
                     'desc_de' => 'Ideal für Sport dank guter Hotels und Teambuilding-Aktivitäten.',
                     'order' => 5,
+                    'active' => true
+                ],
+                [
+                    'id' => 'tour_kenya',
+                    'title' => 'Tour - Kenya - Nairobi',
+                    'hotel_name' => 'Fairmont The Norfolk Nairobi',
+                    'location' => 'Nairobi, Kenya',
+                    'image' => '/assets/images/service_hero_bg.jpg',
+                    'external_url' => 'https://www.fairmont.com/norfolk-hotel-nairobi/',
+                    'desc_en' => 'High-altitude training facilities and world-class luxury hotels make Kenya an exceptional destination for athletic delegations and international MICE events.',
+                    'desc_de' => 'Höhentrainingslager und erstklassige Luxushotels machen Kenia zu einem außergewöhnlichen Ziel für Sportdelegationen und internationale MICE-Events.',
+                    'order' => 6,
+                    'active' => true
+                ],
+                [
+                    'id' => 'tour_japan',
+                    'title' => 'Tour - Japan - Tokyo',
+                    'hotel_name' => 'The Grand Hyatt Tokyo',
+                    'location' => 'Tokyo, Japan',
+                    'image' => '/assets/images/service_teambuilding.png',
+                    'external_url' => 'https://www.hyatt.com/en-US/hotel/japan/grand-hyatt-tokyo/tokgh',
+                    'desc_en' => 'State-of-the-art Olympic sports facilities combined with ultra-modern MICE conference venues. Perfect for elite team preparations and global congresses.',
+                    'desc_de' => 'Hochmoderne olympische Sportstätten kombiniert mit hochmodernen MICE-Konferenzzentren. Perfekt für die Vorbereitung von Spitzenteams und globale Kongresse.',
+                    'order' => 7,
+                    'active' => true
+                ],
+                [
+                    'id' => 'travel_rio',
+                    'title' => 'Rio de Janeiro - Brazil',
+                    'hotel_name' => 'Coastal MICE Resort',
+                    'location' => 'Rio de Janeiro, Brazil',
+                    'image' => '/assets/images/about_rio.jpg',
+                    'external_url' => '',
+                    'desc_en' => 'Vibrant beach sports culture, World Cup venue infrastructure, and coastal conference facilities.',
+                    'desc_de' => 'Lebendige Strandsportkultur, WM-Stadioninfrastruktur und erstklassige Tagungsmöglichkeiten an der Küste.',
+                    'order' => 8,
                     'active' => true
                 ]
             ]

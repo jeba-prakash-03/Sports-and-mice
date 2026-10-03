@@ -34,15 +34,7 @@ const BentoSportsSection = ({ section }) => {
         
         {/* Section Header */}
         <div className="bento-header">
-          <motion.div 
-            className="bento-badge"
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <Activity size={15} style={{ color: '#106cc2' }} />
-            <span>SPORTS & MICE DASHBOARD</span>
-          </motion.div>
+          
 
           <motion.h2
             className="bento-title"

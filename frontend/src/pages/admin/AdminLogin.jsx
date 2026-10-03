@@ -61,7 +61,7 @@ const AdminLogin = () => {
       padding: '20px',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -81,9 +81,9 @@ const AdminLogin = () => {
           textAlign: 'center',
           borderBottom: '1px solid rgba(255,255,255,0.08)'
         }}>
-          <img 
-            src="/assets/images/logo.png" 
-            alt="Sports & MICE Logo" 
+          <img
+            src="/assets/images/logo.jpeg"
+            alt="Sports & MICE Logo"
             style={{ height: '48px', margin: '0 auto 12px auto', display: 'block' }}
           />
           <h2 style={{ margin: 0, color: '#ffffff', fontSize: '20px', fontWeight: '700' }}>
@@ -97,7 +97,7 @@ const AdminLogin = () => {
         {/* Form Body */}
         <div style={{ padding: '28px 24px' }}>
           {error && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               style={{
@@ -138,7 +138,7 @@ const AdminLogin = () => {
                   transform: 'translateY(-50%)',
                   color: '#94a3b8'
                 }} />
-                <input 
+                <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -177,7 +177,7 @@ const AdminLogin = () => {
                   transform: 'translateY(-50%)',
                   color: '#94a3b8'
                 }} />
-                <input 
+                <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -248,8 +248,8 @@ const AdminLogin = () => {
           </form>
 
           <div style={{ marginTop: '24px', textAlign: 'center' }}>
-            <a 
-              href="/" 
+            <a
+              href="/"
               style={{
                 fontSize: '13px',
                 color: '#64748b',

@@ -86,8 +86,10 @@ export const translations = {
       card1Text: 'The Caribbean passion of sport, for meeting with a view of the sea and ideal for motivational trips.',
       card2Title: 'Beijing - China',
       card2Text: 'A country where sport is very important - ideally suited for large sport competitions.',
-      card3Title: 'Johannesburg - Südafrika',
-      card3Text: 'Ideal for sport thanks to its good hotels, good sports event infrastructure and great team building activities.'
+      card3Title: 'Johannesburg - South Africa',
+      card3Text: 'Ideal for sport thanks to its good hotels, good sports event infrastructure and great team building activities.',
+      card4Title: 'Rio de Janeiro - Brazil',
+      card4Text: 'Vibrant beach sports culture, World Cup venue infrastructure, and coastal conference facilities.'
     },
     hotels: {
       heroTitle: 'Hotels & more',
@@ -224,7 +226,9 @@ export const translations = {
       card2Title: 'Peking - China',
       card2Text: 'Ein Land, in dem Sport einen hohen Stellenwert hat.',
       card3Title: 'Johannesburg - Südafrika',
-      card3Text: 'Ideal für Sport dank guter Hotels und Teambuilding-Aktivitäten.'
+      card3Text: 'Ideal für Sport dank guter Hotels und Teambuilding-Aktivitäten.',
+      card4Title: 'Rio de Janeiro - Brasilien',
+      card4Text: 'Lebendige Strandsportkultur, WM-Stadioninfrastruktur und erstklassige Tagungsmöglichkeiten an der Küste.'
     },
     hotels: {
       heroTitle: 'Hotels & mehr',

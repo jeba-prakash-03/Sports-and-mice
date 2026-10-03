@@ -98,7 +98,7 @@
     },
     "header": {
         "sticky": true,
-        "logo_url": "\/assets\/images\/logo.png",
+        "logo_url": "/assets/images/logo.jpeg",
         "nav_items": [
             {
                 "id": "nav_home",
@@ -141,7 +141,7 @@
                 "name_en": "Contact"
             }
         ],
-        "brand_title": "Sports & MICE",
+        "brand_title": "",
         "show_language_selector": true
     },
     "gallery": [
@@ -203,15 +203,58 @@
         },
         {
             "id": "travel_joburg",
-            "image": "\/assets\/images\/about_johannesburg.jpg",
+            "image": "/assets/images/about_johannesburg.jpg",
             "order": 5,
             "title": "Johannesburg - South Africa",
             "active": true,
-            "desc_de": "Ideal f\u00fcr den Sport dank guter Hotels, guter Sport-Event-Infrastruktur und toller Teambuilding-Aktivit\u00e4ten.",
+            "desc_de": "Ideal für den Sport dank guter Hotels, guter Sport-Event-Infrastruktur und toller Teambuilding-Aktivitäten.",
             "desc_en": "Ideal for sport thanks to its good hotels, good sports event infrastructure and great team building activities.",
             "location": "Johannesburg, South Africa",
-            "title_de": "Johannesburg - S\u00fcdafrika",
+            "title_de": "Johannesburg - Südafrika",
             "hotel_name": "Sports & Wildlife Base",
+            "external_url": ""
+        },
+        {
+            "id": "tour_kenya",
+            "image": "/assets/images/service_hero_bg.jpg",
+            "order": 6,
+            "title": "Tour - Kenya - Nairobi",
+            "active": true,
+            "desc_de": "Höhentrainingslager und erstklassige Luxushotels machen Kenia zu einem außergewöhnlichen Ziel für Sportdelegationen und internationale MICE-Events.",
+            "desc_en": "High-altitude training facilities and world-class luxury hotels make Kenya an exceptional destination for athletic delegations and international MICE events.",
+            "location": "Nairobi, Kenya",
+            "title_de": "Tour - Kenia - Nairobi",
+            "hotel_name": "Fairmont The Norfolk Nairobi",
+            "external_url": "https://www.fairmont.com/norfolk-hotel-nairobi/",
+            "button_text_de": "Fairmont The Norfolk Nairobi",
+            "button_text_en": "Fairmont The Norfolk Nairobi"
+        },
+        {
+            "id": "tour_japan",
+            "image": "/assets/images/service_teambuilding.png",
+            "order": 7,
+            "title": "Tour - Japan - Tokyo",
+            "active": true,
+            "desc_de": "Hochmoderne olympische Sportstätten kombiniert mit hochmodernen MICE-Konferenzzentren. Perfekt für die Vorbereitung von Spitzenteams und globale Kongresse.",
+            "desc_en": "State-of-the-art Olympic sports facilities combined with ultra-modern MICE conference venues. Perfect for elite team preparations and global congresses.",
+            "location": "Tokyo, Japan",
+            "title_de": "Tour - Japan - Tokio",
+            "hotel_name": "The Grand Hyatt Tokyo",
+            "external_url": "https://www.hyatt.com/en-US/hotel/japan/grand-hyatt-tokyo/tokgh",
+            "button_text_de": "The Grand Hyatt Tokyo",
+            "button_text_en": "The Grand Hyatt Tokyo"
+        },
+        {
+            "id": "travel_rio",
+            "image": "/assets/images/about_rio.jpg",
+            "order": 8,
+            "title": "Rio de Janeiro - Brazil",
+            "active": true,
+            "desc_de": "Lebendige Strandsportkultur, WM-Stadioninfrastruktur und erstklassige Tagungsmöglichkeiten an der Küste.",
+            "desc_en": "Vibrant beach sports culture, World Cup venue infrastructure, and coastal conference facilities.",
+            "location": "Rio de Janeiro, Brazil",
+            "title_de": "Rio de Janeiro - Brasilien",
+            "hotel_name": "Coastal MICE Resort",
             "external_url": ""
         }
     ],
@@ -475,6 +518,7 @@
                 "name": "Service Introduction",
                 "type": "text_block",
                 "order": 2,
+                "image": "/assets/images/service_teamtrips.jpeg",
                 "p1_de": "Unser Team sorgt f\u00fcr die richtige Auswahl von Venues und Hotels f\u00fcr Ihre MICE-Aktivit\u00e4ten. Sportteams und Sportfunktion\u00e4re haben besondere Anforderungen, an denen wir uns bei unseren Empfehlungen f\u00fcr Sie orientieren.",
                 "p1_en": "Our team ensures the right selection of venues and hotels for your MICE activities. Sports teams and sports officials have special requirements, which guide us in our recommendations for you.",
                 "p2_de": "Bei der Auswahl der Hotels achten wir darauf, dass diese f\u00fcr Sportmannschaften geeignet sind und \u00fcber Personal verf\u00fcgen, das im Umgang mit Sportmannschaften vertraut ist. Unsere gezielte Beratung des ausgew\u00e4hlten Hotels sichert Ihnen qualitativ hochwertige Dienstleistungen. Die Ausstattung muss stimmen, der Fitnessbereich sollte nicht der kleinste Raum des Hotels sein. Auch legen wir Wert auf ansprechende Laufstrecken in Hoteln\u00e4he.",

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useSite } from '../context/SiteContext';
 import { submitContactForm } from '../services/api';
-import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Phone, Printer, Mail, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { PageTransition, AnimatedSection } from '../components/AnimatedSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/contact.css';
 
 const Contact = () => {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
   const { settings } = useSite();
 
   const [formData, setFormData] = useState({
@@ -17,9 +17,8 @@ const Contact = () => {
     country: '',
     city: '',
     address: '',
-    phone: '',
     message: '',
-    website_hp: '' // Bot honeypot
+    website_hp: ''
   });
 
   const [status, setStatus] = useState({
@@ -53,15 +52,15 @@ const Contact = () => {
   const validate = () => {
     const errors = {};
     if (!formData.surname.trim()) {
-      errors.surname = t.contact.validation.required;
+      errors.surname = lang === 'de' ? 'Name ist erforderlich' : 'Surname is required';
     }
     if (!formData.email.trim()) {
-      errors.email = t.contact.validation.required;
+      errors.email = lang === 'de' ? 'E-Mail ist erforderlich' : 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = t.contact.validation.invalidEmail;
+      errors.email = lang === 'de' ? 'Ungültige E-Mail-Adresse' : 'Invalid email address';
     }
     if (!formData.message.trim()) {
-      errors.message = t.contact.validation.required;
+      errors.message = lang === 'de' ? 'Nachricht ist erforderlich' : 'Message is required';
     }
     return errors;
   };
@@ -92,7 +91,6 @@ const Contact = () => {
           country: '',
           city: '',
           address: '',
-          phone: '',
           message: '',
           website_hp: ''
         });
@@ -100,7 +98,7 @@ const Contact = () => {
         setStatus({
           submitting: false,
           submitted: false,
-          error: result.data.error || t.contact.validation.error,
+          error: result.data.error || (lang === 'de' ? 'Fehler beim Senden' : 'Error sending message'),
           fieldErrors: {}
         });
       }
@@ -108,7 +106,7 @@ const Contact = () => {
       setStatus({
         submitting: false,
         submitted: false,
-        error: t.contact.validation.error,
+        error: lang === 'de' ? 'Netzwerkfehler' : 'Network error',
         fieldErrors: {}
       });
     }
@@ -117,67 +115,87 @@ const Contact = () => {
   return (
     <PageTransition>
       <div className="contact-page">
-        {/* Hero Banner */}
-        <section className="contact-hero" style={{ backgroundImage: `url('/assets/images/contact_hero_bg.jpg')` }}>
-          <div className="container">
-            <AnimatedSection direction="up" distance={20}>
-              <h1 className="contact-hero-title">{t.contact.heroTitle}</h1>
-            </AnimatedSection>
-          </div>
-        </section>
+        {/* Floating 3D Liquid Orbs Background */}
+        <div className="contact-liquid-orbs">
+          <div className="contact-orb contact-orb-1" />
+          <div className="contact-orb contact-orb-2" />
+          <div className="contact-orb contact-orb-3" />
+          <div className="contact-orb contact-orb-4" />
+        </div>
 
-        {/* Contact Content Section */}
-        <section className="contact-content-section">
-          <div className="container">
-            <div className="contact-main-grid">
-              {/* Left Side: Contact Information */}
-              <AnimatedSection direction="right" distance={30} className="contact-info-col">
-                <h2 className="contact-form-title">{t.contact.formHeading}</h2>
-                <p className="contact-form-subtitle">{t.contact.formSub}</p>
-                
-                <p className="contact-team-sign">
-                  <span>Your </span>
-                  <a href={`mailto:${emailAddress}`} className="team-link">
-                    {t.contact.teamSign.replace('Your ', '').replace('Ihr ', '')}
-                  </a>
+        <div className="contact-glass-container">
+          <div className="contact-glass-grid">
+
+            {/* LEFT MASTER GLASS CARD: Consultation Info Panel */}
+            <AnimatedSection direction="left" distance={30} className="contact-glass-card">
+              <div>
+               
+                <h1 className="contact-master-title">contact form</h1>
+                <p className="contact-master-subtitle">
+                  {lang === 'de' 
+                    ? 'Haben Sie Fragen zu unseren Sports & MICE Beratungsleistungen? Kontaktieren Sie unser Team und wir antworten innerhalb von 24 Stunden.'
+                    : 'Have questions about our sports & MICE consulting services? Get in touch with our team and we\'ll respond within 24 hours.'
+                  }
                 </p>
+              </div>
 
-                <div className="contact-details-box">
-                  <div className="details-row">
-                    <div className="details-icon">
-                      <span className="phone-icon-symbol">&#128241;</span>
-                    </div>
-                    <div className="details-text">
-                      <p><span>{t.contact.phone}</span> <a href={`tel:${phoneNumber.replace(/\s+/g, '')}`}>{phoneNumber}</a></p>
-                      <p><span>{t.contact.fax}</span> {faxNumber}</p>
-                    </div>
+              {/* Inset Liquid Glass Contact Detail Pills */}
+              <div className="contact-inset-pills-list">
+                <div className="contact-inset-pill">
+                  <div className="contact-spherical-icon">
+                    <Phone size={20} />
                   </div>
-
-                  <div className="details-row">
-                    <div className="details-icon">
-                      <Mail size={22} className="mail-icon-symbol" />
-                    </div>
-                    <div className="details-text">
-                      <p><span>{t.contact.email}</span> <a href={`mailto:${emailAddress}`}>{emailAddress.replace('@', '(@)')}</a></p>
-                    </div>
+                  <div className="contact-pill-content">
+                    <span className="contact-pill-label">Phone</span>
+                    <a href={`tel:${phoneNumber.replace(/\s+/g, '')}`} className="contact-pill-value">{phoneNumber}</a>
                   </div>
                 </div>
-              </AnimatedSection>
 
-              {/* Right Side: Contact Form matching screenshot 1 */}
-              <AnimatedSection direction="left" distance={30} className="contact-form-col">
+                <div className="contact-inset-pill">
+                  <div className="contact-spherical-icon">
+                    <Printer size={20} />
+                  </div>
+                  <div className="contact-pill-content">
+                    <span className="contact-pill-label">Fax</span>
+                    <span className="contact-pill-value">{faxNumber}</span>
+                  </div>
+                </div>
+
+                <div className="contact-inset-pill">
+                  <div className="contact-spherical-icon">
+                    <Mail size={20} />
+                  </div>
+                  <div className="contact-pill-content">
+                    <span className="contact-pill-label">Email</span>
+                    <a href={`mailto:${emailAddress}`} className="contact-pill-value">{emailAddress}</a>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* RIGHT MASTER GLASS CARD: Interactive Liquid Form Panel */}
+            <AnimatedSection direction="right" distance={30} className="contact-glass-card">
+              <div>
+                <h2 className="contact-form-heading">
+                  {lang === 'de' ? 'Nachricht senden' : 'Send us a message'}
+                </h2>
+                <p className="contact-form-subtext">
+                  {lang === 'de'
+                    ? 'Füllen Sie das Formular aus und unser Berater wird Sie in Kürze kontaktieren.'
+                    : 'Fill out the form and our consultant will contact you shortly.'
+                  }
+                </p>
+
                 <AnimatePresence>
                   {status.submitted && (
                     <motion.div 
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="alert-success-msg"
+                      style={{ background: 'rgba(34, 197, 94, 0.15)', border: '1px solid #22c55e', color: '#15803d', padding: '14px', borderRadius: '12px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}
                     >
                       <CheckCircle size={20} />
-                      <div>
-                        <strong>{t.contact.validation.success}</strong>
-                      </div>
+                      <span>{lang === 'de' ? 'Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.' : 'Thank you! Your message has been sent successfully.'}</span>
                     </motion.div>
                   )}
 
@@ -186,7 +204,7 @@ const Contact = () => {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="alert-error-msg"
+                      style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid #ef4444', color: '#b91c1c', padding: '14px', borderRadius: '12px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}
                     >
                       <AlertCircle size={20} />
                       <span>{status.error}</span>
@@ -194,8 +212,8 @@ const Contact = () => {
                   )}
                 </AnimatePresence>
 
-                <form onSubmit={handleSubmit} className="contact-html-form" noValidate>
-                  {/* Anti-spam honeypot (hidden from real users) */}
+                <form onSubmit={handleSubmit} className="glass-form-layout" noValidate>
+                  {/* Anti-spam honeypot */}
                   <input 
                     type="text" 
                     name="website_hp" 
@@ -206,129 +224,121 @@ const Contact = () => {
                     autoComplete="off" 
                   />
 
-                  {/* Surname / Name */}
-                  <div className="form-field-row">
-                    <label htmlFor="surname" className="form-label">{t.contact.fields.surname}</label>
-                    <div className="input-wrapper">
+                  {/* Row 1: Surname & e-mail */}
+                  <div className="glass-form-row-2col">
+                    <div className="glass-form-group">
+                      <label htmlFor="surname" className="glass-form-label">Surname</label>
                       <input 
                         type="text" 
                         id="surname" 
                         name="surname" 
+                        placeholder="e.g. Marc" 
                         value={formData.surname} 
                         onChange={handleChange}
-                        className={`form-input ${status.fieldErrors.surname ? 'input-error' : ''}`}
+                        className="glass-form-input"
                       />
-                      {status.fieldErrors.surname && (
-                        <div className="custom-tooltip">{status.fieldErrors.surname}</div>
-                      )}
+                      {status.fieldErrors.surname && <span style={{ color: '#dc2626', fontSize: '12px' }}>{status.fieldErrors.surname}</span>}
                     </div>
-                  </div>
 
-                  {/* Email */}
-                  <div className="form-field-row">
-                    <label htmlFor="email" className="form-label">{t.contact.fields.email}</label>
-                    <div className="input-wrapper">
+                    <div className="glass-form-group">
+                      <label htmlFor="email" className="glass-form-label">e-mail</label>
                       <input 
                         type="email" 
                         id="email" 
                         name="email" 
+                        placeholder="you@email.com" 
                         value={formData.email} 
                         onChange={handleChange}
-                        className={`form-input ${status.fieldErrors.email ? 'input-error' : ''}`}
+                        className="glass-form-input"
                       />
-                      {status.fieldErrors.email && (
-                        <div className="custom-tooltip">{status.fieldErrors.email}</div>
-                      )}
+                      {status.fieldErrors.email && <span style={{ color: '#dc2626', fontSize: '12px' }}>{status.fieldErrors.email}</span>}
                     </div>
                   </div>
 
-                  {/* Country */}
-                  <div className="form-field-row">
-                    <label htmlFor="country" className="form-label">{t.contact.fields.country}</label>
-                    <div className="input-wrapper">
+                  {/* Row 2: Country & City */}
+                  <div className="glass-form-row-2col">
+                    <div className="glass-form-group">
+                      <label htmlFor="country" className="glass-form-label">Country</label>
                       <input 
                         type="text" 
                         id="country" 
                         name="country" 
+                        placeholder="Germany" 
                         value={formData.country} 
                         onChange={handleChange}
-                        className="form-input"
+                        className="glass-form-input"
                       />
                     </div>
-                  </div>
 
-                  {/* City */}
-                  <div className="form-field-row">
-                    <label htmlFor="city" className="form-label">{t.contact.fields.city}</label>
-                    <div className="input-wrapper">
+                    <div className="glass-form-group">
+                      <label htmlFor="city" className="glass-form-label">City</label>
                       <input 
                         type="text" 
                         id="city" 
                         name="city" 
+                        placeholder="Sankt Augustin" 
                         value={formData.city} 
                         onChange={handleChange}
-                        className="form-input"
+                        className="glass-form-input"
                       />
                     </div>
                   </div>
 
-                  {/* Address */}
-                  <div className="form-field-row">
-                    <label htmlFor="address" className="form-label">{t.contact.fields.address}</label>
-                    <div className="input-wrapper">
-                      <input 
-                        type="text" 
-                        id="address" 
-                        name="address" 
-                        value={formData.address} 
-                        onChange={handleChange}
-                        className="form-input"
-                      />
-                    </div>
+                  {/* Row 3: Address */}
+                  <div className="glass-form-group">
+                    <label htmlFor="address" className="glass-form-label">Address</label>
+                    <input 
+                      type="text" 
+                      id="address" 
+                      name="address" 
+                      placeholder="Fritz-Pullig-Strasse 9, 53757 Sankt Augustin" 
+                      value={formData.address} 
+                      onChange={handleChange}
+                      className="glass-form-input"
+                    />
                   </div>
 
-                  {/* Message */}
-                  <div className="form-field-row">
-                    <label htmlFor="message" className="form-label">{t.contact.fields.message}</label>
-                    <div className="input-wrapper">
-                      <textarea 
-                        id="message" 
-                        name="message" 
-                        rows="4"
-                        value={formData.message} 
-                        onChange={handleChange}
-                        className={`form-textarea ${status.fieldErrors.message ? 'input-error' : ''}`}
-                      ></textarea>
-                      {status.fieldErrors.message && (
-                        <div className="custom-tooltip">{status.fieldErrors.message}</div>
-                      )}
-                    </div>
+                  {/* Row 4: Message */}
+                  <div className="glass-form-group">
+                    <label htmlFor="message" className="glass-form-label">Message</label>
+                    <textarea 
+                      id="message" 
+                      name="message" 
+                      rows="3"
+                      placeholder="Tell us about your project, event, or consultation needs..." 
+                      value={formData.message} 
+                      onChange={handleChange}
+                      className="glass-form-textarea"
+                    />
+                    {status.fieldErrors.message && <span style={{ color: '#dc2626', fontSize: '12px' }}>{status.fieldErrors.message}</span>}
                   </div>
 
-                  {/* Submit button */}
-                  <div className="form-actions-row">
-                    <motion.button 
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                  {/* Row 5: Action Submit Button */}
+                  <div className="glass-form-action-bar">
+                    <button 
                       type="submit" 
-                      className="contact-send-btn" 
+                      className="btn-glass-purple-submit"
                       disabled={status.submitting}
                     >
                       {status.submitting ? (
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                          <Loader2 size={14} className="spin-icon" />
-                          {t.contact.validation.sending}
-                        </span>
+                        <>
+                          <Loader2 size={16} className="spin-icon" />
+                          <span>Sending...</span>
+                        </>
                       ) : (
-                        t.contact.fields.send
+                        <>
+                          <span>Send Message</span>
+                          <Send size={16} />
+                        </>
                       )}
-                    </motion.button>
+                    </button>
                   </div>
                 </form>
-              </AnimatedSection>
-            </div>
+              </div>
+            </AnimatedSection>
+
           </div>
-        </section>
+        </div>
       </div>
     </PageTransition>
   );

@@ -141,7 +141,7 @@
                 "name_en": "Contact"
             }
         ],
-        "brand_title": "Sports & MICE",
+        "brand_title": "",
         "show_language_selector": true
     },
     "gallery": [
@@ -219,10 +219,116 @@
     "sections": {
         "home": [
             {
+                "id": "home_row_4936",
+                "name": "Custom Row (100)",
+                "type": "row",
+                "order": 1,
+                "layout": "100",
+                "columns": [
+                    {
+                        "id": "col_1",
+                        "width": "100%",
+                        "blocks": [
+                            {
+                                "id": "b_09510",
+                                "size": "2rem",
+                                "type": "heading",
+                                "align": "left",
+                                "color": "#1f242d",
+                                "level": "h2",
+                                "weight": "700",
+                                "text_de": "Neue \u00dcberschrift",
+                                "text_en": "New Heading"
+                            },
+                            {
+                                "id": "b_10426",
+                                "size": "2rem",
+                                "type": "heading",
+                                "align": "left",
+                                "color": "#1f242d",
+                                "level": "h2",
+                                "weight": "700",
+                                "text_de": "Neue \u00dcberschrift",
+                                "text_en": "New Heading"
+                            },
+                            {
+                                "id": "b_12554",
+                                "size": "2rem",
+                                "type": "heading",
+                                "align": "left",
+                                "color": "#1f242d",
+                                "level": "h2",
+                                "weight": "700",
+                                "text_de": "Neue \u00dcberschrift",
+                                "text_en": "New Heading"
+                            }
+                        ]
+                    }
+                ],
+                "enabled": true,
+                "padding_top": 60,
+                "padding_bottom": 60,
+                "block_b_20006_text_en": "New Heading"
+            },
+            {
+                "id": "home_row_7199",
+                "name": "Custom Row (50-50)",
+                "type": "row",
+                "order": 2,
+                "layout": "50-50",
+                "columns": [
+                    {
+                        "id": "col_1",
+                        "width": "50%",
+                        "blocks": []
+                    },
+                    {
+                        "id": "col_2",
+                        "width": "50%",
+                        "blocks": []
+                    }
+                ],
+                "enabled": true,
+                "padding_top": 60,
+                "padding_bottom": 60
+            },
+            {
+                "id": "home_row_9355",
+                "name": "Custom Row (25-25-25-25)",
+                "type": "row",
+                "order": 3,
+                "layout": "25-25-25-25",
+                "columns": [
+                    {
+                        "id": "col_1",
+                        "width": "25%",
+                        "blocks": []
+                    },
+                    {
+                        "id": "col_2",
+                        "width": "25%",
+                        "blocks": []
+                    },
+                    {
+                        "id": "col_3",
+                        "width": "25%",
+                        "blocks": []
+                    },
+                    {
+                        "id": "col_4",
+                        "width": "25%",
+                        "blocks": []
+                    }
+                ],
+                "enabled": true,
+                "padding_top": 60,
+                "padding_bottom": 60
+            },
+            {
                 "id": "home_hero",
                 "name": "Hero Banner Section",
                 "type": "hero",
-                "order": 1,
+                "order": 4,
                 "enabled": true,
                 "tag1_de": "Besprechungen \u2662 Teambildung",
                 "tag1_en": "Meetings \u2662 Incentives",
@@ -242,7 +348,7 @@
                 "id": "home_intro",
                 "name": "Introductory Explanation",
                 "type": "home_intro",
-                "order": 2,
+                "order": 5,
                 "p1_de": "Sei es bei Wettk\u00e4mpfen oder Teambildungen der Nationalmannschaften oder bei Konferenzen, Veranstaltungen oder Besprechungen der Sportverb\u00e4nde, der Sport und seine Weiterentwicklung m\u00fcssen immer im Mittelpunkt stehen.",
                 "p1_en": "Be it at competitions or team building of the national teams or at conferences, events or meetings of sports associations, the focus must always be on sport and its further development.",
                 "p2_de": "So ist es besonders wichtig, dass die Infrastruktur stimmig ist. Hotels m\u00fcssen mit Sportmannschaften umgehen k\u00f6nnen, Teambildungsaktivit\u00e4ten den besonderen Anspr\u00fcchen der Sportler:innen entsprechen, Konferenzr\u00e4ume zu den aktiven sportlichen Teilnehmer:innen passen.",
@@ -280,7 +386,7 @@
                         "title_en": "INCENTIVES"
                     }
                 ],
-                "order": 3,
+                "order": 6,
                 "enabled": true,
                 "title_de": "Gemeinsam zum Erfolg! Reisen und Tagen wie die Profis!",
                 "title_en": "Together for success! Travel and meet like the pros!"
@@ -289,7 +395,7 @@
                 "id": "home_expertise",
                 "name": "Expertise for Sporting Success",
                 "type": "expertise",
-                "order": 4,
+                "order": 7,
                 "p1_de": "Anders als gro\u00dfe Unternehmen haben Sportverb\u00e4nde in der Regel keine eigene Abteilung, die sich nur um die Reisen zu Wettk\u00e4mpfen der Nationalmannschaften oder der Sportfunktion\u00e4re zu Tagungen k\u00fcmmert.",
                 "p1_en": "Unlike large companies, sports associations usually do not have their own department specializing in trips to competitions for national teams or sports officials to conferences.",
                 "p2_de": "Wir nehmen Ihnen die Suche des passenden Mannschaftshotels ab, organisieren auf Wunsch den Transport vom Flughafen wie auch zur Wettkampfst\u00e4tte oder finden die richtige Teambildungsaktivit\u00e4t.",
@@ -306,7 +412,7 @@
                 "id": "home_video",
                 "name": "International High-Performance Sport Video",
                 "type": "video",
-                "order": 5,
+                "order": 8,
                 "p1_de": "Um Kunden aus dem Spitzensport verstehen zu k\u00f6nnen, sollte man eigene Erfahrungen gemacht haben.",
                 "p1_en": "In order to understand the needs of customers from top-class sport, a MICE co-ordinator needs to have had their own experiences at that level.",
                 "p2_de": "Was bedeutet es, wenn eine Sportmannschaft zu einem Wettkampf reist oder man selbst an einem Wettkampf teilnimmt? Was ist den Sportfunktion\u00e4ren bei Tagungen wichtig? Was sind die besonderen Anspr\u00fcche?",
@@ -325,7 +431,7 @@
                 "id": "home_contact_cta",
                 "name": "Contact Call to Action",
                 "type": "cta",
-                "order": 6,
+                "order": 9,
                 "enabled": true,
                 "bg_image": "\/assets\/images\/service_cta_bg.jpg",
                 "title_de": "Kontaktieren Sie uns!",
@@ -335,6 +441,43 @@
                 "subtitle_en": "Contact us today for professional team travel, meetings, and conferences.",
                 "button_text_de": "Kontaktformular",
                 "button_text_en": "Contact Us"
+            },
+            {
+                "id": "home_hero_4221",
+                "name": "Hero Banner Section",
+                "type": "hero",
+                "order": 10,
+                "enabled": true,
+                "tag1_de": "Meetings \u2662 Incentives",
+                "tag1_en": "Meetings \u2662 Incentives",
+                "tag2_de": "Konferenzen \u2662 Events",
+                "tag2_en": "Conferences \u2662 Events",
+                "bg_image": "\/assets\/images\/home_hero_bg.jpg",
+                "subtitle_de": "Sport ben\u00f6tigt professionelle Strukturen bei Reisen zu Wettk\u00e4mpfen.",
+                "subtitle_en": "Sport needs professional structures when traveling to competitions and conferences around the world.",
+                "cta_button_link": "\/en\/Contact\/",
+                "heading_prefix_de": "Sportverb\u00e4nde &",
+                "heading_prefix_en": "Sports associations &",
+                "cta_button_enabled": true,
+                "cta_button_text_de": "Kostenlose Beratung anfragen",
+                "cta_button_text_en": "Get Free Consultation"
+            },
+            {
+                "id": "home_row_5988",
+                "name": "Custom Row (100)",
+                "type": "row",
+                "order": 11,
+                "layout": "100",
+                "columns": [
+                    {
+                        "id": "col_1",
+                        "width": "100%",
+                        "blocks": []
+                    }
+                ],
+                "enabled": true,
+                "padding_top": 60,
+                "padding_bottom": 60
             }
         ],
         "about": [
@@ -475,6 +618,7 @@
                 "name": "Service Introduction",
                 "type": "text_block",
                 "order": 2,
+                "image": "/assets/images/service_teamtrips.jpeg",
                 "p1_de": "Unser Team sorgt f\u00fcr die richtige Auswahl von Venues und Hotels f\u00fcr Ihre MICE-Aktivit\u00e4ten. Sportteams und Sportfunktion\u00e4re haben besondere Anforderungen, an denen wir uns bei unseren Empfehlungen f\u00fcr Sie orientieren.",
                 "p1_en": "Our team ensures the right selection of venues and hotels for your MICE activities. Sports teams and sports officials have special requirements, which guide us in our recommendations for you.",
                 "p2_de": "Bei der Auswahl der Hotels achten wir darauf, dass diese f\u00fcr Sportmannschaften geeignet sind und \u00fcber Personal verf\u00fcgen, das im Umgang mit Sportmannschaften vertraut ist. Unsere gezielte Beratung des ausgew\u00e4hlten Hotels sichert Ihnen qualitativ hochwertige Dienstleistungen. Die Ausstattung muss stimmen, der Fitnessbereich sollte nicht der kleinste Raum des Hotels sein. Auch legen wir Wert auf ansprechende Laufstrecken in Hoteln\u00e4he.",
@@ -687,9 +831,11 @@
             "cta_button_text_en": "Get Free Consultation"
         }
     ],
-    "last_saved_at": "2026-10-02 09:33:39",
+    "last_saved_at": "2026-10-03 14:57:29",
     "last_published_at": "2026-10-02 09:38:31",
-    "draft_changes_count": 0,
-    "draft_changes_summary": [],
-    "has_unpublished_changes": false
+    "draft_changes_count": 5,
+    "draft_changes_summary": [
+        "5 section(s) added\/removed on Home"
+    ],
+    "has_unpublished_changes": true
 }
