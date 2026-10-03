@@ -34,6 +34,19 @@ export const validateMaxLines = (value, max, label = 'This field') => {
   return null;
 };
 
+export const countWords = (value) => {
+  const trimmed = String(value || '').trim();
+  return trimmed === '' ? 0 : trimmed.split(/\s+/).length;
+};
+
+export const validateMaxWords = (value, max = MAX_WORDS, label = 'This field') => {
+  const count = countWords(value);
+  if (count > max) {
+    return `${label} must be ${max} words or fewer (currently ${count}).`;
+  }
+  return null;
+};
+
 export const validateUrl = (value, label = 'URL') => {
   if (!value) return null;
   const v = String(value).trim();
@@ -82,13 +95,15 @@ export const runValidators = (fields) => {
   return null;
 };
 
-// Shared length/line limits, matching the numbers in the CMS feature request.
+// Single word-count ceiling applied to every admin-editable text field —
+// replaces the old per-field character limits so there's one rule to reason
+// about instead of several different numbers.
+export const MAX_WORDS = 30;
+
+// Line-count limits are a separate, still-valid concern (prevents a hero
+// heading/subtitle from wrapping past its designed line count) and apply
+// alongside the word-count check, not instead of it.
 export const LIMITS = {
-  NAV_LABEL: 18,
-  BUTTON_TEXT: 18,
-  HERO_HEADING: 80,
   HERO_HEADING_LINES: 2,
-  HERO_SUBTITLE_LINES: 20,
-  CARD_TITLE: 30,
-  CARD_DESCRIPTION: 120
+  HERO_SUBTITLE_LINES: 20
 };
