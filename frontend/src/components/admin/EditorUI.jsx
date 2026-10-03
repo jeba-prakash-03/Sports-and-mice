@@ -15,14 +15,10 @@ import {
   Heading,
   Type,
   Square,
-  Columns,
-  Star,
   Quote,
   BadgeAlert,
   List,
-  Video,
-  Minus,
-  MoveVertical
+  Video
 } from 'lucide-react';
 
 /**
@@ -336,9 +332,6 @@ export const QUICK_ADD_COMPONENTS = [
   { type: 'image', name: 'Image', icon: ImageIcon, color: '#c084fc' },
   { type: 'button', name: 'Button', icon: Sparkles, color: '#fb923c' },
   { type: 'card', name: 'Card', icon: Square, color: '#34d399' },
-  { type: 'icon', name: 'Icon', icon: Star, color: '#f472b6' },
-  { type: 'divider', name: 'Divider', icon: Minus, color: '#94a3b8' },
-  { type: 'spacer', name: 'Spacer', icon: MoveVertical, color: '#94a3b8' },
   { type: 'badge', name: 'Badge', icon: BadgeAlert, color: '#e879f9' },
   { type: 'quote', name: 'Quote', icon: Quote, color: '#fbbf24' },
   { type: 'list', name: 'List', icon: List, color: '#a3e635' },

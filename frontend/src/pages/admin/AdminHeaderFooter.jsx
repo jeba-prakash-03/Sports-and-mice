@@ -3,7 +3,7 @@ import { saveDraftConfig, uploadMediaFile } from '../../services/api';
 import { useSite } from '../../context/SiteContext';
 import { useEditor, MAX_NAV_ITEMS } from '../../context/EditorContext';
 import AdminCmsHeader from '../../components/admin/AdminCmsHeader';
-import CharCounter from '../../components/CharCounter';
+import WordCounter from '../../components/WordCounter';
 import {
   ArrowUp,
   ArrowDown,
@@ -20,11 +20,11 @@ import {
 import { motion } from 'framer-motion';
 import {
   validateRequired,
-  validateMaxLength,
+  validateMaxWords,
   validateUrl,
   validatePhone,
   validateEmail,
-  LIMITS
+  MAX_WORDS
 } from '../../utils/adminValidation';
 
 const emptyNavForm = { name_en: '', name_de: '', path: '' };
@@ -192,7 +192,7 @@ const AdminHeaderFooter = () => {
   const handleNavFormSubmit = (e) => {
     e.preventDefault();
     const error = validateRequired(navForm.name_en, 'Label') ||
-      validateMaxLength(navForm.name_en, LIMITS.NAV_LABEL, 'Label') ||
+      validateMaxWords(navForm.name_en, MAX_WORDS, 'Label') ||
       validateRequired(navForm.path, 'Link path') ||
       validateUrl(navForm.path, 'Link path');
 
@@ -218,7 +218,7 @@ const AdminHeaderFooter = () => {
   };
 
   const handleNavLabelChange = (navId, lang, value) => {
-    const error = validateMaxLength(value, LIMITS.NAV_LABEL, 'Label');
+    const error = validateMaxWords(value, MAX_WORDS, 'Label');
     setErrors(prev => ({ ...prev, [`nav_${navId}_${lang}`]: error }));
     if (error) return;
     updateNavItem(navId, lang === 'en' ? { name_en: value } : { name_de: value });
@@ -333,27 +333,25 @@ const AdminHeaderFooter = () => {
                 <div className="form-group">
                   <label className="cms-label">
                     Label (EN)
-                    <CharCounter value={navForm.name_en} max={LIMITS.NAV_LABEL} />
+                    <WordCounter value={navForm.name_en} max={MAX_WORDS} />
                   </label>
                   <input
                     type="text"
                     value={navForm.name_en}
                     onChange={(e) => setNavForm(prev => ({ ...prev, name_en: e.target.value }))}
                     className="cms-input-sm"
-                    maxLength={LIMITS.NAV_LABEL}
                   />
                 </div>
                 <div className="form-group">
                   <label className="cms-label">
                     Label (DE)
-                    <CharCounter value={navForm.name_de} max={LIMITS.NAV_LABEL} />
+                    <WordCounter value={navForm.name_de} max={MAX_WORDS} />
                   </label>
                   <input
                     type="text"
                     value={navForm.name_de}
                     onChange={(e) => setNavForm(prev => ({ ...prev, name_de: e.target.value }))}
                     className="cms-input-sm"
-                    maxLength={LIMITS.NAV_LABEL}
                   />
                 </div>
               </div>
@@ -369,7 +367,14 @@ const AdminHeaderFooter = () => {
               </div>
               {navFormError && <div className="cms-field-error"><AlertCircle size={13} /> {navFormError}</div>}
               <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
-                <button type="submit" className="cms-btn-primary" style={{ padding: '8px 16px', fontSize: '13px' }}>Add</button>
+                <button
+                  type="submit"
+                  className="cms-btn-primary"
+                  style={{ padding: '8px 16px', fontSize: '13px' }}
+                  disabled={validateMaxWords(navForm.name_en, MAX_WORDS, 'Label') !== null}
+                >
+                  Add
+                </button>
                 <button type="button" className="btn-modal-cancel" onClick={() => { setShowAddNav(false); setNavForm(emptyNavForm); setNavFormError(null); }}>Cancel</button>
               </div>
             </form>
@@ -407,7 +412,6 @@ const AdminHeaderFooter = () => {
                       onBlur={(e) => handleNavLabelChange(item.id, 'en', e.target.value)}
                       placeholder="Label (EN)"
                       className={`cms-input-sm ${errors[`nav_${item.id}_en`] ? 'has-error' : ''}`}
-                      maxLength={LIMITS.NAV_LABEL}
                     />
                     <input
                       type="text"
@@ -415,7 +419,6 @@ const AdminHeaderFooter = () => {
                       onBlur={(e) => handleNavLabelChange(item.id, 'de', e.target.value)}
                       placeholder="Label (DE)"
                       className={`cms-input-sm ${errors[`nav_${item.id}_de`] ? 'has-error' : ''}`}
-                      maxLength={LIMITS.NAV_LABEL}
                     />
                     <input
                       type="text"

@@ -1223,6 +1223,21 @@
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--builder-text-muted);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cms-char-counter {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--builder-text-muted);
+  white-space: nowrap;
+}
+
+.cms-char-counter.over-limit {
+  color: #f87171;
 }
 
 .property-responsive-tag {

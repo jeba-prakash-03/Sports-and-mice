@@ -69,7 +69,6 @@ import {
   Edit2,
   FolderPlus,
   Navigation,
-  Star,
   ShieldCheck,
   Globe2,
   Clock,
@@ -93,6 +92,8 @@ import {
 } from '../../utils/responsiveStyles';
 import '../../styles/website-builder.css';
 import { ImagePickerField, EditorButton, EditorIconButton, QuickAddGrid } from '../../components/admin/EditorUI';
+import WordCounter from '../../components/WordCounter';
+import { MAX_WORDS, countWords } from '../../utils/adminValidation';
 
 const DEFAULT_NEW_SECTIONS = {
   hero: {
@@ -360,6 +361,17 @@ const AdminWebsiteBuilder = () => {
   const [activeLibraryTab, setActiveLibraryTab] = useState('all'); // 'all' | 'basic' | 'layout' | 'content' | 'website' | 'layers'
   const [librarySearch, setLibrarySearch] = useState('');
   const [publishModalOpen, setPublishModalOpen] = useState(false);
+  const [cardLimitModalSectionId, setCardLimitModalSectionId] = useState(null);
+  const MAX_CARDS_PER_ROW = 4;
+
+  const handleAddCardClick = (sectionId) => {
+    const sec = currentSections.find(s => s.id === sectionId);
+    if ((sec?.cards?.length || 0) >= MAX_CARDS_PER_ROW) {
+      setCardLimitModalSectionId(sectionId);
+      return;
+    }
+    addSectionCard(sectionId);
+  };
   const [publishSuccessMsg, setPublishSuccessMsg] = useState(null);
   const [mediaList, setMediaList] = useState([]);
   const [mediaUploading, setMediaUploading] = useState(false);
@@ -371,7 +383,6 @@ const AdminWebsiteBuilder = () => {
   const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(false);
   const [rightSidebarCollapsed, setRightSidebarCollapsed] = useState(false);
   const [mobileDrawer, setMobileDrawer] = useState(null); // 'library' | 'layers' | 'properties' | null
-  const [editingDevice, setEditingDevice] = useState('desktop'); // 'desktop' | 'tablet' | 'mobile'
   const [accordions, setAccordions] = useState({
     content: true,
     appearance: true,
@@ -722,10 +733,7 @@ const AdminWebsiteBuilder = () => {
     { category: 'basic', kind: 'block', type: 'heading', name: 'Heading', desc: 'H1-H6 title or section headline', icon: Type, defaultProps: { level: 'h2', text_en: 'New Heading', text_de: 'Neue Überschrift', size: '2rem', align: 'left', color: '#1f242d' } },
     { category: 'basic', kind: 'block', type: 'text', name: 'Text / Paragraph', desc: 'Body paragraph with inline editing', icon: FileText, defaultProps: { text_en: 'Detailing exceptional standards and proven expertise in sports event logistics and travel.', text_de: 'Detaillierte Informationen.', size: '1rem', color: '#555555', align: 'left' } },
     { category: 'basic', kind: 'block', type: 'image', name: 'Image Block', desc: 'Photo asset with media picker and sizing', icon: ImageIcon, defaultProps: { src: '/assets/images/home_hero_bg.jpg', alt: 'Showcase Photo', border_radius: '12px', height: '320px', object_fit: 'cover', align: 'center' } },
-    { category: 'basic', kind: 'block', type: 'button', name: 'Button', desc: 'Call to action button with custom link and style', icon: Zap, defaultProps: { text_en: 'Get In Touch', text_de: 'Kontaktieren Sie uns', link: '/en/Contact/', link_type: 'internal', bg_color: '#ff0000', text_color: '#ffffff', border_radius: '50px', padding: '12px 28px', align: 'left' } },
-    { category: 'basic', kind: 'block', type: 'icon', name: 'Icon', desc: 'Lucide icon with background and colors', icon: Star, defaultProps: { icon: 'Star', size: 36, color: '#ff0000', bg_color: 'rgba(255,0,0,0.1)', border_radius: '50px', align: 'left' } },
-    { category: 'basic', kind: 'block', type: 'divider', name: 'Divider', desc: 'Horizontal separation line rule', icon: Sliders, defaultProps: { thickness: 1, color: '#e2e8f0', style: 'solid', margin: 24 } },
-    { category: 'basic', kind: 'block', type: 'spacer', name: 'Spacer', desc: 'Vertical height spacer to adjust whitespace', icon: Columns, defaultProps: { height: 30 } },
+    { category: 'basic', kind: 'block', type: 'button', name: 'Button', desc: 'Call to action button with custom link and style', icon: Zap, defaultProps: { text_en: 'Get In Touch', text_de: 'Kontaktieren Sie uns', link: '/en/Contact/', link_type: 'internal', enabled: true } },
 
     // 2. LAYOUT
     { category: 'layout', kind: 'row', type: 'row', layout: '100', name: 'Section', desc: 'New section container with empty drop zone', icon: Layout, cols: 1 },
@@ -797,27 +805,8 @@ const AdminWebsiteBuilder = () => {
         </div>
       );
     }
-    if (t === 'icon') {
-      return (
-        <div className="mini-icon-mockup">
-          <Star size={18} />
-        </div>
-      );
-    }
     if (t === 'badge') {
       return <div className="mini-badge-mockup">✦ Partner Badge</div>;
-    }
-    if (t === 'divider') {
-      return <div style={{ width: '130px', borderTop: '2px dashed #64748b' }}></div>;
-    }
-    if (t === 'spacer') {
-      return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: '#38bdf8', fontSize: '0.72rem', fontWeight: 700 }}>
-          <MoveUp size={12} />
-          <span>30px Space</span>
-          <MoveDown size={12} />
-        </div>
-      );
     }
     if (t === 'feature') {
       return (
@@ -1758,7 +1747,7 @@ const AdminWebsiteBuilder = () => {
                               })}
                               <button
                                 type="button"
-                                onClick={(e) => { e.stopPropagation(); addSectionCard(sec.id); }}
+                                onClick={(e) => { e.stopPropagation(); handleAddCardClick(sec.id); }}
                                 style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'none', border: '1px dashed #38bdf855', color: '#38bdf8', padding: '4px 8px', borderRadius: '4px', fontSize: '0.74rem', cursor: 'pointer', marginTop: '2px' }}
                               >
                                 <Plus size={11} /> <span>+ Add Pillar Card</span>
@@ -2343,11 +2332,14 @@ const AdminWebsiteBuilder = () => {
 
                   {/* Title Fields */}
                   <div className="property-group">
-                    <label className="property-label">Card Title (English)</label>
+                    <label className="property-label">
+                      Card Title (English)
+                      <WordCounter value={card.title} max={MAX_WORDS} />
+                    </label>
                     <input
                       type="text"
                       value={card.title || ''}
-                      onChange={(e) => updateGalleryCard(card.id, { title: e.target.value })}
+                      onChange={(e) => { if (countWords(e.target.value) <= MAX_WORDS) updateGalleryCard(card.id, { title: e.target.value }); }}
                       className="property-input"
                     />
                   </div>
@@ -2364,31 +2356,24 @@ const AdminWebsiteBuilder = () => {
                   {/* Location Field */}
                   <div className="property-group">
                     <label className="property-label">Location (e.g. Cancún, Mexico)</label>
-                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                      <input
-                        type="text"
-                        value={card.location || ''}
-                        onChange={(e) => updateGalleryCard(card.id, { location: e.target.value })}
-                        className="property-input"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setSelectedElement({ type: 'card_location', cardId: card.id, card, sectionId: 'hotels_tours', location: card.location })}
-                        style={{ padding: '8px', background: '#1e293b', border: '1px solid #334155', color: '#38bdf8', borderRadius: '6px', cursor: 'pointer' }}
-                        title="Customize Location Style"
-                      >
-                        <Settings size={14} />
-                      </button>
-                    </div>
+                    <input
+                      type="text"
+                      value={card.location || ''}
+                      onChange={(e) => updateGalleryCard(card.id, { location: e.target.value })}
+                      className="property-input"
+                    />
                   </div>
 
                   {/* Description Fields */}
                   <div className="property-group">
-                    <label className="property-label">Description (English)</label>
+                    <label className="property-label">
+                      Description (English)
+                      <WordCounter value={card.desc_en} max={MAX_WORDS} />
+                    </label>
                     <textarea
                       rows={3}
                       value={card.desc_en || ''}
-                      onChange={(e) => updateGalleryCard(card.id, { desc_en: e.target.value })}
+                      onChange={(e) => { if (countWords(e.target.value) <= MAX_WORDS) updateGalleryCard(card.id, { desc_en: e.target.value }); }}
                       className="property-input"
                     />
                   </div>
@@ -2489,29 +2474,6 @@ const AdminWebsiteBuilder = () => {
                     />
                   </div>
 
-                  <div className="property-group">
-                    <label className="property-label">Height (px)</label>
-                    <input
-                      type="text"
-                      value={card.image_height || '220px'}
-                      onChange={(e) => updateGalleryCard(card.id, { image_height: e.target.value })}
-                      className="property-input"
-                      placeholder="220px"
-                    />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Object Fit</label>
-                    <select
-                      value={card.image_object_fit || 'cover'}
-                      onChange={(e) => updateGalleryCard(card.id, { image_object_fit: e.target.value })}
-                      className="property-input"
-                    >
-                      <option value="cover">Cover (Fill & Crop)</option>
-                      <option value="contain">Contain (Fit Whole)</option>
-                      <option value="fill">Fill (Stretch)</option>
-                    </select>
-                  </div>
                 </div>
               );
             })()
@@ -2530,11 +2492,14 @@ const AdminWebsiteBuilder = () => {
                   </div>
 
                   <div className="property-group">
-                    <label className="property-label">Title Text (English)</label>
+                    <label className="property-label">
+                      Title Text (English)
+                      <WordCounter value={card.title} max={MAX_WORDS} />
+                    </label>
                     <input
                       type="text"
                       value={card.title || ''}
-                      onChange={(e) => updateGalleryCard(card.id, { title: e.target.value })}
+                      onChange={(e) => { if (countWords(e.target.value) <= MAX_WORDS) updateGalleryCard(card.id, { title: e.target.value }); }}
                       className="property-input"
                     />
                   </div>
@@ -2549,38 +2514,6 @@ const AdminWebsiteBuilder = () => {
                     />
                   </div>
 
-                  <div className="property-group">
-                    <label className="property-label">Title Color</label>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <input
-                        type="color"
-                        value={card.title_color || '#1f242d'}
-                        onChange={(e) => updateGalleryCard(card.id, { title_color: e.target.value })}
-                        style={{ width: '40px', height: '36px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'none' }}
-                      />
-                      <input
-                        type="text"
-                        value={card.title_color || '#1f242d'}
-                        onChange={(e) => updateGalleryCard(card.id, { title_color: e.target.value })}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Font Size</label>
-                    <select
-                      value={card.title_size || '1.25rem'}
-                      onChange={(e) => updateGalleryCard(card.id, { title_size: e.target.value })}
-                      className="property-input"
-                    >
-                      <option value="1rem">Small (1rem)</option>
-                      <option value="1.15rem">Medium (1.15rem)</option>
-                      <option value="1.25rem">Standard (1.25rem)</option>
-                      <option value="1.4rem">Large (1.4rem)</option>
-                      <option value="1.6rem">Extra Large (1.6rem)</option>
-                    </select>
-                  </div>
                 </div>
               );
             })()
@@ -2608,41 +2541,6 @@ const AdminWebsiteBuilder = () => {
                     />
                   </div>
 
-                  <div className="property-group">
-                    <label className="property-label">Icon Color</label>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <input
-                        type="color"
-                        value={card.location_icon_color || '#ff0000'}
-                        onChange={(e) => updateGalleryCard(card.id, { location_icon_color: e.target.value })}
-                        style={{ width: '40px', height: '36px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'none' }}
-                      />
-                      <input
-                        type="text"
-                        value={card.location_icon_color || '#ff0000'}
-                        onChange={(e) => updateGalleryCard(card.id, { location_icon_color: e.target.value })}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Text Color</label>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <input
-                        type="color"
-                        value={card.location_color || '#666666'}
-                        onChange={(e) => updateGalleryCard(card.id, { location_color: e.target.value })}
-                        style={{ width: '40px', height: '36px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'none' }}
-                      />
-                      <input
-                        type="text"
-                        value={card.location_color || '#666666'}
-                        onChange={(e) => updateGalleryCard(card.id, { location_color: e.target.value })}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
                 </div>
               );
             })()
@@ -2661,11 +2559,14 @@ const AdminWebsiteBuilder = () => {
                   </div>
 
                   <div className="property-group">
-                    <label className="property-label">Description (English)</label>
+                    <label className="property-label">
+                      Description (English)
+                      <WordCounter value={card.desc_en} max={MAX_WORDS} />
+                    </label>
                     <textarea
                       rows={4}
                       value={card.desc_en || ''}
-                      onChange={(e) => updateGalleryCard(card.id, { desc_en: e.target.value })}
+                      onChange={(e) => { if (countWords(e.target.value) <= MAX_WORDS) updateGalleryCard(card.id, { desc_en: e.target.value }); }}
                       className="property-input"
                     />
                   </div>
@@ -2680,23 +2581,6 @@ const AdminWebsiteBuilder = () => {
                     />
                   </div>
 
-                  <div className="property-group">
-                    <label className="property-label">Text Color</label>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <input
-                        type="color"
-                        value={card.desc_color || '#555555'}
-                        onChange={(e) => updateGalleryCard(card.id, { desc_color: e.target.value })}
-                        style={{ width: '40px', height: '36px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'none' }}
-                      />
-                      <input
-                        type="text"
-                        value={card.desc_color || '#555555'}
-                        onChange={(e) => updateGalleryCard(card.id, { desc_color: e.target.value })}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
                 </div>
               );
             })()
@@ -2769,41 +2653,6 @@ const AdminWebsiteBuilder = () => {
                     </select>
                   </div>
 
-                  <div className="property-group">
-                    <label className="property-label">Background Color</label>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <input
-                        type="color"
-                        value={card.button_bg_color || '#ff0000'}
-                        onChange={(e) => updateGalleryCard(card.id, { button_bg_color: e.target.value })}
-                        style={{ width: '40px', height: '36px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'none' }}
-                      />
-                      <input
-                        type="text"
-                        value={card.button_bg_color || '#ff0000'}
-                        onChange={(e) => updateGalleryCard(card.id, { button_bg_color: e.target.value })}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Text Color</label>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                      <input
-                        type="color"
-                        value={card.button_text_color || '#ffffff'}
-                        onChange={(e) => updateGalleryCard(card.id, { button_text_color: e.target.value })}
-                        style={{ width: '40px', height: '36px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'none' }}
-                      />
-                      <input
-                        type="text"
-                        value={card.button_text_color || '#ffffff'}
-                        onChange={(e) => updateGalleryCard(card.id, { button_text_color: e.target.value })}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
                 </div>
               );
             })()
@@ -2822,56 +2671,53 @@ const AdminWebsiteBuilder = () => {
                     <button type="button" onClick={() => setSelectedElement(null)} style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}><X size={16} /></button>
                   </div>
 
-                  <div className="property-group">
-                    <label className="property-label">Video URL (YouTube or Direct)</label>
-                    <input
-                      type="text"
-                      value={vUrl}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        const parsed = parseYouTubeUrl(val);
-                        updateVideoProperties(selectedElement.sectionId, selectedElement.blockId, {
-                          url: val,
-                          video_url: parsed.isYouTube ? parsed.embedUrl : val,
-                          video_id: parsed.videoId,
-                          video_type: parsed.isYouTube ? 'youtube' : 'url'
-                        });
-                      }}
-                      className="property-input"
-                      placeholder="https://www.youtube.com/watch?v=..."
-                    />
-                    {isYouTube && videoId && (
-                      <div style={{ marginTop: '6px', display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontSize: '0.78rem', fontWeight: 600 }}>
-                        <CheckCircle2 size={13} />
-                        <span>Detected YouTube Video ID: <strong>{videoId}</strong></span>
-                      </div>
-                    )}
+                  <div className="property-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <label className="property-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 0 }}>
+                      <input
+                        type="checkbox"
+                        checked={(selectedElement.blockId ? selectedElement.block?.video_enabled : selectedElement.video_enabled) !== false}
+                        onChange={(e) => {
+                          const val = e.target.checked;
+                          if (selectedElement.colId && selectedElement.blockId) {
+                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'video_enabled', val);
+                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, video_enabled: val } }));
+                          } else {
+                            updateSectionField(selectedElement.sectionId, 'video_enabled', val);
+                            setSelectedElement(prev => ({ ...prev, video_enabled: val }));
+                          }
+                        }}
+                      />
+                      Enable Video
+                    </label>
                   </div>
 
-                  <div className="property-group">
-                    <label className="property-label">Aspect Ratio</label>
-                    <select
-                      value={selectedElement.block?.aspect_ratio || '16/9'}
-                      onChange={(e) => updateVideoProperties(selectedElement.sectionId, selectedElement.blockId, { aspect_ratio: e.target.value })}
-                      className="property-input"
-                    >
-                      <option value="16/9">16:9 Standard Widescreen</option>
-                      <option value="4/3">4:3 Classic TV</option>
-                      <option value="1/1">1:1 Square</option>
-                      <option value="21/9">21:9 Ultrawide Cinematic</option>
-                    </select>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Corner Border Radius</label>
-                    <input
-                      type="text"
-                      value={selectedElement.block?.border_radius || '12px'}
-                      onChange={(e) => updateVideoProperties(selectedElement.sectionId, selectedElement.blockId, { border_radius: e.target.value })}
-                      className="property-input"
-                      placeholder="12px"
-                    />
-                  </div>
+                  {(selectedElement.blockId ? selectedElement.block?.video_enabled : selectedElement.video_enabled) !== false && (
+                    <div className="property-group">
+                      <label className="property-label">Video URL (YouTube or Direct)</label>
+                      <input
+                        type="text"
+                        value={vUrl}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const parsed = parseYouTubeUrl(val);
+                          updateVideoProperties(selectedElement.sectionId, selectedElement.blockId, {
+                            url: val,
+                            video_url: parsed.isYouTube ? parsed.embedUrl : val,
+                            video_id: parsed.videoId,
+                            video_type: parsed.isYouTube ? 'youtube' : 'url'
+                          });
+                        }}
+                        className="property-input"
+                        placeholder="https://www.youtube.com/watch?v=..."
+                      />
+                      {isYouTube && videoId && (
+                        <div style={{ marginTop: '6px', display: 'flex', alignItems: 'center', gap: '6px', color: '#10b981', fontSize: '0.78rem', fontWeight: 600 }}>
+                          <CheckCircle2 size={13} />
+                          <span>Detected YouTube Video ID: <strong>{videoId}</strong></span>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   <div style={{ background: '#0f172a', padding: '12px', borderRadius: '8px', border: '1px solid #334155', color: '#94a3b8', fontSize: '0.8rem', lineHeight: 1.5 }}>
                     💡 <strong>Live Mode Notice:</strong> In Edit Mode, clicking the video selects it for customization. To play and preview the video interactively, click <strong>Test / Play Video</strong> on the video itself or switch to <strong>Live Preview</strong>.
@@ -2923,11 +2769,14 @@ const AdminWebsiteBuilder = () => {
                   </div>
 
                   <div className="property-group">
-                    <label className="property-label">Title (English)</label>
+                    <label className="property-label">
+                      Title (English)
+                      <WordCounter value={card.title_en} max={MAX_WORDS} />
+                    </label>
                     <input
                       type="text"
                       value={card.title_en || ''}
-                      onChange={(e) => updateSectionCard(selectedElement.sectionId, idx, { title_en: e.target.value })}
+                      onChange={(e) => { if (countWords(e.target.value) <= MAX_WORDS) updateSectionCard(selectedElement.sectionId, idx, { title_en: e.target.value }); }}
                       className="property-input"
                     />
                   </div>
@@ -2943,11 +2792,14 @@ const AdminWebsiteBuilder = () => {
                   </div>
 
                   <div className="property-group">
-                    <label className="property-label">Description (English)</label>
+                    <label className="property-label">
+                      Description (English)
+                      <WordCounter value={card.desc_en} max={MAX_WORDS} />
+                    </label>
                     <textarea
                       rows={4}
                       value={card.desc_en || ''}
-                      onChange={(e) => updateSectionCard(selectedElement.sectionId, idx, { desc_en: e.target.value })}
+                      onChange={(e) => { if (countWords(e.target.value) <= MAX_WORDS) updateSectionCard(selectedElement.sectionId, idx, { desc_en: e.target.value }); }}
                       className="property-input"
                     />
                   </div>
@@ -3045,45 +2897,74 @@ const AdminWebsiteBuilder = () => {
                 </button>
               </div>
 
-              {/* 1.1 CONTENT: LABELS & URL */}
-              <div className="property-group">
-                <label className="property-label">Button Text (English)</label>
-                <input 
-                  type="text" 
-                  value={selectedElement.text_en || ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (selectedElement.colId && selectedElement.blockId) {
-                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_en', val);
-                    } else {
-                      updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { text_en: val });
-                    }
-                    setSelectedElement(prev => ({ ...prev, text_en: val }));
-                  }}
-                  className="property-input"
-                />
+              <div className="property-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <label className="property-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 0 }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedElement.enabled !== false}
+                    onChange={(e) => {
+                      const val = e.target.checked;
+                      if (selectedElement.colId && selectedElement.blockId) {
+                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'enabled', val);
+                      } else {
+                        updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { enabled: val });
+                      }
+                      setSelectedElement(prev => ({ ...prev, enabled: val }));
+                    }}
+                  />
+                  Enable Button
+                </label>
               </div>
 
-              <div className="property-group">
-                <label className="property-label">Button Text (German)</label>
-                <input 
-                  type="text" 
-                  value={selectedElement.text_de || ''}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (selectedElement.colId && selectedElement.blockId) {
-                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_de', val);
-                    } else {
-                      updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { text_de: val });
-                    }
-                    setSelectedElement(prev => ({ ...prev, text_de: val }));
-                  }}
-                  className="property-input"
-                />
-              </div>
+              {selectedElement.enabled !== false && (
+                <>
+                  {/* 1.1 CONTENT: LABELS & URL */}
+                  <div className="property-group">
+                    <label className="property-label">
+                      Button Text (English)
+                      <WordCounter value={selectedElement.text_en} max={MAX_WORDS} />
+                    </label>
+                    <input
+                      type="text"
+                      value={selectedElement.text_en || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setSelectedElement(prev => ({ ...prev, text_en: val }));
+                        if (countWords(val) > MAX_WORDS) return;
+                        if (selectedElement.colId && selectedElement.blockId) {
+                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_en', val);
+                        } else {
+                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { text_en: val });
+                        }
+                      }}
+                      className="property-input"
+                    />
+                  </div>
 
-              <div className="property-group">
-                <label className="property-label">Link Destination Type</label>
+                  <div className="property-group">
+                    <label className="property-label">
+                      Button Text (German)
+                      <WordCounter value={selectedElement.text_de} max={MAX_WORDS} />
+                    </label>
+                    <input
+                      type="text"
+                      value={selectedElement.text_de || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setSelectedElement(prev => ({ ...prev, text_de: val }));
+                        if (countWords(val) > MAX_WORDS) return;
+                        if (selectedElement.colId && selectedElement.blockId) {
+                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_de', val);
+                        } else {
+                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { text_de: val });
+                        }
+                      }}
+                      className="property-input"
+                    />
+                  </div>
+
+                  <div className="property-group">
+                    <label className="property-label">Link Destination Type</label>
                 <select 
                   value={selectedElement.link_type || 'internal'}
                   onChange={(e) => {
@@ -3199,179 +3080,8 @@ const AdminWebsiteBuilder = () => {
                   </button>
                 </div>
               </div>
-
-              {/* 1.2 STYLES: COLORS & PADDING */}
-              <div style={{ marginTop: '14px', paddingTop: '14px', borderTop: '1px solid #334155' }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#38bdf8', display: 'block', marginBottom: '12px' }}>Colors & Appearance</span>
-
-                <div className="property-group">
-                  <label className="property-label">Background Color</label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={selectedElement.bg_color || '#ff0000'}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (selectedElement.colId && selectedElement.blockId) {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'bg_color', val);
-                        } else {
-                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { bg_color: val });
-                        }
-                        setSelectedElement(prev => ({ ...prev, bg_color: val }));
-                      }}
-                      style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                    />
-                    <input 
-                      type="text" 
-                      value={selectedElement.bg_color || '#ff0000'} 
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (selectedElement.colId && selectedElement.blockId) {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'bg_color', val);
-                        } else {
-                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { bg_color: val });
-                        }
-                        setSelectedElement(prev => ({ ...prev, bg_color: val }));
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-                </div>
-
-                <div className="property-group">
-                  <label className="property-label">Text Color</label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={selectedElement.text_color || '#ffffff'}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (selectedElement.colId && selectedElement.blockId) {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_color', val);
-                        } else {
-                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { text_color: val });
-                        }
-                        setSelectedElement(prev => ({ ...prev, text_color: val }));
-                      }}
-                      style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                    />
-                    <input 
-                      type="text" 
-                      value={selectedElement.text_color || '#ffffff'} 
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (selectedElement.colId && selectedElement.blockId) {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_color', val);
-                        } else {
-                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { text_color: val });
-                        }
-                        setSelectedElement(prev => ({ ...prev, text_color: val }));
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-                </div>
-
-                <div className="property-group">
-                  <label className="property-label">Hover Background Color</label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input 
-                      type="color" 
-                      value={selectedElement.hover_bg_color || '#cc0000'}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (selectedElement.colId && selectedElement.blockId) {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'hover_bg_color', val);
-                        } else {
-                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { hover_bg_color: val });
-                        }
-                        setSelectedElement(prev => ({ ...prev, hover_bg_color: val }));
-                      }}
-                      style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                    />
-                    <input 
-                      type="text" 
-                      value={selectedElement.hover_bg_color || '#cc0000'} 
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (selectedElement.colId && selectedElement.blockId) {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'hover_bg_color', val);
-                        } else {
-                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { hover_bg_color: val });
-                        }
-                        setSelectedElement(prev => ({ ...prev, hover_bg_color: val }));
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-                </div>
-
-                <div className="property-group">
-                  <label className="property-label">Border Radius</label>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                    <input 
-                      type="range" 
-                      min="0" 
-                      max="50" 
-                      step="2"
-                      value={parseInt(selectedElement.border_radius) || 50}
-                      onChange={(e) => {
-                        const val = `${e.target.value}px`;
-                        if (selectedElement.colId && selectedElement.blockId) {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'border_radius', val);
-                        } else {
-                          updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { border_radius: val });
-                        }
-                        setSelectedElement(prev => ({ ...prev, border_radius: val }));
-                      }}
-                      className="property-slider"
-                    />
-                    <span style={{ fontSize: '0.85rem', color: '#fff', minWidth: '40px' }}>{selectedElement.border_radius || '50px'}</span>
-                  </div>
-                </div>
-
-                <div className="property-group">
-                  <label className="property-label">Padding (Vertical & Horizontal)</label>
-                  <input 
-                    type="text" 
-                    value={selectedElement.padding || '14px 32px'}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      if (selectedElement.colId && selectedElement.blockId) {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'padding', val);
-                      } else {
-                        updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { padding: val });
-                      }
-                      setSelectedElement(prev => ({ ...prev, padding: val }));
-                    }}
-                    className="property-input"
-                    placeholder="14px 32px"
-                  />
-                </div>
-
-                <div className="property-group">
-                  <label className="property-label">Hover Animation Effect</label>
-                  <select 
-                    value={selectedElement.hover_animation || 'scale'}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      if (selectedElement.colId && selectedElement.blockId) {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'hover_animation', val);
-                      } else {
-                        updateButtonProperties(selectedElement.sectionId, selectedElement.fieldPrefix, { hover_animation: val });
-                      }
-                      setSelectedElement(prev => ({ ...prev, hover_animation: val }));
-                    }}
-                    className="property-input"
-                  >
-                    <option value="scale">Scale Up (Zoom)</option>
-                    <option value="lift">Lift Up (Translate Y)</option>
-                    <option value="glow">Glow Highlight</option>
-                    <option value="pulse">Pulse Motion</option>
-                    <option value="none">None</option>
-                  </select>
-                </div>
-              </div>
+                </>
+              )}
 
               {/* Remove block button if it is a block */}
               {selectedElement.blockId && (
@@ -3667,13 +3377,18 @@ const AdminWebsiteBuilder = () => {
                   </div>
 
                   <div className="property-group">
-                    <label className="property-label">Heading Text (English)</label>
-                    <input 
-                      type="text" 
+                    <label className="property-label">
+                      Heading Text (English)
+                      <WordCounter value={selectedElement.block?.text_en} max={MAX_WORDS} />
+                    </label>
+                    <input
+                      type="text"
                       value={selectedElement.block?.text_en || ''}
                       onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_en', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, text_en: e.target.value } }));
+                        const val = e.target.value;
+                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, text_en: val } }));
+                        if (countWords(val) > MAX_WORDS) return;
+                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_en', val);
                       }}
                       className="property-input"
                     />
@@ -3681,8 +3396,8 @@ const AdminWebsiteBuilder = () => {
 
                   <div className="property-group">
                     <label className="property-label">Heading Text (German)</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={selectedElement.block?.text_de || ''}
                       onChange={(e) => {
                         updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_de', e.target.value);
@@ -3690,50 +3405,6 @@ const AdminWebsiteBuilder = () => {
                       }}
                       className="property-input"
                     />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Text Alignment</label>
-                    <div className="property-btn-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
-                      {['left', 'center', 'right'].map(align => (
-                        <button
-                          key={align}
-                          type="button"
-                          className={`btn-align-toggle ${selectedElement.block?.align === align ? 'active' : ''}`}
-                          style={{ padding: '8px', background: (selectedElement.block?.align || 'left') === align ? '#38bdf8' : '#1e293b', border: '1px solid #334155', color: (selectedElement.block?.align || 'left') === align ? '#0f172a' : '#fff', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize' }}
-                          onClick={() => {
-                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'align', align);
-                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, align } }));
-                          }}
-                        >
-                          {align}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Text Color</label>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <input 
-                        type="color" 
-                        value={selectedElement.block?.color || '#1f242d'}
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'color', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, color: e.target.value } }));
-                        }}
-                        style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                      />
-                      <input 
-                        type="text" 
-                        value={selectedElement.block?.color || '#1f242d'} 
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'color', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, color: e.target.value } }));
-                        }}
-                        className="property-input"
-                      />
-                    </div>
                   </div>
                 </>
               )}
@@ -3742,13 +3413,18 @@ const AdminWebsiteBuilder = () => {
               {selectedElement.type === 'text' && (
                 <>
                   <div className="property-group">
-                    <label className="property-label">Paragraph Content (English)</label>
-                    <textarea 
+                    <label className="property-label">
+                      Paragraph Content (English)
+                      <WordCounter value={selectedElement.block?.text_en} max={MAX_WORDS} />
+                    </label>
+                    <textarea
                       rows="4"
                       value={selectedElement.block?.text_en || ''}
                       onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_en', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, text_en: e.target.value } }));
+                        const val = e.target.value;
+                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, text_en: val } }));
+                        if (countWords(val) > MAX_WORDS) return;
+                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_en', val);
                       }}
                       className="property-input"
                     />
@@ -3756,7 +3432,7 @@ const AdminWebsiteBuilder = () => {
 
                   <div className="property-group">
                     <label className="property-label">Paragraph Content (German)</label>
-                    <textarea 
+                    <textarea
                       rows="4"
                       value={selectedElement.block?.text_de || ''}
                       onChange={(e) => {
@@ -3765,49 +3441,6 @@ const AdminWebsiteBuilder = () => {
                       }}
                       className="property-input"
                     />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Text Alignment</label>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
-                      {['left', 'center', 'right'].map(align => (
-                        <button
-                          key={align}
-                          type="button"
-                          style={{ padding: '8px', background: (selectedElement.block?.align || 'left') === align ? '#38bdf8' : '#1e293b', border: '1px solid #334155', color: (selectedElement.block?.align || 'left') === align ? '#0f172a' : '#fff', borderRadius: '6px', fontWeight: 600, cursor: 'pointer', textTransform: 'capitalize' }}
-                          onClick={() => {
-                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'align', align);
-                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, align } }));
-                          }}
-                        >
-                          {align}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Text Color</label>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <input 
-                        type="color" 
-                        value={selectedElement.block?.color || '#555555'}
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'color', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, color: e.target.value } }));
-                        }}
-                        style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                      />
-                      <input 
-                        type="text" 
-                        value={selectedElement.block?.color || '#555555'} 
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'color', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, color: e.target.value } }));
-                        }}
-                        className="property-input"
-                      />
-                    </div>
                   </div>
                 </>
               )}
@@ -3839,148 +3472,62 @@ const AdminWebsiteBuilder = () => {
                     }}
                     previewHeight={140}
                   />
-
-                  {/* Responsive Dimensions */}
-                  <div className="property-group">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                      <label className="property-label" style={{ margin: 0 }}>Dimensions & Responsive</label>
-                      <div className="responsive-mini-pills">
-                        {['desktop', 'tablet', 'mobile'].map(dev => (
-                          <button
-                            key={dev}
-                            type="button"
-                            className={`mini-pill-btn ${editingDevice === dev ? 'active' : ''}`}
-                            onClick={() => setEditingDevice(dev)}
-                          >
-                            {dev === 'desktop' ? '🖥️' : dev === 'tablet' ? '📱' : '📲'}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                      <div>
-                        <label className="property-sub-label">Width ({editingDevice})</label>
-                        <input
-                          type="text"
-                          value={
-                            editingDevice === 'desktop' ? (selectedElement.block?.width || '100%') :
-                            editingDevice === 'tablet' ? (selectedElement.block?.tablet_width || selectedElement.block?.width || '100%') :
-                            (selectedElement.block?.mobile_width || '100%')
-                          }
-                          onChange={(e) => {
-                            const fKey = editingDevice === 'desktop' ? 'width' : `${editingDevice}_width`;
-                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, fKey, e.target.value);
-                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, [fKey]: e.target.value } }));
-                          }}
-                          className="property-input"
-                          placeholder="100% or 400px"
-                        />
-                      </div>
-                      <div>
-                        <label className="property-sub-label">Height ({editingDevice})</label>
-                        <input
-                          type="text"
-                          value={
-                            editingDevice === 'desktop' ? (selectedElement.block?.height || '420px') :
-                            editingDevice === 'tablet' ? (selectedElement.block?.tablet_height || selectedElement.block?.height || '340px') :
-                            (selectedElement.block?.mobile_height || '260px')
-                          }
-                          onChange={(e) => {
-                            const fKey = editingDevice === 'desktop' ? 'height' : `${editingDevice}_height`;
-                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, fKey, e.target.value);
-                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, [fKey]: e.target.value } }));
-                          }}
-                          className="property-input"
-                          placeholder="420px or auto"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Display & Fit */}
-                  <div className="property-group">
-                    <label className="property-label">Object Fit & Alignment</label>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '8px' }}>
-                      <select
-                        value={selectedElement.block?.object_fit || 'cover'}
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'object_fit', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, object_fit: e.target.value } }));
-                        }}
-                        className="property-input"
-                      >
-                        <option value="cover">Cover (Crop to Fit)</option>
-                        <option value="contain">Contain (Full Image)</option>
-                        <option value="fill">Fill (Stretch)</option>
-                        <option value="none">None (Original Size)</option>
-                        <option value="scale-down">Scale Down</option>
-                      </select>
-
-                      <div style={{ display: 'flex', gap: '4px' }}>
-                        {['left', 'center', 'right'].map(align => (
-                          <button
-                            key={align}
-                            type="button"
-                            className={`editor-btn ${selectedElement.block?.align === align ? 'editor-btn-primary' : 'editor-btn-secondary'}`}
-                            style={{ flex: 1, padding: '6px', fontSize: '0.75rem', textTransform: 'capitalize' }}
-                            onClick={() => {
-                              updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'align', align);
-                              setSelectedElement(prev => ({ ...prev, block: { ...prev.block, align } }));
-                            }}
-                          >
-                            {align}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Corner Radius & Style */}
-                  <div className="property-group">
-                    <label className="property-label">Corner Radius: {selectedElement.block?.border_radius || '12px'}</label>
-                    <input 
-                      type="range"
-                      min="0"
-                      max="40"
-                      value={parseInt(selectedElement.block?.border_radius || 12, 10)}
-                      onChange={(e) => {
-                        const val = `${e.target.value}px`;
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'border_radius', val);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, border_radius: val } }));
-                      }}
-                      style={{ width: '100%', accentColor: '#38bdf8' }}
-                    />
-                  </div>
-
-                  {/* Shadow */}
-                  <div className="property-group" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#cbd5e1', fontSize: '0.85rem' }}>
-                      <input 
-                        type="checkbox"
-                        checked={Boolean(selectedElement.block?.shadow)}
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'shadow', e.target.checked);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, shadow: e.target.checked } }));
-                        }}
-                      />
-                      <span>Drop Shadow</span>
-                    </label>
-                  </div>
                 </>
               )}
 
               {/* 5.4 CARD BLOCK */}
               {selectedElement.type === 'card' && (
                 <>
+                  <div className="property-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <label className="property-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 0 }}>
+                      <input
+                        type="checkbox"
+                        checked={selectedElement.block?.enabled !== false}
+                        onChange={(e) => {
+                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'enabled', e.target.checked);
+                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, enabled: e.target.checked } }));
+                        }}
+                      />
+                      Enable Card
+                    </label>
+                  </div>
+
+                  {selectedElement.block?.enabled !== false && (
+                    <>
+                  <ImagePickerField
+                    label="Card Image"
+                    value={selectedElement.block?.image || ''}
+                    onUrlChange={(url) => {
+                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', url);
+                      setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: url } }));
+                    }}
+                    onOpenMediaLibrary={() => {
+                      triggerMediaPicker((url) => {
+                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', url);
+                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: url } }));
+                      });
+                    }}
+                    onRemove={() => {
+                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'image', '');
+                      setSelectedElement(prev => ({ ...prev, block: { ...prev.block, image: '' } }));
+                    }}
+                    previewHeight={120}
+                    showAltField={false}
+                  />
+
                   <div className="property-group">
-                    <label className="property-label">Card Title (English)</label>
-                    <input 
-                      type="text" 
+                    <label className="property-label">
+                      Card Title (English)
+                      <WordCounter value={selectedElement.block?.title_en} max={MAX_WORDS} />
+                    </label>
+                    <input
+                      type="text"
                       value={selectedElement.block?.title_en || ''}
                       onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'title_en', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, title_en: e.target.value } }));
+                        const val = e.target.value;
+                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, title_en: val } }));
+                        if (countWords(val) > MAX_WORDS) return;
+                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'title_en', val);
                       }}
                       className="property-input"
                     />
@@ -3988,8 +3535,8 @@ const AdminWebsiteBuilder = () => {
 
                   <div className="property-group">
                     <label className="property-label">Card Title (German)</label>
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       value={selectedElement.block?.title_de || ''}
                       onChange={(e) => {
                         updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'title_de', e.target.value);
@@ -4000,13 +3547,18 @@ const AdminWebsiteBuilder = () => {
                   </div>
 
                   <div className="property-group">
-                    <label className="property-label">Card Description (English)</label>
-                    <textarea 
+                    <label className="property-label">
+                      Card Description (English)
+                      <WordCounter value={selectedElement.block?.desc_en} max={MAX_WORDS} />
+                    </label>
+                    <textarea
                       rows="3"
                       value={selectedElement.block?.desc_en || ''}
                       onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'desc_en', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, desc_en: e.target.value } }));
+                        const val = e.target.value;
+                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, desc_en: val } }));
+                        if (countWords(val) > MAX_WORDS) return;
+                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'desc_en', val);
                       }}
                       className="property-input"
                     />
@@ -4014,7 +3566,7 @@ const AdminWebsiteBuilder = () => {
 
                   <div className="property-group">
                     <label className="property-label">Card Description (German)</label>
-                    <textarea 
+                    <textarea
                       rows="3"
                       value={selectedElement.block?.desc_de || ''}
                       onChange={(e) => {
@@ -4022,46 +3574,6 @@ const AdminWebsiteBuilder = () => {
                         setSelectedElement(prev => ({ ...prev, block: { ...prev.block, desc_de: e.target.value } }));
                       }}
                       className="property-input"
-                    />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Card Background Color</label>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <input 
-                        type="color" 
-                        value={selectedElement.block?.bg || '#faf5fa'}
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'bg', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, bg: e.target.value } }));
-                        }}
-                        style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                      />
-                      <input 
-                        type="text" 
-                        value={selectedElement.block?.bg || '#faf5fa'} 
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'bg', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, bg: e.target.value } }));
-                        }}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Corner Radius: {selectedElement.block?.border_radius || '12px'}</label>
-                    <input 
-                      type="range"
-                      min="0"
-                      max="30"
-                      value={parseInt(selectedElement.block?.border_radius || 12, 10)}
-                      onChange={(e) => {
-                        const val = `${e.target.value}px`;
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'border_radius', val);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, border_radius: val } }));
-                      }}
-                      style={{ width: '100%', accentColor: '#38bdf8' }}
                     />
                   </div>
 
@@ -4090,85 +3602,8 @@ const AdminWebsiteBuilder = () => {
                       />
                     </div>
                   </div>
-                </>
-              )}
-
-              {/* 5.5 ICON BLOCK */}
-              {selectedElement.type === 'icon' && (
-                <>
-                  <div className="property-group">
-                    <label className="property-label">Choose Icon</label>
-                    <div className="icon-picker-grid">
-                      {['Star', 'Trophy', 'ShieldCheck', 'Award', 'Sparkles', 'Zap', 'Heart', 'Globe2', 'Compass', 'MapPin', 'Clock', 'Users', 'Building2', 'Mail', 'Phone', 'MessageSquareQuote', 'HelpCircle', 'CheckCircle2', 'Play'].map(icName => (
-                        <div 
-                          key={icName} 
-                          className={`icon-picker-item ${(selectedElement.block?.icon || 'Star') === icName ? 'active' : ''}`}
-                          onClick={() => {
-                            updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'icon', icName);
-                            setSelectedElement(prev => ({ ...prev, block: { ...prev.block, icon: icName } }));
-                          }}
-                          title={icName}
-                        >
-                          <span style={{ fontSize: '0.75rem', fontWeight: 700 }}>{icName.slice(0, 3)}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Icon Color</label>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <input 
-                        type="color" 
-                        value={selectedElement.block?.color || '#ff0000'}
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'color', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, color: e.target.value } }));
-                        }}
-                        style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                      />
-                      <input 
-                        type="text" 
-                        value={selectedElement.block?.color || '#ff0000'} 
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'color', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, color: e.target.value } }));
-                        }}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Icon Background Color</label>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                      <input 
-                        type="text" 
-                        value={selectedElement.block?.bg_color || 'rgba(255, 0, 0, 0.1)'} 
-                        onChange={(e) => {
-                          updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'bg_color', e.target.value);
-                          setSelectedElement(prev => ({ ...prev, block: { ...prev.block, bg_color: e.target.value } }));
-                        }}
-                        className="property-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Icon Size: {selectedElement.block?.size || 36}px</label>
-                    <input 
-                      type="range"
-                      min="18"
-                      max="72"
-                      value={selectedElement.block?.size || 36}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value, 10);
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'size', val);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, size: val } }));
-                      }}
-                      style={{ width: '100%', accentColor: '#38bdf8' }}
-                    />
-                  </div>
+                    </>
+                  )}
                 </>
               )}
 
@@ -4201,18 +3636,6 @@ const AdminWebsiteBuilder = () => {
                     />
                   </div>
 
-                  <div className="property-group">
-                    <label className="property-label">Badge Text Color</label>
-                    <input 
-                      type="color" 
-                      value={selectedElement.block?.text_color || '#ff0000'}
-                      onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'text_color', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, text_color: e.target.value } }));
-                      }}
-                      style={{ width: '100%', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                    />
-                  </div>
                 </>
               )}
 
@@ -4258,106 +3681,6 @@ const AdminWebsiteBuilder = () => {
                     </div>
                   </div>
                 </>
-              )}
-
-              {/* 5.8 FEATURE BOX BLOCK */}
-              {selectedElement.type === 'feature' && (
-                <>
-                  <div className="property-group">
-                    <label className="property-label">Feature Heading</label>
-                    <input 
-                      type="text" 
-                      value={selectedElement.block?.title_en || ''}
-                      onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'title_en', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, title_en: e.target.value } }));
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Feature Description</label>
-                    <textarea 
-                      rows="3"
-                      value={selectedElement.block?.desc_en || ''}
-                      onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'desc_en', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, desc_en: e.target.value } }));
-                      }}
-                      className="property-input"
-                    />
-                  </div>
-                </>
-              )}
-
-              {/* 5.9 VIDEO BLOCK */}
-              {selectedElement.type === 'video' && (
-                <div className="property-group">
-                  <label className="property-label">YouTube / Video Embed URL</label>
-                  <input 
-                    type="text" 
-                    value={selectedElement.block?.video_url || ''}
-                    onChange={(e) => {
-                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'video_url', e.target.value);
-                      setSelectedElement(prev => ({ ...prev, block: { ...prev.block, video_url: e.target.value } }));
-                    }}
-                    className="property-input"
-                  />
-                </div>
-              )}
-
-              {/* 5.10 DIVIDER BLOCK */}
-              {selectedElement.type === 'divider' && (
-                <>
-                  <div className="property-group">
-                    <label className="property-label">Divider Thickness: {selectedElement.block?.thickness || 1}px</label>
-                    <input 
-                      type="range"
-                      min="1"
-                      max="8"
-                      value={selectedElement.block?.thickness || 1}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value, 10);
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'thickness', val);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, thickness: val } }));
-                      }}
-                      style={{ width: '100%', accentColor: '#38bdf8' }}
-                    />
-                  </div>
-
-                  <div className="property-group">
-                    <label className="property-label">Divider Color</label>
-                    <input 
-                      type="color" 
-                      value={selectedElement.block?.color || '#e2e8f0'}
-                      onChange={(e) => {
-                        updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'color', e.target.value);
-                        setSelectedElement(prev => ({ ...prev, block: { ...prev.block, color: e.target.value } }));
-                      }}
-                      style={{ width: '100%', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                    />
-                  </div>
-                </>
-              )}
-
-              {/* 5.11 SPACER BLOCK */}
-              {selectedElement.type === 'spacer' && (
-                <div className="property-group">
-                  <label className="property-label">Spacer Height: {selectedElement.block?.height || 30}px</label>
-                  <input 
-                    type="range"
-                    min="10"
-                    max="160"
-                    value={selectedElement.block?.height || 30}
-                    onChange={(e) => {
-                      const val = parseInt(e.target.value, 10);
-                      updateBlock(selectedElement.sectionId, selectedElement.colId, selectedElement.blockId, 'height', val);
-                      setSelectedElement(prev => ({ ...prev, block: { ...prev.block, height: val } }));
-                    }}
-                    style={{ width: '100%', accentColor: '#38bdf8' }}
-                  />
-                </div>
               )}
 
               {/* Block Actions: Duplicate & Delete */}
@@ -4436,31 +3759,13 @@ const AdminWebsiteBuilder = () => {
 
               {/* Tabs */}
               <div className="properties-tabs" style={{ flexShrink: 0, position: 'sticky', top: 0, zIndex: 10 }}>
-                <button 
+                <button
                   className={`properties-tab-btn ${activeTab === 'content' ? 'active' : ''}`}
                   onClick={() => setActiveTab('content')}
                 >
                   Content
                 </button>
-                <button 
-                  className={`properties-tab-btn ${activeTab === 'style' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('style')}
-                >
-                  Style
-                </button>
-                <button 
-                  className={`properties-tab-btn ${activeTab === 'spacing' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('spacing')}
-                >
-                  Spacing
-                </button>
-                <button 
-                  className={`properties-tab-btn ${activeTab === 'animation' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('animation')}
-                >
-                  Motion
-                </button>
-                <button 
+                <button
                   className={`properties-tab-btn ${activeTab === 'visibility' ? 'active' : ''}`}
                   onClick={() => setActiveTab('visibility')}
                 >
@@ -4548,439 +3853,41 @@ const AdminWebsiteBuilder = () => {
                       />
                     )}
 
-                    {/* Video URL — shown when section has a video_url field (e.g. service_hero_video) */}
+                    {/* Video — shown when section has a video_url field (e.g. service_hero_video) */}
                     {selectedSection.video_url !== undefined && (
-                      <div className="property-group">
-                        <label className="property-label">🎬 YouTube Video URL</label>
-                        <input
-                          type="text"
-                          value={selectedSection.video_url || ''}
-                          onChange={(e) => {
-                            const parsed = parseYouTubeUrl(e.target.value);
-                            const embedUrl = parsed.isYouTube ? parsed.embedUrl + '?controls=1' : e.target.value;
-                            updateSectionField(selectedSection.id, 'video_url', embedUrl);
-                          }}
-                          className="property-input"
-                          placeholder="https://www.youtube.com/watch?v=..."
-                        />
-                        <p style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '4px' }}>
-                          Paste a YouTube URL or embed URL — it will be auto-converted.
-                        </p>
-                      </div>
-                    )}
-                  </>
-                )}
-
-                {/* 2. STYLE TAB */}
-                {activeTab === 'style' && (
-                  <>
-                    <ImagePickerField
-                      label="Section Background Image"
-                      value={selectedSection.bg_image || ''}
-                      onUrlChange={(url) => updateSectionField(selectedSection.id, 'bg_image', url)}
-                      onOpenMediaLibrary={() => {
-                        triggerMediaPicker((url) => updateSectionField(selectedSection.id, 'bg_image', url));
-                      }}
-                      onRemove={() => updateSectionField(selectedSection.id, 'bg_image', '')}
-                      previewHeight={120}
-                      showAltField={false}
-                    />
-
-                    <div className="property-group">
-                      <label className="property-label">Section Background Color</label>
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                        <input 
-                          type="color" 
-                          value={selectedSection.bg_color || '#ffffff'}
-                          onChange={(e) => updateSectionField(selectedSection.id, 'bg_color', e.target.value)}
-                          style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                        />
-                        <input 
-                          type="text" 
-                          value={selectedSection.bg_color || '#ffffff'}
-                          onChange={(e) => updateSectionField(selectedSection.id, 'bg_color', e.target.value)}
-                          className="property-input"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="property-group">
-                      <label className="property-label">Heading Color Override</label>
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                        <input 
-                          type="color" 
-                          value={selectedSection.heading_color || '#1f242d'}
-                          onChange={(e) => updateSectionField(selectedSection.id, 'heading_color', e.target.value)}
-                          style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                        />
-                        <input 
-                          type="text" 
-                          value={selectedSection.heading_color || '#1f242d'}
-                          onChange={(e) => updateSectionField(selectedSection.id, 'heading_color', e.target.value)}
-                          className="property-input"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="property-group">
-                      <label className="property-label">Body Text Color</label>
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                        <input 
-                          type="color" 
-                          value={selectedSection.text_color || '#555555'}
-                          onChange={(e) => updateSectionField(selectedSection.id, 'text_color', e.target.value)}
-                          style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
-                        />
-                        <input 
-                          type="text" 
-                          value={selectedSection.text_color || '#555555'}
-                          onChange={(e) => updateSectionField(selectedSection.id, 'text_color', e.target.value)}
-                          className="property-input"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="property-group">
-                      <label className="property-label">Border Width: {selectedSection.border_width || 0}px</label>
-                      <input 
-                        type="range"
-                        min="0"
-                        max="20"
-                        value={selectedSection.border_width || 0}
-                        onChange={(e) => updateSectionField(selectedSection.id, 'border_width', parseInt(e.target.value))}
-                        className="property-slider"
-                      />
-                    </div>
-
-                    {(selectedSection.border_width > 0) && (
                       <>
-                        <div className="property-group">
-                          <label className="property-label">Border Color</label>
-                          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                            <input 
-                              type="color" 
-                              value={selectedSection.border_color || '#e2e8f0'}
-                              onChange={(e) => updateSectionField(selectedSection.id, 'border_color', e.target.value)}
-                              style={{ width: '40px', height: '36px', padding: 0, border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+                        <div className="property-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <label className="property-label" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: 0 }}>
+                            <input
+                              type="checkbox"
+                              checked={selectedSection.video_enabled !== false}
+                              onChange={(e) => updateSectionField(selectedSection.id, 'video_enabled', e.target.checked)}
                             />
-                            <input 
-                              type="text" 
-                              value={selectedSection.border_color || '#e2e8f0'}
-                              onChange={(e) => updateSectionField(selectedSection.id, 'border_color', e.target.value)}
-                              className="property-input"
-                            />
-                          </div>
+                            Enable Video
+                          </label>
                         </div>
 
-                        <div className="property-group">
-                          <label className="property-label">Border Style</label>
-                          <select 
-                            value={selectedSection.border_style || 'solid'}
-                            onChange={(e) => updateSectionField(selectedSection.id, 'border_style', e.target.value)}
-                            className="property-input"
-                          >
-                            <option value="solid">Solid</option>
-                            <option value="dashed">Dashed</option>
-                            <option value="dotted">Dotted</option>
-                          </select>
-                        </div>
+                        {selectedSection.video_enabled !== false && (
+                          <div className="property-group">
+                            <label className="property-label">🎬 YouTube Video URL</label>
+                            <input
+                              type="text"
+                              value={selectedSection.video_url || ''}
+                              onChange={(e) => {
+                                const parsed = parseYouTubeUrl(e.target.value);
+                                const embedUrl = parsed.isYouTube ? parsed.embedUrl + '?controls=1' : e.target.value;
+                                updateSectionField(selectedSection.id, 'video_url', embedUrl);
+                              }}
+                              className="property-input"
+                              placeholder="https://www.youtube.com/watch?v=..."
+                            />
+                            <p style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '4px' }}>
+                              Paste a YouTube URL or embed URL — it will be auto-converted.
+                            </p>
+                          </div>
+                        )}
                       </>
                     )}
-
-                    <div className="property-group">
-                      <label className="property-label">Corner Radius: {selectedSection.border_radius || 0}px</label>
-                      <input 
-                        type="range"
-                        min="0"
-                        max="40"
-                        value={selectedSection.border_radius || 0}
-                        onChange={(e) => updateSectionField(selectedSection.id, 'border_radius', parseInt(e.target.value))}
-                        className="property-slider"
-                      />
-                    </div>
-
-                    <div className="property-group">
-                      <label className="property-label">Box Shadow</label>
-                      <select 
-                        value={selectedSection.shadow || ''}
-                        onChange={(e) => updateSectionField(selectedSection.id, 'shadow', e.target.value)}
-                        className="property-input"
-                      >
-                        <option value="">None</option>
-                        <option value="0 4px 6px -1px rgba(0,0,0,0.1)">Subtle Shadow</option>
-                        <option value="0 10px 15px -3px rgba(0,0,0,0.1)">Medium Shadow</option>
-                        <option value="0 20px 25px -5px rgba(0,0,0,0.15)">Large Elevation</option>
-                        <option value="0 0 20px rgba(56,189,248,0.2)">Cyan Glow</option>
-                      </select>
-                    </div>
-
-                    <div className="property-group">
-                      <label className="property-label">Opacity: {selectedSection.opacity !== undefined ? selectedSection.opacity : 1}</label>
-                      <input 
-                        type="range"
-                        min="0.1"
-                        max="1"
-                        step="0.05"
-                        value={selectedSection.opacity !== undefined ? selectedSection.opacity : 1}
-                        onChange={(e) => updateSectionField(selectedSection.id, 'opacity', parseFloat(e.target.value))}
-                        className="property-slider"
-                      />
-                    </div>
-                  </>
-                )}
-
-                {/* 3. SPACING TAB */}
-                {activeTab === 'spacing' && (
-                  <>
-                    {/* Viewport Selection */}
-                    <div className="property-group">
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                        <label className="property-label" style={{ margin: 0 }}>Responsive Breakpoint</label>
-                        <div className="responsive-mini-pills">
-                          {['desktop', 'tablet', 'mobile'].map(dev => (
-                            <button
-                              key={dev}
-                              type="button"
-                              className={`mini-pill-btn ${editingDevice === dev ? 'active' : ''}`}
-                              onClick={() => setEditingDevice(dev)}
-                            >
-                              {dev === 'desktop' ? '🖥️ Desktop' : dev === 'tablet' ? '📱 Tablet' : '📲 Mobile'}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Padding Group */}
-                    <div style={{ background: '#1e293b', padding: '12px', borderRadius: '8px', marginBottom: '12px', border: '1px solid #334155' }}>
-                      <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#38bdf8', display: 'block', marginBottom: '10px' }}>
-                        Padding ({editingDevice.toUpperCase()})
-                      </span>
-                      
-                      <div className="property-group" style={{ marginBottom: '8px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                          <label className="property-sub-label" style={{ margin: 0 }}>Padding Top</label>
-                          <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-                            {getResponsiveValue(selectedSection, 'padding_top', editingDevice, selectedSection.padding_top !== undefined ? selectedSection.padding_top : 60)}px
-                          </span>
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                          <input 
-                            type="range" 
-                            min="0" 
-                            max="240" 
-                            step="1"
-                            value={Number(getResponsiveValue(selectedSection, 'padding_top', editingDevice, selectedSection.padding_top !== undefined ? selectedSection.padding_top : 60)) || 0}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'padding_top', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-slider"
-                            style={{ flex: 1 }}
-                          />
-                          <input 
-                            type="number" 
-                            min="0" 
-                            max="240" 
-                            value={Number(getResponsiveValue(selectedSection, 'padding_top', editingDevice, selectedSection.padding_top !== undefined ? selectedSection.padding_top : 60)) || 0}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'padding_top', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-input"
-                            style={{ width: '65px', padding: '4px 6px', textAlign: 'center' }}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="property-group" style={{ marginBottom: '8px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                          <label className="property-sub-label" style={{ margin: 0 }}>Padding Bottom</label>
-                          <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-                            {getResponsiveValue(selectedSection, 'padding_bottom', editingDevice, selectedSection.padding_bottom !== undefined ? selectedSection.padding_bottom : 60)}px
-                          </span>
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                          <input 
-                            type="range" 
-                            min="0" 
-                            max="240" 
-                            step="1"
-                            value={Number(getResponsiveValue(selectedSection, 'padding_bottom', editingDevice, selectedSection.padding_bottom !== undefined ? selectedSection.padding_bottom : 60)) || 0}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'padding_bottom', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-slider"
-                            style={{ flex: 1 }}
-                          />
-                          <input 
-                            type="number" 
-                            min="0" 
-                            max="240" 
-                            value={Number(getResponsiveValue(selectedSection, 'padding_bottom', editingDevice, selectedSection.padding_bottom !== undefined ? selectedSection.padding_bottom : 60)) || 0}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'padding_bottom', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-input"
-                            style={{ width: '65px', padding: '4px 6px', textAlign: 'center' }}
-                          />
-                        </div>
-                      </div>
-
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                        <div>
-                          <label className="property-sub-label">Padding Left</label>
-                          <input 
-                            type="number" 
-                            min="0" 
-                            max="160"
-                            value={getResponsiveValue(selectedSection, 'padding_left', editingDevice, selectedSection.padding_left || 0)}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'padding_left', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-input"
-                            placeholder="0px"
-                          />
-                        </div>
-                        <div>
-                          <label className="property-sub-label">Padding Right</label>
-                          <input 
-                            type="number" 
-                            min="0" 
-                            max="160"
-                            value={getResponsiveValue(selectedSection, 'padding_right', editingDevice, selectedSection.padding_right || 0)}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'padding_right', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-input"
-                            placeholder="0px"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Margin Group */}
-                    <div style={{ background: '#1e293b', padding: '12px', borderRadius: '8px', marginBottom: '12px', border: '1px solid #334155' }}>
-                      <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#38bdf8', display: 'block', marginBottom: '10px' }}>
-                        Margin ({editingDevice.toUpperCase()})
-                      </span>
-
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '8px' }}>
-                        <div>
-                          <label className="property-sub-label">Margin Top</label>
-                          <input 
-                            type="number" 
-                            min="0" 
-                            max="200"
-                            value={getResponsiveValue(selectedSection, 'margin_top', editingDevice, selectedSection.margin_top || 0)}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'margin_top', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-input"
-                            placeholder="0px"
-                          />
-                        </div>
-                        <div>
-                          <label className="property-sub-label">Margin Bottom</label>
-                          <input 
-                            type="number" 
-                            min="0" 
-                            max="200"
-                            value={getResponsiveValue(selectedSection, 'margin_bottom', editingDevice, selectedSection.margin_bottom || 0)}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'margin_bottom', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-input"
-                            placeholder="0px"
-                          />
-                        </div>
-                      </div>
-
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                        <div>
-                          <label className="property-sub-label">Margin Left</label>
-                          <input 
-                            type="number" 
-                            min="0" 
-                            max="120"
-                            value={getResponsiveValue(selectedSection, 'margin_left', editingDevice, selectedSection.margin_left || 0)}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'margin_left', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-input"
-                            placeholder="0px"
-                          />
-                        </div>
-                        <div>
-                          <label className="property-sub-label">Margin Right</label>
-                          <input 
-                            type="number" 
-                            min="0" 
-                            max="120"
-                            value={getResponsiveValue(selectedSection, 'margin_right', editingDevice, selectedSection.margin_right || 0)}
-                            onChange={(e) => updateSectionResponsive(selectedSection.id, 'margin_right', parseInt(e.target.value) || 0, editingDevice)}
-                            className="property-input"
-                            placeholder="0px"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Min Height */}
-                    <div className="property-group">
-                      <label className="property-label">Minimum Height (px)</label>
-                      <input 
-                        type="number" 
-                        min="0" 
-                        max="1200" 
-                        step="10"
-                        value={getResponsiveValue(selectedSection, 'min_height', editingDevice, selectedSection.min_height || '')}
-                        onChange={(e) => updateSectionResponsive(selectedSection.id, 'min_height', e.target.value ? parseInt(e.target.value) : '', editingDevice)}
-                        className="property-input"
-                        placeholder="e.g. 500"
-                      />
-                    </div>
-                  </>
-                )}
-
-                {/* 4. MOTION & ANIMATION TAB */}
-                {activeTab === 'animation' && (
-                  <>
-                    <div className="property-group">
-                      <label className="property-label">Entrance Animation Direction</label>
-                      <select 
-                        value={selectedSection.animation?.type || 'up'}
-                        onChange={(e) => updateSectionAnimation(selectedSection.id, 'type', e.target.value)}
-                        className="property-input"
-                      >
-                        <option value="up">Fade Up (Bottom to Top)</option>
-                        <option value="down">Fade Down (Top to Bottom)</option>
-                        <option value="left">Slide from Right</option>
-                        <option value="right">Slide from Left</option>
-                        <option value="fade">Pure Fade In</option>
-                        <option value="zoom">Zoom Scale In</option>
-                      </select>
-                    </div>
-
-                    <div className="property-group">
-                      <label className="property-label">Duration: {selectedSection.animation?.duration || 0.55}s</label>
-                      <input 
-                        type="range" 
-                        min="0.2" 
-                        max="2.5" 
-                        step="0.05"
-                        value={selectedSection.animation?.duration || 0.55}
-                        onChange={(e) => updateSectionAnimation(selectedSection.id, 'duration', parseFloat(e.target.value))}
-                        className="property-slider"
-                      />
-                    </div>
-
-                    <div className="property-group">
-                      <label className="property-label">Delay: {selectedSection.animation?.delay || 0.1}s</label>
-                      <input 
-                        type="range" 
-                        min="0" 
-                        max="1.5" 
-                        step="0.05"
-                        value={selectedSection.animation?.delay !== undefined ? selectedSection.animation.delay : 0.1}
-                        onChange={(e) => updateSectionAnimation(selectedSection.id, 'delay', parseFloat(e.target.value))}
-                        className="property-slider"
-                      />
-                    </div>
-
-                    <div className="property-group">
-                      <label className="property-label">Animation Easing</label>
-                      <select 
-                        value={selectedSection.animation?.easing || 'easeOut'}
-                        onChange={(e) => updateSectionAnimation(selectedSection.id, 'easing', e.target.value)}
-                        className="property-input"
-                      >
-                        <option value="easeOut">Smooth Ease Out</option>
-                        <option value="easeInOut">Ease In Out</option>
-                        <option value="linear">Linear</option>
-                        <option value="spring">Bouncy Spring</option>
-                      </select>
-                    </div>
                   </>
                 )}
 
@@ -5776,6 +4683,54 @@ const AdminWebsiteBuilder = () => {
                 >
                   <Send size={15} />
                   <span>{saveStatus === 'saving' ? 'Publishing...' : 'Publish'}</span>
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {cardLimitModalSectionId && (
+          <div className="builder-modal-overlay">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="builder-modal-card"
+            >
+              <div className="builder-modal-header">
+                <h3 className="builder-modal-title">Maximum 4 Items Reached</h3>
+                <button
+                  className="builder-modal-close"
+                  onClick={() => setCardLimitModalSectionId(null)}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="builder-modal-body">
+                <p style={{ color: '#cbd5e1', fontSize: '0.92rem' }}>
+                  Normal content supports up to 4 cards per row. Would you like to switch this section to a scrollable carousel so you can add more?
+                </p>
+              </div>
+
+              <div className="builder-modal-footer">
+                <button
+                  className="builder-modal-btn btn-cancel"
+                  onClick={() => setCardLimitModalSectionId(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="builder-modal-btn btn-publish-confirm"
+                  onClick={() => {
+                    updateSectionField(cardLimitModalSectionId, 'display_mode', 'carousel');
+                    addSectionCard(cardLimitModalSectionId);
+                    setCardLimitModalSectionId(null);
+                  }}
+                >
+                  <span>Create Carousel</span>
                 </button>
               </div>
             </motion.div>

@@ -36,7 +36,7 @@ export const EditorProvider = ({ children }) => {
   const [viewport, setViewport] = useState('desktop'); // 'desktop' | 'tablet' | 'mobile'
   const [selectedSectionId, setSelectedSectionId] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
-  const [activeTab, setActiveTab] = useState('content'); // 'content' | 'style' | 'spacing' | 'animation' | 'visibility'
+  const [activeTab, setActiveTab] = useState('content'); // 'content' | 'visibility'
   const [saveStatus, setSaveStatus] = useState('saved'); // 'saved' | 'saving' | 'error'
   const [autoPublish, setAutoPublish] = useState(false); // ALWAYS false: changes are strictly stored as DRAFT
   const [mediaPickerOpen, setMediaPickerOpen] = useState(false);
@@ -1284,8 +1284,6 @@ export const EditorProvider = ({ children }) => {
       newBlock = { id: bId, type: 'button', text_en: 'Get In Touch', text_de: 'Kontaktieren Sie uns', link: '/en/Contact/', link_type: 'internal', style: 'primary', bg_color: '#ff0000', text_color: '#ffffff', border_radius: '50px', padding: '12px 28px', align: 'left', ...defaultProps };
     } else if (blockType === 'card') {
       newBlock = { id: bId, type: 'card', title_en: 'Feature Card Title', title_de: 'Karten-Titel', desc_en: 'Card description detailing specific athletic or MICE benefits.', desc_de: 'Karten-Beschreibung.', bg: '#faf5fa', border_color: '#ede4ed', border_radius: '12px', padding: '24px', button_text: 'Learn More', button_link: '/en/Contact/', ...defaultProps };
-    } else if (blockType === 'icon') {
-      newBlock = { id: bId, type: 'icon', icon: 'Star', size: 36, color: '#ff0000', bg_color: 'rgba(255,0,0,0.1)', border_radius: '50px', align: 'left', ...defaultProps };
     } else if (blockType === 'badge') {
       newBlock = { id: bId, type: 'badge', text_en: '✦ Premium Partner', text_de: '✦ Premium Partner', bg_color: 'rgba(255, 0, 0, 0.12)', text_color: '#ff0000', border_radius: '50px', align: 'left', ...defaultProps };
     } else if (blockType === 'quote') {
@@ -1296,10 +1294,6 @@ export const EditorProvider = ({ children }) => {
       newBlock = { id: bId, type: 'video', video_type: 'youtube', video_id: 'dD_FThvzO9I', video_url: 'https://www.youtube.com/embed/dD_FThvzO9I?controls=1', url: 'https://www.youtube.com/watch?v=dD_FThvzO9I', aspect_ratio: '16/9', border_radius: '12px', shadow: '0 8px 24px rgba(0,0,0,0.12)', controls: true, autoplay: false, muted: false, loop: false, ...defaultProps };
     } else if (blockType === 'youtube') {
       newBlock = { id: bId, type: 'youtube', video_type: 'youtube', video_id: 'dD_FThvzO9I', video_url: 'https://www.youtube.com/embed/dD_FThvzO9I?controls=1', url: 'https://www.youtube.com/watch?v=dD_FThvzO9I', aspect_ratio: '16/9', border_radius: '12px', shadow: '0 8px 24px rgba(0,0,0,0.12)', controls: true, autoplay: false, muted: false, loop: false, ...defaultProps };
-    } else if (blockType === 'divider') {
-      newBlock = { id: bId, type: 'divider', thickness: 1, color: '#e2e8f0', style: 'solid', margin: 24, ...defaultProps };
-    } else if (blockType === 'spacer') {
-      newBlock = { id: bId, type: 'spacer', height: 30, ...defaultProps };
     } else if (blockType === 'list') {
       newBlock = { id: bId, type: 'list', items_en: ['Direct venue proximity', 'Tailored athletic meals', 'Dedicated 24/7 coordinator'], icon: 'CheckCircle2', color: '#10b981', ...defaultProps };
     }

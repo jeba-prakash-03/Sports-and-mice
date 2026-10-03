@@ -20,12 +20,13 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   validateRequired,
-  validateMaxLength,
+  validateMaxWords,
   validateMaxLines,
   validateUrl,
+  MAX_WORDS,
   LIMITS
 } from '../../utils/adminValidation';
-import CharCounter from '../../components/CharCounter';
+import WordCounter from '../../components/WordCounter';
 
 const DEFAULT_CAROUSEL_SETTINGS = { autoplay: true, duration_ms: 6000 };
 
@@ -184,22 +185,39 @@ const AdminContentCRUD = () => {
     }
   };
 
-  /** Only hero_slides has real validation right now — the one collection this
-   *  CMS feature pass added fields+limits for. Returns {} when there's
-   *  nothing to check (every other existing type), or a field->message map. */
+  /** Every collection's text fields get the same 30-word ceiling. Hero slides
+   *  additionally keep their line-count checks (a separate concern — how many
+   *  lines the heading/subtitle visually wraps to) and required-field checks. */
   const validateModalItem = (type, item) => {
-    if (type !== 'hero_slides') return {};
     const errors = {};
-    errors.heading_prefix_en = validateRequired(item.heading_prefix_en, 'Heading') ||
-      validateMaxLength(item.heading_prefix_en, LIMITS.HERO_HEADING, 'Heading') ||
-      validateMaxLines(item.heading_prefix_en, LIMITS.HERO_HEADING_LINES, 'Heading');
-    errors.subtitle_en = validateMaxLines(item.subtitle_en, LIMITS.HERO_SUBTITLE_LINES, 'Subtitle');
-    errors.cta_button_text_en = validateMaxLength(item.cta_button_text_en, LIMITS.BUTTON_TEXT, 'Button text');
-    if (item.cta_button_enabled !== false) {
-      errors.cta_button_link = validateRequired(item.cta_button_link, 'Button link') ||
-        validateUrl(item.cta_button_link, 'Button link');
+    if (type === 'hero_slides') {
+      errors.heading_prefix_en = validateRequired(item.heading_prefix_en, 'Heading') ||
+        validateMaxWords(item.heading_prefix_en, MAX_WORDS, 'Heading') ||
+        validateMaxLines(item.heading_prefix_en, LIMITS.HERO_HEADING_LINES, 'Heading');
+      errors.subtitle_en = validateMaxWords(item.subtitle_en, MAX_WORDS, 'Subtitle') ||
+        validateMaxLines(item.subtitle_en, LIMITS.HERO_SUBTITLE_LINES, 'Subtitle');
+      errors.cta_button_text_en = validateMaxWords(item.cta_button_text_en, MAX_WORDS, 'Button text');
+      if (item.cta_button_enabled !== false) {
+        errors.cta_button_link = validateRequired(item.cta_button_link, 'Button link') ||
+          validateUrl(item.cta_button_link, 'Button link');
+      }
+      errors.bg_image = validateRequired(item.bg_image, 'Background image');
+    } else if (type === 'services') {
+      errors.title_en = validateMaxWords(item.title_en, MAX_WORDS, 'Title');
+      errors.desc_en = validateMaxWords(item.desc_en, MAX_WORDS, 'Description');
+    } else if (type === 'team') {
+      errors.name = validateMaxWords(item.name, MAX_WORDS, 'Name');
+      errors.bio_en = validateMaxWords(item.bio_en, MAX_WORDS, 'Bio');
+    } else if (type === 'testimonials') {
+      errors.name = validateMaxWords(item.name, MAX_WORDS, 'Name');
+      errors.review = validateMaxWords(item.review, MAX_WORDS, 'Review');
+    } else if (type === 'faqs') {
+      errors.question_en = validateMaxWords(item.question_en, MAX_WORDS, 'Question');
+      errors.answer_en = validateMaxWords(item.answer_en, MAX_WORDS, 'Answer');
+    } else if (type === 'gallery') {
+      errors.title = validateMaxWords(item.title, MAX_WORDS, 'Title');
+      errors.desc_en = validateMaxWords(item.desc_en, MAX_WORDS, 'Description');
     }
-    errors.bg_image = validateRequired(item.bg_image, 'Background image');
     return Object.fromEntries(Object.entries(errors).filter(([, v]) => v));
   };
 
@@ -472,14 +490,18 @@ const AdminContentCRUD = () => {
                   <>
                     <div className="form-group-row">
                       <div className="form-group">
-                        <label className="cms-label">Service Title (English)</label>
+                        <label className="cms-label">
+                          Service Title (English)
+                          <WordCounter value={editingModal.item.title_en} max={MAX_WORDS} />
+                        </label>
                         <input
                           type="text"
                           required
                           value={editingModal.item.title_en || ''}
                           onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, title_en: e.target.value } }))}
-                          className="cms-input"
+                          className={`cms-input ${modalErrors.title_en ? 'has-error' : ''}`}
                         />
+                        {modalErrors.title_en && <div className="cms-field-error">{modalErrors.title_en}</div>}
                       </div>
                       <div className="form-group">
                         <label className="cms-label">Service Title (German)</label>
@@ -503,13 +525,17 @@ const AdminContentCRUD = () => {
                     </div>
 
                     <div className="form-group">
-                      <label className="cms-label">Description (English)</label>
+                      <label className="cms-label">
+                        Description (English)
+                        <WordCounter value={editingModal.item.desc_en} max={MAX_WORDS} />
+                      </label>
                       <textarea
                         rows="3"
                         value={editingModal.item.desc_en || ''}
                         onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, desc_en: e.target.value } }))}
-                        className="cms-textarea"
+                        className={`cms-textarea ${modalErrors.desc_en ? 'has-error' : ''}`}
                       />
+                      {modalErrors.desc_en && <div className="cms-field-error">{modalErrors.desc_en}</div>}
                     </div>
 
                     <div className="form-group">
@@ -529,14 +555,18 @@ const AdminContentCRUD = () => {
                   <>
                     <div className="form-group-row">
                       <div className="form-group">
-                        <label className="cms-label">Full Name</label>
+                        <label className="cms-label">
+                          Full Name
+                          <WordCounter value={editingModal.item.name} max={MAX_WORDS} />
+                        </label>
                         <input
                           type="text"
                           required
                           value={editingModal.item.name || ''}
                           onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, name: e.target.value } }))}
-                          className="cms-input"
+                          className={`cms-input ${modalErrors.name ? 'has-error' : ''}`}
                         />
+                        {modalErrors.name && <div className="cms-field-error">{modalErrors.name}</div>}
                       </div>
                       <div className="form-group">
                         <label className="cms-label">Designation / Sport Role</label>
@@ -571,13 +601,17 @@ const AdminContentCRUD = () => {
                     </div>
 
                     <div className="form-group">
-                      <label className="cms-label">Biography / Background (English)</label>
+                      <label className="cms-label">
+                        Biography / Background (English)
+                        <WordCounter value={editingModal.item.bio_en} max={MAX_WORDS} />
+                      </label>
                       <textarea
                         rows="3"
                         value={editingModal.item.bio_en || ''}
                         onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, bio_en: e.target.value } }))}
-                        className="cms-textarea"
+                        className={`cms-textarea ${modalErrors.bio_en ? 'has-error' : ''}`}
                       />
+                      {modalErrors.bio_en && <div className="cms-field-error">{modalErrors.bio_en}</div>}
                     </div>
                   </>
                 )}
@@ -587,14 +621,18 @@ const AdminContentCRUD = () => {
                   <>
                     <div className="form-group-row">
                       <div className="form-group">
-                        <label className="cms-label">Client / Association Name</label>
+                        <label className="cms-label">
+                          Client / Association Name
+                          <WordCounter value={editingModal.item.name} max={MAX_WORDS} />
+                        </label>
                         <input
                           type="text"
                           required
                           value={editingModal.item.name || ''}
                           onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, name: e.target.value } }))}
-                          className="cms-input"
+                          className={`cms-input ${modalErrors.name ? 'has-error' : ''}`}
                         />
+                        {modalErrors.name && <div className="cms-field-error">{modalErrors.name}</div>}
                       </div>
                       <div className="form-group">
                         <label className="cms-label">Role / Organization</label>
@@ -608,14 +646,18 @@ const AdminContentCRUD = () => {
                     </div>
 
                     <div className="form-group">
-                      <label className="cms-label">Review / Feedback</label>
+                      <label className="cms-label">
+                        Review / Feedback
+                        <WordCounter value={editingModal.item.review} max={MAX_WORDS} />
+                      </label>
                       <textarea
                         rows="3"
                         required
                         value={editingModal.item.review || ''}
                         onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, review: e.target.value } }))}
-                        className="cms-textarea"
+                        className={`cms-textarea ${modalErrors.review ? 'has-error' : ''}`}
                       />
+                      {modalErrors.review && <div className="cms-field-error">{modalErrors.review}</div>}
                     </div>
                   </>
                 )}
@@ -624,14 +666,18 @@ const AdminContentCRUD = () => {
                 {editingModal.type === 'faqs' && (
                   <>
                     <div className="form-group">
-                      <label className="cms-label">Question (English)</label>
+                      <label className="cms-label">
+                        Question (English)
+                        <WordCounter value={editingModal.item.question_en} max={MAX_WORDS} />
+                      </label>
                       <input
                         type="text"
                         required
                         value={editingModal.item.question_en || ''}
                         onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, question_en: e.target.value } }))}
-                        className="cms-input"
+                        className={`cms-input ${modalErrors.question_en ? 'has-error' : ''}`}
                       />
+                      {modalErrors.question_en && <div className="cms-field-error">{modalErrors.question_en}</div>}
                     </div>
 
                     <div className="form-group">
@@ -645,14 +691,18 @@ const AdminContentCRUD = () => {
                     </div>
 
                     <div className="form-group">
-                      <label className="cms-label">Answer (English)</label>
+                      <label className="cms-label">
+                        Answer (English)
+                        <WordCounter value={editingModal.item.answer_en} max={MAX_WORDS} />
+                      </label>
                       <textarea
                         rows="3"
                         required
                         value={editingModal.item.answer_en || ''}
                         onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, answer_en: e.target.value } }))}
-                        className="cms-textarea"
+                        className={`cms-textarea ${modalErrors.answer_en ? 'has-error' : ''}`}
                       />
+                      {modalErrors.answer_en && <div className="cms-field-error">{modalErrors.answer_en}</div>}
                     </div>
 
                     <div className="form-group">
@@ -672,15 +722,19 @@ const AdminContentCRUD = () => {
                   <>
                     <div className="form-group-row">
                       <div className="form-group">
-                        <label className="cms-label">Tour / Destination Title</label>
+                        <label className="cms-label">
+                          Tour / Destination Title
+                          <WordCounter value={editingModal.item.title} max={MAX_WORDS} />
+                        </label>
                         <input
                           type="text"
                           required
                           value={editingModal.item.title || ''}
                           onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, title: e.target.value } }))}
-                          className="cms-input"
+                          className={`cms-input ${modalErrors.title ? 'has-error' : ''}`}
                           placeholder="e.g. Tour - Mexico - Cancún"
                         />
+                        {modalErrors.title && <div className="cms-field-error">{modalErrors.title}</div>}
                       </div>
                       <div className="form-group">
                         <label className="cms-label">Hotel / Venue Name</label>
@@ -716,13 +770,17 @@ const AdminContentCRUD = () => {
                     </div>
 
                     <div className="form-group">
-                      <label className="cms-label">Inspection Tour Report (English)</label>
+                      <label className="cms-label">
+                        Inspection Tour Report (English)
+                        <WordCounter value={editingModal.item.desc_en} max={MAX_WORDS} />
+                      </label>
                       <textarea
                         rows="3"
                         value={editingModal.item.desc_en || ''}
                         onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, desc_en: e.target.value } }))}
-                        className="cms-textarea"
+                        className={`cms-textarea ${modalErrors.desc_en ? 'has-error' : ''}`}
                       />
+                      {modalErrors.desc_en && <div className="cms-field-error">{modalErrors.desc_en}</div>}
                     </div>
                   </>
                 )}
@@ -755,14 +813,13 @@ const AdminContentCRUD = () => {
                       <div className="form-group">
                         <label className="cms-label">
                           Heading (English)
-                          <CharCounter value={editingModal.item.heading_prefix_en} max={LIMITS.HERO_HEADING} />
+                          <WordCounter value={editingModal.item.heading_prefix_en} max={MAX_WORDS} />
                         </label>
                         <input
                           type="text"
                           value={editingModal.item.heading_prefix_en || ''}
                           onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, heading_prefix_en: e.target.value } }))}
                           className={`cms-input ${modalErrors.heading_prefix_en ? 'has-error' : ''}`}
-                          maxLength={LIMITS.HERO_HEADING}
                         />
                         {modalErrors.heading_prefix_en && <div className="cms-field-error">{modalErrors.heading_prefix_en}</div>}
                       </div>
@@ -773,7 +830,6 @@ const AdminContentCRUD = () => {
                           value={editingModal.item.heading_prefix_de || ''}
                           onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, heading_prefix_de: e.target.value } }))}
                           className="cms-input"
-                          maxLength={LIMITS.HERO_HEADING}
                         />
                       </div>
                     </div>
@@ -790,7 +846,10 @@ const AdminContentCRUD = () => {
                     </div>
 
                     <div className="form-group">
-                      <label className="cms-label">Subtitle (English) — up to {LIMITS.HERO_SUBTITLE_LINES} lines</label>
+                      <label className="cms-label">
+                        Subtitle (English) — up to {LIMITS.HERO_SUBTITLE_LINES} lines
+                        <WordCounter value={editingModal.item.subtitle_en} max={MAX_WORDS} />
+                      </label>
                       <textarea
                         rows="3"
                         value={editingModal.item.subtitle_en || ''}
@@ -818,14 +877,13 @@ const AdminContentCRUD = () => {
                         <div className="form-group">
                           <label className="cms-label">
                             Button Text (EN)
-                            <CharCounter value={editingModal.item.cta_button_text_en} max={LIMITS.BUTTON_TEXT} />
+                            <WordCounter value={editingModal.item.cta_button_text_en} max={MAX_WORDS} />
                           </label>
                           <input
                             type="text"
                             value={editingModal.item.cta_button_text_en || ''}
                             onChange={(e) => setEditingModal(prev => ({ ...prev, item: { ...prev.item, cta_button_text_en: e.target.value } }))}
                             className={`cms-input ${modalErrors.cta_button_text_en ? 'has-error' : ''}`}
-                            maxLength={LIMITS.BUTTON_TEXT}
                           />
                           {modalErrors.cta_button_text_en && <div className="cms-field-error">{modalErrors.cta_button_text_en}</div>}
                         </div>
@@ -847,7 +905,11 @@ const AdminContentCRUD = () => {
 
                 <div className="cms-modal-actions">
                   <button type="button" className="btn-modal-cancel" onClick={() => setEditingModal(null)}>Cancel</button>
-                  <button type="submit" className="cms-btn-primary">
+                  <button
+                    type="submit"
+                    className="cms-btn-primary"
+                    disabled={Object.keys(validateModalItem(editingModal.type, editingModal.item)).length > 0}
+                  >
                     <Save size={15} />
                     <span>Save Item to Draft</span>
                   </button>
