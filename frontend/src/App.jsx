@@ -26,9 +26,6 @@ const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const AdminPages = lazy(() => import('./pages/admin/AdminPages'));
 const AdminMedia = lazy(() => import('./pages/admin/AdminMedia'));
-const AdminButtons = lazy(() => import('./pages/admin/AdminButtons'));
-const AdminAnimations = lazy(() => import('./pages/admin/AdminAnimations'));
-const AdminTheme = lazy(() => import('./pages/admin/AdminTheme'));
 const AdminHeaderFooter = lazy(() => import('./pages/admin/AdminHeaderFooter'));
 const AdminContentCRUD = lazy(() => import('./pages/admin/AdminContentCRUD'));
 const AdminAuditLogs = lazy(() => import('./pages/admin/AdminAuditLogs'));
@@ -154,9 +151,6 @@ const AppRoutes = () => {
             the same data and has been removed. */}
         <Route path="builder/sections" element={<Navigate to="/admin/website-builder" replace />} />
         <Route path="builder/media" element={<Suspense fallback={<AdminLoadingFallback />}><AdminMedia /></Suspense>} />
-        <Route path="builder/buttons" element={<Suspense fallback={<AdminLoadingFallback />}><AdminButtons /></Suspense>} />
-        <Route path="builder/animations" element={<Suspense fallback={<AdminLoadingFallback />}><AdminAnimations /></Suspense>} />
-        <Route path="builder/theme" element={<Suspense fallback={<AdminLoadingFallback />}><AdminTheme /></Suspense>} />
         <Route path="builder/header" element={<Suspense fallback={<AdminLoadingFallback />}><AdminHeaderFooter /></Suspense>} />
         <Route path="builder/footer" element={<Suspense fallback={<AdminLoadingFallback />}><AdminHeaderFooter /></Suspense>} />
 

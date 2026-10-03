@@ -74,9 +74,6 @@ const AdminLayout = () => {
     const path = location.pathname;
     if (path.includes('/admin/builder/pages')) return 'Website Builder — Pages';
     if (path.includes('/admin/builder/media')) return 'Website Builder — Media Library';
-    if (path.includes('/admin/builder/theme')) return 'Website Builder — Theme & Colors';
-    if (path.includes('/admin/builder/animations')) return 'Website Builder — Motion & Animations';
-    if (path.includes('/admin/builder/buttons')) return 'Website Builder — Buttons & Links';
     if (path.includes('/admin/builder/header')) return 'Website Builder — Header & Navigation';
     if (path.includes('/admin/builder/footer')) return 'Website Builder — Footer & Social Links';
     if (path.includes('/admin/content/services')) return 'Content Management — Services';
