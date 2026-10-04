@@ -1,14 +1,14 @@
-import React, { useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 import { SiteProvider } from './context/SiteContext';
+import { EditorProvider } from './context/EditorContext';
 
 // Public Layout & Components
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollProgressBar from './components/ScrollProgressBar';
-import VerticalSectionIndicator from './components/VerticalSectionIndicator';
 import FloatingWidgets from './components/FloatingWidgets';
 
 // Public Pages
@@ -91,20 +91,27 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Public Website Shell
+import { SmoothScrollProvider, SpatialCursor } from './components/MotionSuite';
+import { useSite } from './context/SiteContext';
+import { LoadingProvider } from './context/LoadingContext';
+import FootballLoadingScreen from './components/FootballLoadingScreen';
+
+// Public Website Shell with Reusable Hero Football Loading Animation
 const PublicLayout = ({ children }) => {
   return (
-    <div className="site-wrapper">
-      <ScrollProgressBar />
-      <VerticalSectionIndicator />
-      <ScrollToTop />
-      <Header />
-      <main className="main-content">
-        {children}
-      </main>
-      <Footer />
-      <FloatingWidgets />
-    </div>
+    <SmoothScrollProvider>
+      <FootballLoadingScreen />
+      <SpatialCursor />
+      <div className="site-wrapper">
+        <ScrollToTop />
+        <Header />
+        <main className="main-content">
+          {children}
+        </main>
+        <Footer />
+        <FloatingWidgets />
+      </div>
+    </SmoothScrollProvider>
   );
 };
 
@@ -205,20 +212,20 @@ const AppRoutes = () => {
   );
 };
 
-import { EditorProvider } from './context/EditorContext';
-
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <SiteProvider>
-          <EditorProvider>
-            <LanguageProvider>
-              <AppRoutes />
-            </LanguageProvider>
-          </EditorProvider>
-        </SiteProvider>
-      </AuthProvider>
+      <LoadingProvider>
+        <AuthProvider>
+          <SiteProvider>
+            <EditorProvider>
+              <LanguageProvider>
+                <AppRoutes />
+              </LanguageProvider>
+            </EditorProvider>
+          </SiteProvider>
+        </AuthProvider>
+      </LoadingProvider>
     </BrowserRouter>
   );
 }

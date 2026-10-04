@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { fetchPublicSiteConfig } from '../services/api';
+import { useLoading } from './LoadingContext';
 
 const SiteContext = createContext();
 
@@ -8,6 +9,7 @@ export const SiteProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDraftPreview, setIsDraftPreview] = useState(false);
+  const { startLoading, stopLoading } = useLoading();
 
   // Apply theme tokens to CSS root variables
   const applyThemeTokens = (theme) => {
@@ -27,6 +29,7 @@ export const SiteProvider = ({ children }) => {
 
   const loadSiteConfig = useCallback(async (previewMode = false) => {
     setLoading(true);
+    startLoading('site-config');
     setError(null);
     try {
       const config = await fetchPublicSiteConfig(previewMode);
@@ -44,8 +47,10 @@ export const SiteProvider = ({ children }) => {
       setError(err.message || 'Failed to load website configuration from backend API.');
     } finally {
       setLoading(false);
+      stopLoading('site-config');
+      stopLoading('initial-boot');
     }
-  }, []);
+  }, [startLoading, stopLoading]);
 
   useEffect(() => {
     // Check if preview mode is in URL

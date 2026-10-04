@@ -14,6 +14,7 @@ import Service from '../Service';
 import AboutUs from '../AboutUs';
 import HotelsMore from '../HotelsMore';
 import Contact from '../Contact';
+import sportsImageManifest from '../../data/sportsImageManifest';
 
 import { 
   ArrowLeft, 
@@ -538,12 +539,28 @@ const AdminWebsiteBuilder = () => {
       const res = await fetch(`${API_BASE_URL}/admin/media.php`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
+      let baseList = [];
       if (res.ok) {
         const json = await res.json();
-        if (json.success && json.data) {
-          setMediaList(json.data);
+        if (json.success && Array.isArray(json.data)) {
+          baseList = json.data;
         }
       }
+      // Add all 30 new sports images to media list if not already present
+      const combined = [...baseList];
+      sportsImageManifest.forEach(img => {
+        if (!combined.some(m => m.url === img.src || m.id === img.id)) {
+          combined.push({
+            id: img.id,
+            name: `${img.title} (${img.category.toUpperCase()})`,
+            url: img.src,
+            category: 'sports',
+            type: 'image/jpeg',
+            size: '250 KB'
+          });
+        }
+      });
+      setMediaList(combined);
     } catch (e) {
       console.error('Failed to load media list:', e);
     }
@@ -553,7 +570,42 @@ const AdminWebsiteBuilder = () => {
     loadMedia();
   }, [token]);
 
-  // Removed stale auto-selection of section 0 to prevent corrupting header/navbar/footer element selections
+  // Handle in-canvas navbar and header brand clicks safely without navigating away
+  useEffect(() => {
+    const handleNavSelect = (e) => {
+      const item = e.detail;
+      if (!item) return;
+
+      setSelectedSectionId(null);
+      setSelectedElement({
+        type: 'navbar_item',
+        navId: item.id || 'home',
+        item: {
+          id: item.id || 'home',
+          name_en: item.label,
+          name_de: item.label,
+          link: item.path
+        }
+      });
+
+      if (item.id && ['home', 'service', 'about', 'hotels', 'contact'].includes(item.id)) {
+        setActivePage(item.id);
+      }
+    };
+
+    const handleBrandSelect = () => {
+      setSelectedSectionId(null);
+      setSelectedElement({ type: 'header_brand' });
+    };
+
+    window.addEventListener('builder-nav-select', handleNavSelect);
+    window.addEventListener('builder-brand-select', handleBrandSelect);
+
+    return () => {
+      window.removeEventListener('builder-nav-select', handleNavSelect);
+      window.removeEventListener('builder-brand-select', handleBrandSelect);
+    };
+  }, []);
 
   // Load current page settings into modal state when modal opens
   useEffect(() => {
@@ -1124,6 +1176,23 @@ const AdminWebsiteBuilder = () => {
               style={{ fontSize: '0.68rem', fontWeight: 700 }}
             >
               1:1
+            </button>
+            <button
+              type="button"
+              className="zoom-btn"
+              onClick={() => {
+                const container = document.querySelector('.builder-canvas-container');
+                if (container) {
+                  const availWidth = container.clientWidth - 48;
+                  const targetWidth = viewport === 'mobile' ? 390 : viewport === 'tablet' ? 768 : 1280;
+                  const fitZoom = Math.min(100, Math.max(50, Math.floor((availWidth / targetWidth) * 100)));
+                  setZoom(fitZoom);
+                }
+              }}
+              title="Fit to Canvas"
+              style={{ fontSize: '0.68rem', fontWeight: 700 }}
+            >
+              Fit
             </button>
           </div>
 

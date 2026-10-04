@@ -129,7 +129,7 @@ export const VideoFacade = ({
               width: '84px',
               height: '84px',
               borderRadius: '50%',
-              background: 'rgba(255, 0, 0, 0.28)',
+              background: 'rgba(37, 99, 235, 0.28)',
               animation: 'pulseRing 2.2s cubic-bezier(0.25, 0.1, 0.25, 1) infinite'
             }}
           />
@@ -140,8 +140,8 @@ export const VideoFacade = ({
               width: '68px',
               height: '68px',
               borderRadius: '50%',
-              background: 'linear-gradient(135deg, #ff0000 0%, #cc0000 100%)',
-              boxShadow: '0 0 28px rgba(255, 0, 0, 0.7), 0 8px 24px rgba(0,0,0,0.5)',
+              background: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+              boxShadow: '0 0 28px rgba(37, 99, 235, 0.5), 0 8px 24px rgba(11, 18, 32, 0.4)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

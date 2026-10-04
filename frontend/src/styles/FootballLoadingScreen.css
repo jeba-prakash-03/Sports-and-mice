@@ -1,0 +1,348 @@
+/* ============================================================================
+   SPORTS & MICE — FULL-SCREEN HERO FOOTBALL LOADING SCREEN
+   High-Impact Pure Football Animation (Dynamic Bounce, 3D Spin & Impact Waves)
+   Brand Colors: Deep Aubergine (#3F2335) | Oxblood (#641F35) | Burnt Coral (#B65345)
+                 Ivory (#F4EEE5) | Clay (#C96B56) | Copper (#B9825A)
+   ============================================================================ */
+
+.football-loading-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100svh;
+  z-index: 9999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(201, 107, 86, 0.14) 0%, rgba(63, 35, 53, 0.90) 50%, #200F1B 100%), #3F2335;
+  background-color: #3F2335;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: all;
+  user-select: none;
+  overflow: hidden;
+}
+
+.football-loading-overlay.is-exiting {
+  opacity: 0;
+  transform: scale(1.03);
+  pointer-events: none;
+}
+
+/* Subtle Ambient Glow behind Football */
+.football-ambient-glow {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  width: clamp(360px, 50vw, 700px);
+  height: clamp(360px, 50vw, 700px);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at center,
+    rgba(201, 107, 86, 0.18) 0%,
+    rgba(100, 31, 53, 0.12) 38%,
+    transparent 68%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating Ambient Energy Specks (8 lightweight elements) */
+.football-particles-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.football-particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: particleSlowFloat 6.5s ease-in-out infinite alternate;
+}
+
+.p-1 { top: 18%; left: 24%; width: 4px; height: 4px; animation-duration: 5.8s; background: #B9825A; }
+.p-2 { top: 30%; right: 22%; width: 5px; height: 5px; animation-duration: 7.2s; animation-delay: 1s; background: #C96B56; }
+.p-3 { bottom: 26%; left: 28%; width: 3px; height: 3px; animation-duration: 7.8s; animation-delay: 2s; background: #F4EEE5; }
+.p-4 { bottom: 20%; right: 26%; width: 4px; height: 4px; animation-duration: 6.5s; animation-delay: 0.8s; background: #B65345; }
+.p-5 { top: 48%; left: 18%; width: 3.5px; height: 3.5px; animation-duration: 8.2s; animation-delay: 2.8s; background: #B9825A; }
+.p-6 { top: 24%; right: 18%; width: 3px; height: 3px; animation-duration: 6s; animation-delay: 1.4s; background: #F4EEE5; }
+.p-7 { bottom: 36%; right: 18%; width: 4px; height: 4px; animation-duration: 7s; animation-delay: 2.2s; background: #C96B56; }
+.p-8 { top: 54%; left: 22%; width: 3px; height: 3px; animation-duration: 7.6s; animation-delay: 0.4s; background: #B65345; }
+
+@keyframes particleSlowFloat {
+  0% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
+  50% { opacity: 0.55; }
+  100% { transform: translateY(-26px) translateX(12px); opacity: 0.25; }
+}
+
+/* Central Composition Frame */
+.football-loader-composition {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 580px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* ============================================================================
+   HERO FOOTBALL ANIMATION STAGE (LARGE, PROMINENT & CENTERED)
+   Desktop: clamp(300px, 35vw, 520px)
+   Tablet:  300px–400px
+   Mobile:  240px–320px
+   ============================================================================ */
+.football-hero-stage {
+  position: relative;
+  width: 100%;
+  max-width: clamp(300px, 35vw, 520px);
+  height: clamp(260px, 32vh, 440px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.football-hero-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 20px 35px rgba(20, 9, 16, 0.5));
+}
+
+/* ============================================================================
+   GPU KEYFRAME TRANSFORM ANIMATIONS (Smooth 2.2s Athletic Football Loop)
+   ============================================================================ */
+
+/* 1. Master Football Bounce & Levitation Rhythm */
+.anim-ball-bounce {
+  transform-origin: 250px 240px;
+  animation: ballAthleticBounce 2.2s cubic-bezier(0.28, 0, 0.4, 1) infinite;
+}
+
+@keyframes ballAthleticBounce {
+  0% {
+    /* Ground Contact / Impact Compression */
+    transform: translate3d(0, 52px, 0) scale(1.08, 0.92);
+  }
+  16% {
+    /* Explosive Liftoff */
+    transform: translate3d(0, -25px, 0) scale(0.96, 1.05);
+  }
+  42% {
+    /* High Apex Float */
+    transform: translate3d(0, -95px, 0) scale(1.02, 1);
+  }
+  56% {
+    /* Hover Apex Transition */
+    transform: translate3d(0, -88px, 0) scale(1, 1);
+  }
+  78% {
+    /* Acceleration Descent */
+    transform: translate3d(0, 10px, 0) scale(0.97, 1.04);
+  }
+  94% {
+    /* Pre-Impact Landing */
+    transform: translate3d(0, 48px, 0) scale(1.03, 0.97);
+  }
+  100% {
+    /* Return to Ground Compression */
+    transform: translate3d(0, 52px, 0) scale(1.08, 0.92);
+  }
+}
+
+/* 2. Football 3D Dynamic Rotation */
+.anim-ball-rotation {
+  transform-origin: 250px 200px;
+  animation: ball3DSpin 2.2s linear infinite;
+}
+
+@keyframes ball3DSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 3. Aerodynamic Speed Arc / Energy Trailing Accents */
+.anim-energy-trail {
+  transform-origin: 250px 200px;
+  animation: energyTrailPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes energyTrailPulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.95);
+  }
+  18% {
+    opacity: 0.85;
+    transform: scale(1.08);
+  }
+  45% {
+    opacity: 0.4;
+    transform: scale(1.02);
+  }
+  80% {
+    opacity: 0.75;
+    transform: scale(1.06);
+  }
+}
+
+/* 4. Dynamic Ground Contact Shadow (Synchronized with Bounce) */
+.anim-ground-shadow {
+  transform-origin: 250px 365px;
+  animation: shadowScaleTracking 2.2s cubic-bezier(0.28, 0, 0.4, 1) infinite;
+}
+
+@keyframes shadowScaleTracking {
+  0%, 100% {
+    /* Full contact spread */
+    transform: scale(1.15, 1.1);
+    opacity: 0.95;
+  }
+  42%, 56% {
+    /* High apex: shadow shrinks & softens */
+    transform: scale(0.45, 0.4);
+    opacity: 0.2;
+  }
+  78% {
+    transform: scale(0.85, 0.85);
+    opacity: 0.7;
+  }
+}
+
+/* 5. Ground Impact Shockwave Pulse */
+.anim-impact-ring {
+  transform-origin: 250px 365px;
+  animation: impactRingWave 2.2s ease-out infinite;
+}
+
+@keyframes impactRingWave {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.85;
+    stroke-width: 3.5;
+  }
+  24% {
+    transform: scale(1.4);
+    opacity: 0;
+    stroke-width: 1;
+  }
+  25%, 100% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
+   BRANDING & MINIMALIST 3-DOT PROGRESS
+   ============================================================================ */
+.football-brand-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.football-brand-title {
+  font-family: var(--font-heading, 'Plus Jakarta Sans', sans-serif);
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ivory, #F4EEE5);
+  margin: 0;
+  line-height: 1.15;
+  text-shadow: 0 4px 18px rgba(20, 9, 16, 0.5);
+}
+
+.football-brand-subtitle {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: clamp(10.5px, 1.15vw, 12.5px);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-copper, #B9825A);
+  margin-bottom: 14px;
+}
+
+/* Minimal Sequential 3-Dot Pulse */
+.football-dots-progress {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 12px;
+}
+
+.football-dots-progress .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--color-coral, #B65345);
+  animation: dotSequentialPulse 1.4s ease-in-out infinite;
+}
+
+.football-dots-progress .dot-1 {
+  animation-delay: 0s;
+}
+
+.football-dots-progress .dot-2 {
+  animation-delay: 0.22s;
+}
+
+.football-dots-progress .dot-3 {
+  animation-delay: 0.44s;
+}
+
+@keyframes dotSequentialPulse {
+  0%, 80%, 100% {
+    transform: scale(0.75);
+    opacity: 0.35;
+    background-color: #B65345;
+  }
+  40% {
+    transform: scale(1.4);
+    opacity: 1;
+    background-color: #C96B56;
+    box-shadow: 0 0 10px rgba(201, 107, 86, 0.7);
+  }
+}
+
+/* ============================================================================
+   ACCESSIBILITY & REDUCED MOTION SUPPORT
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .anim-ball-bounce,
+  .anim-ball-rotation,
+  .anim-energy-trail,
+  .anim-ground-shadow,
+  .anim-impact-ring,
+  .football-particle,
+  .football-dots-progress .dot {
+    animation: none !important;
+    transform: none !important;
+  }
+}

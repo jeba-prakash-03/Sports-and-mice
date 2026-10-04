@@ -8,7 +8,7 @@ export const AnimatedSection = ({
   delay = 0, 
   direction = 'up', 
   distance = 30,
-  duration = 0.55,
+  duration = 0.7,
   stagger = false,
   style = {}
 }) => {
@@ -18,6 +18,7 @@ export const AnimatedSection = ({
       case 'down': return { opacity: 0, y: -distance };
       case 'left': return { opacity: 0, x: distance };
       case 'right': return { opacity: 0, x: -distance };
+      case 'none': return { opacity: 1, y: 0 };
       default: return { opacity: 0, y: distance };
     }
   };
@@ -31,9 +32,9 @@ export const AnimatedSection = ({
       transition: {
         duration,
         delay,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.22, 1, 0.36, 1],
         when: stagger ? "beforeChildren" : undefined,
-        staggerChildren: stagger ? 0.12 : undefined
+        staggerChildren: stagger ? 0.1 : undefined
       }
     }
   };
@@ -42,7 +43,7 @@ export const AnimatedSection = ({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.08 }}
       variants={variants}
       style={{ width: '100%', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box', ...style }}
       className={className}
@@ -55,17 +56,17 @@ export const AnimatedSection = ({
 export const AnimatedCard = ({ children, className = '', index = 0, style = {} }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 25, scale: 0.97 }}
+      initial={{ opacity: 0, y: 28, scale: 0.97 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: false, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.08 }}
       transition={{ 
-        duration: 0.5, 
-        delay: (index % 6) * 0.1,
-        ease: [0.16, 1, 0.3, 1] 
+        duration: 0.6, 
+        delay: (index % 6) * 0.09,
+        ease: [0.22, 1, 0.36, 1] 
       }}
       whileHover={{ 
-        y: -6, 
-        transition: { duration: 0.25, ease: "easeOut" } 
+        y: -8, 
+        transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } 
       }}
       style={{ width: '100%', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box', ...style }}
       className={className}
@@ -78,10 +79,10 @@ export const AnimatedCard = ({ children, className = '', index = 0, style = {} }
 export const PageTransition = ({ children }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.3, ease: "easeInOut" }}
+      exit={{ opacity: 0, y: -14 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       style={{ width: '100%', minWidth: 0, maxWidth: '100%', boxSizing: 'border-box' }}
     >
       {children}

@@ -24,7 +24,10 @@ export const ScrollReveal = ({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (currentEl) observer.unobserve(currentEl);
+        }
       },
       {
         threshold,

@@ -1,260 +1,402 @@
-/* About Us Page Styles - Ultra-Premium Editorial Agency System */
+/* ============================================================================
+   ABOUT US PAGE — EDITORIAL SPORTS & MICE ART DIRECTION
+   Rhythm: Hero (Full Photo + Aubergine Scrim) -> Founder Story (Ivory #F4EEE5)
+   -> International Destinations (Champagne #E9DED0)
+   ============================================================================ */
 
-.about-hero {
-  position: relative;
-  background-size: cover;
-  background-position: center;
-  padding: clamp(75px, 9vw, 115px) 0 clamp(60px, 8vw, 95px) 0;
-  color: #ffffff;
-  overflow: hidden;
-  width: 100%;
-  background-color: var(--dark-bg);
+.about-page {
+  padding-top: 80px;
+  background-color: var(--color-ivory);
+  min-height: 100vh;
 }
 
-.about-hero::before {
+/* 1. ABOUT HERO BANNER (CRYSTAL CLEAR PHOTOGRAPHY + AUBERGINE SCRIM) */
+.about-hero-banner {
+  position: relative;
+  min-height: clamp(440px, 65vh, 680px);
+  display: flex;
+  align-items: flex-end;
+  padding: 80px 0;
+  overflow: hidden;
+  background-color: var(--color-aubergine);
+}
+
+.about-hero-banner .hero-cinematic-bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+  transform: none;
+  opacity: 1;
+  filter: none;
+}
+
+/* Subtle, clean contrast scrim */
+.about-hero-banner::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(11, 15, 25, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(63, 35, 53, 0.15) 0%,
+    rgba(63, 35, 53, 0.55) 100%
+  );
   pointer-events: none;
 }
 
-.about-hero > .container {
+.about-hero-banner .container {
   position: relative;
   z-index: 2;
+  width: 100%;
 }
 
 .about-hero-title {
-  font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-size: var(--text-hero);
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--color-surface);
+  text-shadow: 0 4px 20px rgba(51, 43, 41, 0.5);
+}
+
+.about-hero-banner .editorial-tag {
+  color: var(--color-copper);
+  text-shadow: 0 2px 10px rgba(51, 43, 41, 0.4);
+}
+
+/* 2. FOUNDER STORY (IVORY #F4EEE5) */
+.about-story-section {
+  padding: var(--section-pad-y) 0;
+  border-top: 1px solid var(--color-border);
+  position: relative;
+  background-color: var(--color-ivory);
+}
+
+.story-header-wrap {
+  margin-bottom: 56px;
+  max-width: 900px;
+}
+
+.story-main-heading {
+  font-size: var(--text-section);
   font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: var(--color-oxblood);
 }
 
-/* Section 1: Sport Story */
-.about-sport-section {
-  padding: var(--spacing-section) 0;
-  background-color: #ffffff;
-  width: 100%;
-  border-bottom: 1px solid var(--hairline-border);
-}
-
-.about-sport-section::before {
-  content: '01 / FOUNDER STORY';
-  display: block;
-  font-family: var(--font-heading);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--primary-red);
-  margin-bottom: 20px;
-  max-width: 1440px;
-  margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 48px);
-}
-
-.about-sec-heading {
-  font-family: var(--font-heading);
-  font-size: clamp(2rem, 4.2vw, 3rem);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0 0 clamp(28px, 3.5vw, 44px) 0;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-}
-
-.about-sport-grid {
+.about-story-grid {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(32px, 5vw, 64px);
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(40px, 6vw, 80px);
   align-items: center;
 }
 
-.about-story-text {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.about-story-text p {
-  font-family: var(--font-body);
-  font-size: clamp(15.5px, 1.25vw, 17px);
-  color: var(--text-secondary);
-  line-height: 1.8;
-  margin: 0;
-}
-
-.about-quote-box {
-  background: var(--light-bg);
-  border-left: 4px solid var(--primary-red);
-  padding: clamp(16px, 2.2vw, 22px) clamp(20px, 2.8vw, 26px);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  font-style: italic;
-  color: var(--text-primary);
-  font-weight: 600;
-  margin-top: 10px;
-  font-size: clamp(14.5px, 1.25vw, 16px);
-  border-top: 1px solid var(--hairline-border);
-  border-right: 1px solid var(--hairline-border);
-  border-bottom: 1px solid var(--hairline-border);
-}
-
-.about-story-img {
+.story-photo-col {
   position: relative;
-  width: 100%;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-spatial);
-  border: 1px solid var(--hairline-border);
-  transition: all 0.4s var(--transition-smooth);
 }
 
-.about-story-img:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 32px 64px -12px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(255, 0, 0, 0.2);
-}
-
-.referee-photo {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.5s var(--transition-smooth);
-}
-
-.about-story-img:hover .referee-photo {
-  transform: scale(1.04);
-}
-
-/* Section 2: World Traveler */
-.about-travel-section {
-  padding: var(--spacing-section) 0;
-  background-color: var(--light-bg);
-  border-top: 1px solid var(--hairline-border);
-  width: 100%;
-}
-
-.about-travel-section::before {
-  content: '02 / GLOBAL TRACK RECORD';
-  display: block;
-  font-family: var(--font-heading);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--primary-red);
-  margin-bottom: 20px;
-  max-width: 1440px;
-  margin-inline: auto;
-  padding-inline: clamp(20px, 4vw, 48px);
-}
-
-.about-travel-heading {
-  font-size: clamp(1.35rem, 2.5vw, 1.85rem);
-  font-weight: 800;
-  color: #1a1a1a;
-  margin: 0 0 clamp(20px, 3vw, 35px) 0;
-  letter-spacing: -0.2px;
-}
-
-.about-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(16px, 2.5vw, 30px);
-}
-
-.travel-card {
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #e8ecf1;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  padding-bottom: 20px;
-  height: 100%;
-}
-
-.travel-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
-  border-color: #ffcccc;
-}
-
-.travel-card-img-wrap {
+.story-photo-card {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-card);
   overflow: hidden;
-  background-color: #f0f0f0;
-  margin-bottom: 16px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.travel-card-img-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transform: skewX(-25deg);
-  transition: all 0.75s ease;
-  pointer-events: none;
+.story-photo-card:hover {
+  border-color: var(--color-coral);
+  transform: perspective(1000px) translateY(-5px) rotateX(1deg) rotateY(-1deg) scale(1.01);
+  box-shadow: var(--shadow-hover);
 }
 
-.travel-card:hover .travel-card-img-wrap::after {
-  left: 150%;
-}
-
-.travel-card-img-wrap img {
+.story-founder-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
 }
 
-.travel-card:hover .travel-card-img-wrap img {
-  transform: scale(1.06);
+.story-stat-floating-pill {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(251, 248, 243, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-coral);
+  padding: 10px 16px;
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-card);
+  z-index: 2;
+  transition: transform 0.3s ease;
 }
 
-.travel-card-title {
-  font-size: clamp(16px, 1.8vw, 18.5px);
+.story-stat-floating-pill:hover {
+  transform: translateY(-2px);
+}
+
+.stat-pill-num {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--color-coral);
+  letter-spacing: -0.02em;
+}
+
+.stat-pill-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.stat-pill-text span {
+  font-size: 10px;
   font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 8px 0;
-  padding: 0 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-warm-gray);
 }
 
-.travel-card-desc {
-  font-size: clamp(13.5px, 1.2vw, 14.5px);
-  color: #555555;
-  line-height: 1.65;
-  margin: 0;
-  padding: 0 16px;
+.stat-pill-text strong {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-oxblood);
+}
+
+.photo-focal-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(251, 248, 243, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-coral);
+  box-shadow: var(--shadow-card);
+  z-index: 2;
+}
+
+.story-caption {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: rgba(251, 248, 243, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--color-oxblood);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--color-border);
+}
+
+.story-narrative-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.story-quote-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-coral);
+  border-radius: var(--radius-card);
+  padding: 32px 36px;
+  box-shadow: var(--shadow-card);
+}
+
+.story-quote-card p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-oxblood);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.story-supporting-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.story-body-text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-warm-gray);
+}
+
+.story-body-text strong {
+  color: var(--color-oxblood);
+}
+
+/* 3. INTERNATIONAL DESTINATIONS MOSAIC (CHAMPAGNE #E9DED0) */
+.about-travel-section {
+  padding: var(--section-pad-y) 0;
+  background: var(--color-champagne);
+  position: relative;
+}
+
+.travel-mosaic-header {
+  margin-bottom: 56px;
+  max-width: 800px;
+}
+
+.about-travel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.about-travel-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.35s var(--ease-editorial), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.about-travel-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-coral);
+  box-shadow: var(--shadow-hover);
+}
+
+.about-travel-img-box {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.about-travel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+.about-travel-floating-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(63, 35, 53, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(214, 200, 185, 0.35);
+  padding: 5px 12px;
+  border-radius: var(--radius-btn);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-card);
+}
+
+.about-badge-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-coral);
+}
+
+.about-badge-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-surface);
+}
+
+.about-travel-content {
+  padding: clamp(24px, 3vw, 32px);
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  background: var(--color-surface);
 }
 
-/* Responsive */
+.about-travel-location-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(182, 83, 69, 0.08);
+  border: 1px solid var(--color-border);
+  padding: 5px 12px;
+  border-radius: var(--radius-btn);
+  width: fit-content;
+  margin-bottom: 14px;
+}
+
+.about-location-pin {
+  color: var(--color-coral);
+}
+
+.about-location-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-oxblood);
+}
+
+.about-travel-card-title {
+  font-size: clamp(20px, 2vw, 24px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-oxblood);
+  margin-bottom: 10px;
+}
+
+.about-travel-card-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-warm-gray);
+}
+
+/* RESPONSIVE */
 @media (max-width: 1024px) {
-  .about-sport-grid {
+  .about-story-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 48px;
   }
-  .about-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .about-travel-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
-@media (max-width: 640px) {
-  .about-cards-grid {
+@media (max-width: 768px) {
+  .about-travel-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+  }
+  .story-quote-card {
+    padding: 24px;
   }
 }

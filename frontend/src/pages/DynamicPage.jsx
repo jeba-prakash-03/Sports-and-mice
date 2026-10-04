@@ -71,14 +71,7 @@ const DynamicPage = () => {
   }, [pageData, currentSlug]);
 
   if (loading) {
-    return (
-      <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-          <div className="admin-spinner" style={{ width: '40px', height: '40px', border: '4px solid #eee', borderTopColor: '#ff0000', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
-          <p style={{ color: '#666', fontSize: '1.1rem' }}>Loading page...</p>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   // Page not found or page is disabled (unless in admin draft preview mode)

@@ -15,18 +15,18 @@ import {
 import { motion } from 'framer-motion';
 
 const defaultThemeValues = {
-  primary_color: '#ff0000',
-  primary_hover: '#e60000',
-  secondary_color: '#106cc2',
-  accent_color: '#ff6b6b',
-  dark_bg: '#1f242d',
-  card_bg: '#faf5fa',
-  card_border: '#ede4ed',
-  text_primary: '#222222',
-  text_secondary: '#555555',
-  font_family: "'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-  border_radius: '8px',
-  button_border_radius: '50px'
+  primary_color: '#B65345',
+  primary_hover: '#641F35',
+  secondary_color: '#641F35',
+  accent_color: '#C96B56',
+  dark_bg: '#3F2335',
+  card_bg: '#FBF8F3',
+  card_border: '#D6C8B9',
+  text_primary: '#332B29',
+  text_secondary: '#756B65',
+  font_family: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+  border_radius: '14px',
+  button_border_radius: '8px'
 };
 
 const AdminTheme = () => {
@@ -81,28 +81,28 @@ const AdminTheme = () => {
 
   const presets = [
     {
-      name: 'Sports & MICE Classic (Red & Navy)',
-      primary: '#ff0000',
-      primary_hover: '#e60000',
-      secondary: '#106cc2',
-      dark: '#1f242d',
-      card_bg: '#faf5fa'
+      name: 'Editorial Sports (Oxblood & Burnt Coral)',
+      primary: '#B65345',
+      primary_hover: '#641F35',
+      secondary: '#641F35',
+      dark: '#3F2335',
+      card_bg: '#FBF8F3'
     },
     {
-      name: 'Executive Crimson',
-      primary: '#dc2626',
-      primary_hover: '#b91c1c',
-      secondary: '#0284c7',
-      dark: '#0f172a',
-      card_bg: '#f8fafc'
+      name: 'High Performance (Aubergine & Clay)',
+      primary: '#C96B56',
+      primary_hover: '#3F2335',
+      secondary: '#3F2335',
+      dark: '#3F2335',
+      card_bg: '#FBF8F3'
     },
     {
-      name: 'Modern Athletic (Scarlet & Obsidian)',
-      primary: '#ef4444',
-      primary_hover: '#dc2626',
-      secondary: '#2563eb',
-      dark: '#18181b',
-      card_bg: '#f4f4f5'
+      name: 'Championship Heritage (Copper & Ivory)',
+      primary: '#B9825A',
+      primary_hover: '#641F35',
+      secondary: '#641F35',
+      dark: '#3F2335',
+      card_bg: '#E9DED0'
     }
   ];
 

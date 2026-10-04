@@ -1,7 +1,7 @@
 {
     "version": 20,
     "last_published_at": "2026-09-28 10:20:00",
-    "last_saved_at": "2026-09-28 10:27:12",
+    "last_saved_at": "2026-10-02 10:24:57",
     "has_unpublished_changes": true,
     "theme": {
         "primary_color": "#ff0000",
@@ -279,7 +279,15 @@
                 "p3_en": "For events to be successful, the environment must also be suit the sporting characteristics of the customer.",
                 "p3_de": "Zum Gelingen von Veranstaltungen muss auch das Umfeld zu den sportlichen Eigenschaften der Kunden passen.",
                 "enabled": true,
-                "order": 2
+                "order": 2,
+                "responsiveStyles": {
+                    "desktop": {
+                        "padding_top": 60
+                    },
+                    "tablet": [],
+                    "mobile": []
+                },
+                "padding_top": 60
             },
             {
                 "id": "home_cards",
@@ -470,7 +478,7 @@
                 "id": "hotels_hero",
                 "type": "hero",
                 "name": "Hotels Hero Banner",
-                "title_en": "Hotels & more",
+                "title_en": "HOTELS & MORE",
                 "title_de": "Hotels & mehr",
                 "bg_image": "\/assets\/images\/hotels_hero_bg.jpg",
                 "enabled": true,
@@ -668,8 +676,10 @@
             "active": true
         }
     ],
-    "draft_changes_count": 1,
+    "draft_changes_count": 3,
     "draft_changes_summary": [
+        "Modified Introductory Explanation on Home",
+        "Modified Hotels Hero Banner on Hotels",
         "Theme & Color palette changes"
     ]
 }

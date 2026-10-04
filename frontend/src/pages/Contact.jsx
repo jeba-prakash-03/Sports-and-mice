@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useSite } from '../context/SiteContext';
 import { submitContactForm } from '../services/api';
-import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, Phone, Printer, CheckCircle, AlertCircle, Loader2, ArrowRight } from 'lucide-react';
 import { PageTransition, AnimatedSection } from '../components/AnimatedSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/contact.css';
@@ -128,7 +128,10 @@ const Contact = () => {
 
         {/* Contact Content Section */}
         <section className="contact-content-section">
-          <div className="container">
+          {/* Vertical Watermark */}
+          <div className="vertical-watermark-text" aria-hidden="true">CONSULTATION</div>
+
+          <div className="container" style={{ position: 'relative', zIndex: 1 }}>
             <div className="contact-main-grid">
               {/* Left Side: Contact Information */}
               <AnimatedSection direction="right" distance={30} className="contact-info-col">
@@ -145,7 +148,7 @@ const Contact = () => {
                 <div className="contact-details-box">
                   <div className="details-row">
                     <div className="details-icon">
-                      <span className="phone-icon-symbol">&#128241;</span>
+                      <Phone size={18} />
                     </div>
                     <div className="details-text">
                       <p><span>{t.contact.phone}</span> <a href={`tel:${phoneNumber.replace(/\s+/g, '')}`}>{phoneNumber}</a></p>
@@ -155,7 +158,7 @@ const Contact = () => {
 
                   <div className="details-row">
                     <div className="details-icon">
-                      <Mail size={22} className="mail-icon-symbol" />
+                      <Mail size={18} className="mail-icon-symbol" />
                     </div>
                     <div className="details-text">
                       <p><span>{t.contact.email}</span> <a href={`mailto:${emailAddress}`}>{emailAddress.replace('@', '(@)')}</a></p>

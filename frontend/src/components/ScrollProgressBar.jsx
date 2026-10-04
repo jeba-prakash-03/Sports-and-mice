@@ -19,8 +19,8 @@ const ScrollProgressBar = () => {
         left: 0,
         right: 0,
         height: '3px',
-        background: 'linear-gradient(90deg, #ff0000 0%, #ff4d4d 50%, #ff8080 100%)',
-        boxShadow: '0 0 10px rgba(255, 0, 0, 0.7)',
+        background: 'linear-gradient(90deg, #2563EB 0%, #3B82F6 70%, #C9A227 100%)',
+        boxShadow: '0 0 10px rgba(37, 99, 235, 0.4)',
         zIndex: 99999,
         pointerEvents: 'none'
       }}
